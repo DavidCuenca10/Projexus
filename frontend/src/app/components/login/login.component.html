@@ -1,0 +1,27 @@
+<div class="bg"></div>
+<div class="bg bg2"></div>
+<div class="bg bg3"></div>
+
+<div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="card shadow-lg p-4" style="width: 100%; max-width: 400px; border-radius: 10px;">
+        <h1 class="text-center mb-4">Logo projexus</h1>
+        <h4 class="text-center mb-4">Inicia sesión</h4>
+        <form (ngSubmit)="completeInicio()" #loginForm="ngForm">
+            <div class="mb-4">
+                <input id="email" type="email" [(ngModel)]="email" name="email" class="form-control" placeholder="Correo electrónico" required>
+            </div>
+            <div class="mb-4">
+                <input id="password" type="password" [(ngModel)]="password" name="password" class="form-control" placeholder="Contraseña" required>
+            </div>
+            <!-- Contenedor para los botones -->
+            <div class="d-flex justify-content-center w-100 mb-4">
+                <!-- Botón Iniciar sesión -->
+                <button type="submit" class="btn btn-success" [disabled]="!loginForm.valid">Iniciar sesión</button>
+            </div>
+            <div class="d-flex align-items-center justify-content-center">
+                <p class="mb-0 me-2">No tienes cuenta?</p>
+                <a type="button" class="btn btn-outline-danger" routerLink="/register">Crear cuenta</a>
+            </div>
+        </form>
+    </div>
+</div>

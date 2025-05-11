@@ -1,0 +1,28 @@
+.container {
+  margin-top: 150px;
+  max-width: 1200px;
+}
+
+.custom-container {
+  background-color: #3b3b3b;
+  padding: 20px;
+  border-radius: 10px;
+  color: white;
+}
+
+.perfil-info h1 {
+  color: rgb(0, 0, 100);
+  font-size: 55px;
+}
+
+.tareas {
+  max-height: 550px;
+  height: 100%;
+  overflow-y: auto;
+  margin: 10px;
+}
+
+.bg-dark {
+  background-color: #292929 !important;
+  margin: 10px;
+}

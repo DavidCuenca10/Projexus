@@ -1,0 +1,215 @@
+.custom-container {
+    margin-top: 80px;
+    max-width: 1250px;
+    margin: auto;
+}
+
+.hero-section {
+    margin-top: 180px;
+    margin-bottom: 90px;
+    font-size: 1.5rem;
+}
+
+.hero-section h1{
+    font-size: 4rem;
+}
+
+/* Estilos de la tarjeta personalizada */
+.custom-card {
+    background-color: #303030;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    max-width: 100%; /* Asegura que no se desborde */
+    height: 100%; /* Ajusta la altura automáticamente */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Imagen dentro de la tarjeta */
+.custom-card-image {
+    position: relative;
+    height: 150px;
+    overflow: hidden;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.custom-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.custom-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background-color: rgba(0, 0, 0, 0.6); /* Fondo semitransparente */
+    color: white;
+    padding: 4px 8px;
+    border-radius: 5px;
+    font-size: 0.75rem;
+    pointer-events: none; /* Para que no interfiera con clics */
+}
+
+/* Estilo para la fecha dentro de la tarjeta */
+.custom-card-date {
+    margin-top: 10px;
+    font-size: 0.875rem; /* Tamaño de la fuente más pequeño */
+    color: #888;
+}
+
+/* Cuerpo de la tarjeta */
+.custom-card-body {
+    padding: 15px; /* Reduce el padding */
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.custom-card-title {
+    font-size: 1.25rem; /* Título más pequeño */
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: white;
+}
+
+.custom-card-text {
+    font-size: 0.9rem; /* Texto más pequeño */
+    color: #b9b9b9;
+    margin-bottom: 15px;
+    max-height: 150px;
+    height: 100%;
+    overflow: auto;
+}
+
+/* Pie de la tarjeta */
+.custom-card-footer {
+    padding-top: 10px;
+    border-top: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.custom-card-footer .badge {
+    font-size: 0.85rem;
+}
+
+.custom-card-footer .btn {
+    font-size: 0.85rem;
+}
+
+.stats-section h2 {
+  font-size: 2rem;
+  color: #007bff;
+  margin-top: 50px;
+}
+
+.stats-section p {
+  color: #444;
+}
+
+
+/*Boton de la card*/
+.saber-mas {
+ outline: none;
+ cursor: pointer;
+ border: none;
+ padding: 0.9rem 1.5rem;
+ margin: 0;
+ font-family: inherit;
+ font-size: inherit;
+ position: relative;
+ display: inline-block;
+ letter-spacing: 0.05rem;
+ font-weight: 700;
+ font-size: 14px;
+ border-radius: 500px;
+ overflow: hidden;
+ background: #66a8ff;
+ color: ghostwhite;
+ transition: transform 0.2s ease, background-color 0.4s ease;
+}
+
+.saber-mas span {
+ position: relative;
+ z-index: 10;
+ transition: color 0.4s;
+}
+
+.saber-mas:hover span {
+ color: black;
+}
+
+.saber-mas:focus {
+ transform: scale(1.05);
+ background-color: #4694fa;
+}
+
+.saber-mas::before,
+.saber-mas::after {
+ position: absolute;
+ top: 0;
+ left: 0;
+ width: 100%;
+ height: 100%;
+ z-index: 0;
+}
+
+.saber-mas::before {
+ content: "";
+ background: #000;
+ width: 120%;
+ left: -10%;
+ transform: skew(30deg);
+ transition: transform 0.4s cubic-bezier(0.3, 1, 0.8, 1);
+}
+
+.saber-mas:hover::before {
+ transform: translate3d(100%, 0, 0);
+}
+
+
+.mensaje-idea {
+    color: white;
+}
+
+/* Ajustes responsivos */
+@media (max-width: 768px) {
+    .custom-card-body {
+        padding: 10px;
+    }
+
+    .custom-card-title {
+        font-size: 1.15rem;
+    }
+
+    .custom-card-text {
+        font-size: 0.85rem;
+    }
+
+    .custom-card-image {
+        height: 120px;
+    }
+}
+
+@media (max-width: 576px) {
+    .custom-card-body {
+        padding: 8px; /* Más pequeño en pantallas muy pequeñas */
+    }
+
+    .custom-card-title {
+        font-size: 1rem; /* Acomoda el tamaño del título */
+    }
+
+    .custom-card-text {
+        font-size: 0.8rem; /* Ajusta el tamaño del texto */
+    }
+
+    .custom-card-image {
+        height: 100px; /* Ajusta la altura de la imagen en pantallas muy pequeñas */
+    }
+}

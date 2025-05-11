@@ -1,0 +1,150 @@
+<div class="bg"></div>
+<div class="bg bg2"></div>
+<div class="bg bg3"></div>
+
+<div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="card shadow-lg p-4">
+        <div *ngIf="step === 1">
+            <h1 class="text-center mb-4">Logo projexus</h1>
+            <h5 class="text-center mb-4">Paso 1: Información Básica</h5>
+            <form>
+                <div class="mb-4">
+                    <input id="name" type="text" [(ngModel)]="name" name="name" class="form-control" placeholder="Nombre de usuario" required>
+                </div>
+                <div class="mb-4">
+                    <input id="email" type="email" [(ngModel)]="email" name="email" class="form-control" placeholder="Correo electrónico" required>
+                </div>
+                <div class="mb-4">
+                    <input id="password" type="password" [(ngModel)]="password" name="password" class="form-control" placeholder="Contraseña" required>
+                </div>
+                <div class="mb-4">
+                    <input id="password_confirmation" type="password" [(ngModel)]="password_confirmation" name="password_confirmation" class="form-control" placeholder="Repite contraseña" required>
+                </div>
+                <div class="d-flex justify-content-center mt-4 mb-4">
+                  <!-- Siguiente en la derecha -->
+                  <button class="btn btn-primary" (click)="nextStep()"><i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+                <!-- Indicadores de pasos -->
+                <div class="d-flex align-items-center justify-content-center">
+                  <p class="mb-0 me-2">Ya tienes cuenta?</p>
+                  <a type="button" class="btn btn-outline-danger" routerLink="/login">Inicia sesión</a>
+              </div>
+            </form>
+        </div>
+  
+        <div *ngIf="step === 2">
+            <h5 class="text-center mb-4">Paso 2: Áreas de Interés</h5>
+            <form>
+              <div class="container d-flex justify-content-center align-items-center">
+                <!-- Contenedor de tarjetas -->
+                <div class="d-flex flex-wrap justify-content-between">
+                  <!-- Tarjeta 1: Salud -->
+                  <div class="card custom-card shadow-sm mb-3" (click)="selectedOptions.salud = !selectedOptions.salud" [ngClass]="{'checked': selectedOptions.salud}">
+                    <div class="card-body d-flex align-items-center p-2">
+                      <input type="checkbox" [(ngModel)]="selectedOptions.salud" name="option1" class="form-check-input me-2" style="width: 18px; height: 18px;" />
+                      <label class="form-check-label d-flex align-items-center fs-6">
+                        <span class="fs-6 me-2">🍎</span> 
+                        Salud
+                      </label>
+                    </div>
+                  </div>
+              
+                  <!-- Tarjeta 2: Viajes -->
+                  <div class="card custom-card shadow-sm mb-3" (click)="selectedOptions.viajes = !selectedOptions.viajes" [ngClass]="{'checked': selectedOptions.viajes}">
+                    <div class="card-body d-flex align-items-center p-2">
+                      <input type="checkbox" [(ngModel)]="selectedOptions.viajes" name="option2" class="form-check-input me-2" style="width: 18px; height: 18px;" />
+                      <label class="form-check-label d-flex align-items-center fs-6">
+                        <span class="fs-6 me-2">🏖️</span> 
+                        Viajes
+                      </label>
+                    </div>
+                  </div>
+              
+                  <!-- Tarjeta 3: Deporte -->
+                  <div class="card custom-card shadow-sm mb-3" (click)="selectedOptions.deporte = !selectedOptions.deporte" [ngClass]="{'checked': selectedOptions.deporte}">
+                    <div class="card-body d-flex align-items-center p-2">
+                      <input type="checkbox" [(ngModel)]="selectedOptions.deporte" name="option3" class="form-check-input me-2" style="width: 18px; height: 18px;" />
+                      <label class="form-check-label d-flex align-items-center fs-6">
+                        <span class="fs-6 me-2">⚽</span> 
+                        Deporte
+                      </label>
+                    </div>
+                  </div>
+              
+                  <!-- Tarjeta 4: Tecnología -->
+                  <div class="card custom-card shadow-sm mb-3" (click)="selectedOptions.tecnologias = !selectedOptions.tecnologias" [ngClass]="{'checked': selectedOptions.tecnologias}">
+                    <div class="card-body d-flex align-items-center p-2">
+                      <input type="checkbox" [(ngModel)]="selectedOptions.tecnologias" name="option4" class="form-check-input me-2" style="width: 18px; height: 18px;" />
+                      <label class="form-check-label d-flex align-items-center fs-6">
+                        <span class="fs-6 me-2">💻</span> 
+                        Tecnología
+                      </label>
+                    </div>
+                  </div>
+              
+                  <!-- Tarjeta 5: Música -->
+                  <div class="card custom-card shadow-sm mb-3" (click)="selectedOptions.musica = !selectedOptions.musica" [ngClass]="{'checked': selectedOptions.musica}">
+                    <div class="card-body d-flex align-items-center p-2">
+                      <input type="checkbox" [(ngModel)]="selectedOptions.musica" name="option5" class="form-check-input me-2" style="width: 18px; height: 18px;" />
+                      <label class="form-check-label d-flex align-items-center fs-6">
+                        <span class="fs-6 me-2">🎵</span> 
+                        Música
+                      </label>
+                    </div>
+                  </div>
+              
+                  <!-- Tarjeta 6: Arte -->
+                  <div class="card custom-card shadow-sm mb-3" (click)="selectedOptions.arte = !selectedOptions.arte" [ngClass]="{'checked': selectedOptions.arte}">
+                    <div class="card-body d-flex align-items-center p-2">
+                      <input type="checkbox" [(ngModel)]="selectedOptions.arte" name="option6" class="form-check-input me-2" style="width: 18px; height: 18px;" />
+                      <label class="form-check-label d-flex align-items-center fs-6">
+                        <span class="fs-6 me-2">🎨</span> 
+                        Arte
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Campo oculto para enviar las preferencias -->
+              <input type="hidden" [(ngModel)]="preferences" name="preferences">
+            </form>
+            <div class="d-flex justify-content-between mt-4">
+              <button *ngIf="step > 1" (click)="prevStep()" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i></button>
+              <button *ngIf="step < 3" (click)="nextStep()" class="btn btn-primary"><i class="fa-solid fa-arrow-right"></i></button>
+          </div>
+        </div>
+        <div *ngIf="step === 3">
+            <h5 class="text-center mb-4">Paso 3: Biografía</h5>
+            <form>
+                <div class="mb-3">
+                    <label for="bio" class="form-label">Biografía (Opcional)</label>
+                    <textarea id="biography" [(ngModel)]="biography" name="biography" class="form-control" rows="4"></textarea>
+                </div>
+            </form>
+            <div class="d-flex justify-content-between mt-4">
+              <button *ngIf="step > 1" (click)="prevStep()" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i></button>
+              <button *ngIf="step === 3" (click)="completeRegistration()" class="btn btn-success">Finalizar Registro</button>
+          </div>
+        </div>
+        <div class="steps mt-4">
+          <div class="step-item" [ngClass]="{'active-step': step === 1}">
+            <div class="step-circle" [ngClass]="{'active': step >= 1}">
+              <span *ngIf="step > 1">✓</span>
+            </div>
+          </div>
+          <div class="step-item" [ngClass]="{'active-step': step === 2}">
+            <div class="step-circle" [ngClass]="{'active': step >= 2}">
+              <span *ngIf="step > 2">✓</span>
+            </div>
+          </div>
+          <div class="step-item" [ngClass]="{'active-step': step === 3}">
+            <div class="step-circle" [ngClass]="{'active': step >= 3}">
+              <span *ngIf="step > 3">✓</span>
+            </div>
+          </div>
+        </div>
+        
+    </div>
+  </div>
+  

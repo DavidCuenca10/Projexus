@@ -1,0 +1,43 @@
+.container {
+    margin-top: 150px !important;
+    max-width: 1200px;
+}
+
+.form-container {
+    background-color: #3b3b3b;
+    color: white;
+}
+
+.badge {
+    font-size: 1.1rem;
+    background-color: #3d3d3d;
+    display: inline-flex;
+    align-items: center;
+}
+  
+.btn-borrar {
+    background-color: rgb(204, 3, 3);
+    color: white;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.badge, .btn-close, .btn-borrar {
+    transition: all 0.2s ease-in-out;
+}
+  
+.btn-close:hover, .btn-borrar:hover {
+    transform: scale(1.1);
+    background-color: rgb(155, 1, 1);
+}
+
+.form-control {
+    background-color: #303030;
+    color: #f1f1f1;
+    border: 1px solid #444;
+}

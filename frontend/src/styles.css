@@ -1,0 +1,25 @@
+app-navbar-user {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+body {
+    background-color: #031119;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.snackbar-success{
+    .mdc-snackbar__surface{
+        background-color: green !important;
+    }
+}
+
+.snackbar-error{
+    .mdc-snackbar__surface{
+        background-color: rgb(151, 0, 0) !important;
+    }
+}

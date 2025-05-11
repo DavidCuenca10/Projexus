@@ -1,0 +1,159 @@
+<app-navbar-user></app-navbar-user>
+
+<div class="container my-5">
+  <div class="p-5 form-container shadow rounded-4">
+
+    <h2 class="mb-4 fw-bold text-center">Crear nuevo proyecto</h2>
+
+    <form #form="ngForm" (ngSubmit)="crearProyecto(form)">
+
+      <div class="row g-3">
+        <!-- Nombre del proyecto -->
+        <div class="col-md-6">
+          <label for="projectName" class="form-label">Nombre del Proyecto</label>
+          <input
+            type="text"
+            id="projectName"
+            name="projectName"
+            class="form-control"
+            [(ngModel)]="projectName"
+            required
+            #projectNameField="ngModel"
+          />
+          <div *ngIf="projectNameField.invalid && (projectNameField.touched || form.submitted)" class="text-danger">
+            El nombre del proyecto es obligatorio
+          </div>
+        </div>
+
+        <!-- Categoría -->
+        <div class="col-md-6">
+          <label for="category" class="form-label">Categoría</label>
+          <input
+            type="text"
+            id="category"
+            name="category"
+            class="form-control"
+            [(ngModel)]="category"
+            required
+            #projectCategoryField="ngModel"
+          />
+          <div *ngIf="projectCategoryField.invalid && (projectCategoryField.touched || form.submitted)" class="text-danger">
+            La categoria del proyecto es obligatoria
+          </div>
+        </div>
+
+        <!-- Descripción -->
+        <div class="col-12">
+          <label for="description" class="form-label">Descripción</label>
+          <textarea
+            id="description"
+            name="description"
+            class="form-control"
+            rows="3"
+            [(ngModel)]="description"
+            required
+            #projectDescriptionField="ngModel"
+          ></textarea>
+          <div *ngIf="projectDescriptionField.invalid && (projectDescriptionField.touched || form.submitted)" class="text-danger">
+            La descripción del proyecto es obligatoria
+          </div>
+        </div>
+
+        <!-- Miembros máximos -->
+        <div class="col-md-6">
+          <label for="max-members" class="form-label">Miembros máximos</label>
+          <input
+            type="number"
+            id="max-members"
+            name="max-members"
+            class="form-control"
+            [(ngModel)]="maxMembers"
+            min="1"
+            required
+          />
+        </div>
+
+        <!-- Fecha límite -->
+        <div class="col-md-6">
+          <label for="deadline" class="form-label">Fecha de finalización</label>
+          <input
+            type="date"
+            id="deadline"
+            name="deadline"
+            class="form-control"
+            [(ngModel)]="deadline"
+            [min]="minDate"
+            required
+            #projectDeadlineField="ngModel"
+          />
+          <div *ngIf="projectDeadlineField.invalid && (projectDeadlineField.touched || form.submitted)" class="text-danger">
+            La fecha del proyecto es obligaria
+          </div>
+        </div>
+
+        <!-- Contenedor para las etiquetas -->
+        <div class="col-md-6">
+            <label for="tagInput" class="form-label">Etiquetas</label>
+        
+            <!-- Contenedor que muestra las etiquetas actuales -->
+            <div class="d-flex flex-wrap gap-2 mb-2">
+                <span *ngFor="let tag of tags; let i = index" class="badge px-3 py-2 rounded-pill position-relative">
+                    {{ tag }} <!-- Muestra el nombre de la etiqueta -->
+                    
+                    <!-- Botón de eliminar (la "X") -->
+                    <button type="button" class="btn btn-borrar position-absolute m-2" style="top: -15px; right: -15px; width: 24px; height: 24px;" aria-label="Eliminar" (click)="removeTag(i)"><i class="fa-solid fa-xmark"></i></button>
+                </span>
+            </div>
+        
+            <!-- Campo de entrada para agregar nuevas etiquetas -->
+            <div class="d-flex">
+                <input
+                    type="text"
+                    id="tagInput"
+                    name="tagInput"
+                    class="form-control me-2"
+                    [(ngModel)]="tagInput"
+                    placeholder="Escribe una etiqueta"
+                />
+                <button type="button" class="btn btn-primary" (click)="addTag()"><i class="fa-solid fa-plus"></i></button>
+            </div>
+        </div>
+
+        <!-- Imagen del proyecto -->
+        <div class="col-md-6">
+          <label for="image" class="form-label">Imagen del proyecto</label>
+          <input
+            type="file"
+            id="image"
+            name="image"
+            class="form-control"
+            accept="image/*"
+            (change)="onImageSelect($event)"
+            required
+          />
+
+          <div *ngIf="imagePreview" class="position-relative mt-4">
+            <img [src]="imagePreview" alt="Vista previa" class="img-fluid rounded-3" />
+
+             <!-- Botón flotante para eliminar la imagen -->
+             <button
+                type="button"
+                class="btn btn-borrar position-absolute m-2" style="top: -15px; right: -15px; width: 34px; height: 34px;"
+                (click)="removeImage()"
+                title="Eliminar imagen"
+            >
+            <i class="fa-solid fa-xmark"></i>
+           </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botón -->
+      <div class="d-flex justify-content-center mt-5">
+        <button type="submit" class="btn btn-primary px-4 py-2">
+          Crear Proyecto
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

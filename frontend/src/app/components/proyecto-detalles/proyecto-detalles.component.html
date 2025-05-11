@@ -1,0 +1,330 @@
+<app-navbar-user></app-navbar-user>
+
+<div class="container my-4">
+  <div class="row mb-3">
+    <!-- Contenedor 1 -->
+    <div class="col-12">
+      <div class="custom-container">
+        <div *ngIf="project" class="contenido-proyecto">
+          
+          <!-- Datos contenedor 1 -->
+          <div class="info-proyecto">
+            <div class="titulo-proyecto">
+              <h1>{{ project.name }}</h1>
+            </div>
+            <div class="bloque-proyecto">
+              <h2>👑 Proyecto creado por: {{ nombreOwner }}</h2>
+              <!-- Si no eres miembro mostrar el boton "Unirme" -->
+              <div *ngIf="!isMember && project.current_members < project.max_members" class="bloque-unirse" (click)="solicitarAcceso()">
+                <span class="texto-unirse">🤝 ¿Te gusta este proyecto? ¡Solicita unirte ahora!</span>
+                <button class="boton-elegante verde" [disabled]="project.current_members >= project.max_members">Unirme</button>
+              </div>
+
+              <!-- Mensaje de solicitud -->
+              <p *ngIf="mensajeSolicitud" class="solicitud-pendiente">{{ mensajeSolicitud }}</p>
+              <!-- Mensaje capacida maxima-->
+              <p *ngIf="project.current_members >= project.max_members" class="solicitud-pendiente">
+                El proyecto tiene el máximo de participantes
+              </p>
+
+              <!-- Si eres miembro mostrarlo"-->
+              <p *ngIf="isMember || isOwner || isAdmin" class="miembro-actual">Ya eres miembro de este proyecto</p>
+              <!-- Si eres el owner puede eliminar el proyecto -->
+              <button *ngIf="isOwner" class="boton-elegante rojo" (click)="eliminarProyecto()">Eliminar proyecto</button>
+            </div>
+          </div>
+          <!-- Columna para la imagen del proyecto -->
+          <div class="imagen-proyecto">
+            <img [src]="project.image_url" alt="Imagen del proyecto" class="img-fluid" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenedor 2 -->
+  <div class="row mb-3">
+    <div class="col-12">
+      <div class="custom-container">
+        <!-- Datos contenedor 2 -->
+        <div class="col-12 custom-container">
+          <h2 class="titulos">Información del proyecto</h2>
+
+          <div class="descripcion-contenedor">
+            <h5>Descripción:</h5>
+            <p>{{ project?.description }}</p>
+          </div>
+
+          <!-- Datos del proyecto en línea -->
+          <div class="datos-linea">
+            <div class="dato-item">
+            <span 
+              class="estado-indicador" 
+              [ngClass]="{
+                'activo': project?.estado === 'activo', 
+                'inactivo': project?.estado !== 'activo'
+              }"
+            >
+              <!-- Emoji según el estado -->
+              <span *ngIf="project?.estado === 'activo'">✅</span>
+              <span *ngIf="project?.estado !== 'activo'">❌</span>
+            </span>
+            {{ project?.estado }}
+          </div>
+            <div class="dato-item"><span class="emoji">🏷️</span> {{ project?.category }}</div>
+            <div class="dato-item"><span class="emoji">📅</span> {{ project?.deadline | date:'dd/MM/yyyy' }}</div>
+            <div class="dato-item"><span class="emoji">🔖</span> {{ project?.tags }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenedor 3 y 4 -->
+  <div class="row align-items-stretch"><!-- asegura que las columnas (contenedores 3 y 4) se estiren y tengan la misma altura -->
+    <!-- Contenedor 3 -->
+    <div class="col-12 col-md-6 mb-3 d-flex"> <!-- Le ponemos d-flex para poder estirar el contenido dentro -->
+      <div class="custom-container flex-fill"> <!-- flex-fill hace que este contenedor crezca para ocupar todo el alto disponible dentro de su columna -->
+        <!-- Datos contenedor 3 -->
+        <h2 class="titulos">Miembros del proyecto</h2>
+        <p>{{ project?.current_members }} / {{ project?.max_members }}</p>
+        
+        <div *ngFor="let miembro of members" class="miembro-info">
+          <img src="perfiles/pordefecto.png" alt="Imagen de perfil del miembro">
+
+          <!-- Si el usuario es owner y el miembro no es el owner del proyecto -->
+          <div *ngIf="isOwner && miembro.id !== project?.owner_id" class="miembro-item">
+            <span>{{ miembro.name }} - </span>
+
+            <select [(ngModel)]="miembro.pivot.role">
+              <option value="admin">Admin</option>
+              <option value="member">Miembro</option>
+            </select>
+
+            <button 
+              *ngIf="miembro.pivot.role !== miembro.originalRole"
+              (click)="guardarCambioRol(miembro)"
+              class="btn btn-sm btn-success"
+              style="margin-left: 8px;">
+              Guardar
+            </button>
+
+            <!-- Icono para eliminar al usuario del proyecto -->
+            <label for="btn-modal" (click)="seleccionarUsuario(miembro)">
+              <i *ngIf="isAdmin || isOwner" class="fa-solid fa-user-minus" style="padding-left: 15px; cursor: pointer;" title="Eliminar miembro"></i>
+            </label>
+          </div>
+
+          <!-- Si el miembro es el owner del proyecto -->
+          <div *ngIf="miembro.id === project?.owner_id" class="miembro-item owner-item">
+            <span>👑 {{ miembro.name }} - {{ miembro.pivot.role }}</span>
+          </div>
+
+          <!-- Si no se cumple ninguno de los anteriores casos (ej: eres miembro viendo a otro miembro) -->
+          <div *ngIf="!isOwner && miembro.id !== project?.owner_id" class="miembro-item">
+            <span>{{ miembro.name }} - {{ miembro.pivot.role }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contenedor 4 -->
+    <div class="col-12 col-md-6 mb-3 d-flex">
+      <div class="custom-container flex-fill">
+        <!-- Datos contenedor 4 -->
+        <h2 class="titulos">Tareas del proyecto</h2>
+        <!-- Encabezado con filtros y contador -->
+        <div class="filters-container d-flex justify-content-between align-items-center mb-3">
+
+          <!-- Filtros -->
+           <!-- Filtro 1 -->
+          <div class="filter-item">
+            <select class="form-select" [(ngModel)]="filtroEstado">
+              <option value="all">Todos los estados</option>
+              <option value="pending">Pendiente</option>
+              <option value="in_progress">En progreso</option>
+              <option value="completed">Completado</option>
+            </select>
+          </div>
+
+          <!-- Filtro 2 -->
+          <div class="filter-item">
+            <select class="form-select" [(ngModel)]="filtroPrioridad">
+              <option value="all">Todas las prioridades</option>
+              <option value="low">Baja</option>
+              <option value="medium">Media</option>
+              <option value="high">Alta</option>
+            </select>
+          </div>
+
+          <!-- Número total de tareas filtradas -->
+          <p>Total de tareas: {{ tareasFiltradas.length }}</p>
+        </div>
+
+        <!-- tareas -->
+        <div class="scroll">
+          <ng-container *ngFor="let tareas of tareasFiltradas">
+            <div class="tarea-card" [ngClass]="{'completed-task': tareas.status === 'completed'}">
+              <div class="tarea-header">
+                <h4>{{ tareas.title }}</h4>
+                <div class="tarea-info">
+                  <span class="status" [ngClass]="{
+                    'bg-success': tareas.status === 'completed',
+                    'active': tareas.status === 'active'
+                  }">
+                    {{ tareas.status }}
+                  </span>
+                  <span class="priority" [ngClass]="{
+                    'bg-danger': tareas.priority === 'high',
+                    'bg-warning': tareas.priority === 'medium',
+                    'bg-success': tareas.priority === 'low'
+                  }">
+                    {{ tareas.priority }}
+                  </span>
+                  <span class="deadline">{{ tareas.deadline | date:'dd/MM/yyyy' }}</span>
+
+                  <!-- Botón para abrir el modal -->
+                  <label for="btn-modal" (click)="seleccionarTarea(tareas)">
+                    <i *ngIf="isAdmin || isOwner" class="fas fa-trash papelera" title="Eliminar tarea"></i>
+                  </label>
+                </div>
+              </div>
+              <p class="tarea-description">{{ tareas.description }}</p>
+            </div>
+          </ng-container>
+        </div>
+
+
+        <!-- Modal (checkbox que controla la apertura del modal) -->
+        <input type="checkbox" id="btn-modal" hidden>
+
+        <div class="container-modal">
+          <div class="content-modal">
+            <h3 *ngIf="tipoModal === 'eliminarTarea'">
+              ¿Estás seguro que deseas eliminar la tarea: 
+              <strong>{{ tareaSeleccionada?.title }}</strong>?
+            </h3>
+
+            <h3 *ngIf="tipoModal === 'usuario'">
+              ¿Estás seguro que deseas eliminar al usuario:
+              <strong>{{ usuarioSeleccionado?.name }}</strong> del proyecto?
+            </h3>
+
+            
+            <h3 *ngIf="tipoModal === 'crearTarea'">
+              <!-- Formulario para crear la tarea -->
+            <form (ngSubmit)="crearTarea()" #taskForm="ngForm">
+              <!-- Título de la tarea -->
+              <div class="form-group">
+                <label for="titulo">Título</label>
+                <input
+                  type="text"
+                  id="titulo"
+                  name="titulo"
+                  class="form-control"
+                  [(ngModel)]="nuevaTarea.title"
+                  required>
+              </div>
+
+              <!-- Descripción -->
+              <div class="form-group">
+                <label for="descripcion">Descripción</label>
+                <textarea
+                  id="descripcion"
+                  name="descripcion"
+                  class="form-control"
+                  [(ngModel)]="nuevaTarea.description"
+                  required
+                  rows="4"></textarea>
+              </div>
+
+              <!-- Asignada a (desplegable de usuarios del proyecto) -->
+              <div class="form-group">
+                <label for="asignada">Asignada a</label>
+                <select
+                  id="asignada"
+                  name="asignada"
+                  class="form-control"
+                  [(ngModel)]="nuevaTarea.assigned_to"
+                  required>
+                  <option *ngFor="let miembro of members" [value]="miembro.id">
+                    {{ miembro.name }}
+                  </option>
+                </select>
+              </div>
+
+              <!-- Status (pendiente, en progreso, completada) -->
+              <div class="form-group">
+                <label for="status">Estado</label>
+                <select
+                  id="status"
+                  name="status"
+                  class="form-control"
+                  [(ngModel)]="nuevaTarea.status"
+                  required>
+                  <option value="pending">Pendiente</option>
+                  <option value="in_progress">En progreso</option>
+                  <option value="completed">Completada</option>
+                </select>
+              </div>
+
+              <!-- Priority (alta, baja, media) -->
+              <div class="form-group">
+                <label for="priority">Prioridad</label>
+                <select
+                  id="priority"
+                  name="priority"
+                  class="form-control"
+                  [(ngModel)]="nuevaTarea.priority"
+                  required>
+                  <option value="high">Alta</option>
+                  <option value="medium">Media</option>
+                  <option value="low">Baja</option>
+                </select>
+              </div>
+
+              <!-- Deadline (fecha máxima) -->
+              <div class="form-group">
+                <label for="deadline">Fecha límite</label>
+                <input
+                  type="date"
+                  id="deadline"
+                  name="deadline"
+                  class="form-control"
+                  [(ngModel)]="nuevaTarea.deadline"
+                  required>
+              </div>
+
+              <!-- Botones de confirmación -->
+              <hr>
+              <div class="botones-modal">
+                <button type="submit" class="btn-confirmar" [disabled]="!taskForm.valid">Crear tarea</button>
+                <div class="btn-cancelar">
+                  <label for="btn-modal">Cancelar</label>
+                </div>
+              </div>
+            </form>
+            </h3>
+
+            <div class="botones-modal" *ngIf="tipoModal !== 'crearTarea'">
+              <div class="btn-confirmar" (click)="confirmarEliminacion()">
+                <label for="btn-modal">Confirmar</label>
+              </div>
+              <div class="btn-cancelar">
+                <label for="btn-modal">Cancelar</label>
+              </div>
+            </div>
+          </div>
+
+          <label for="btn-modal" class="cerrar-modal"></label>
+        </div>
+
+        <!-- Botón para crear tarea -->
+        <label for="btn-modal" (click)="abrirModalCrearTarea()">
+          <button *ngIf="isAdmin || isOwner" class="btn btn-success mt-3">Crear tarea</button>
+        </label>
+
+      </div>
+    </div>
+  </div>
+</div>

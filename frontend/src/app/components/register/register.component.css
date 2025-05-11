@@ -1,0 +1,148 @@
+/* Estilos para el fondo animado */
+body, html {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+}
+
+/* Estilo para la tarjeta del formulario */
+.card {
+    background: #192f46; /* Fondo oscuro */
+    color: #fff; /* Texto blanco */
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    padding: 30px;
+    max-width: 400px;
+    width: 100%;
+    font-size: 16px;
+    margin-bottom: 20px;
+    height: 100%;
+    max-height: 600px;
+}
+
+/* Estilo para los campos de formulario */
+.form-control {
+    background-color: #34495e;
+    border: 1px solid #2ecc71;
+    color: #fff;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 20px;
+    transition: all 0.3s;
+}
+
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.329);
+}
+
+/* Estilo para los puntos de los pasos */
+.step-indicator {
+    width: 12px;
+    height: 12px;
+    margin: 0 10px;
+    border-radius: 50%;
+    background-color: #ddd;
+    transition: all 0.3s ease;
+}
+
+/* Cuando el paso está activo, el punto se convierte en una línea */
+.step-indicator.active {
+    width: 50px; /* Hace que el punto se convierta en una línea */
+    background-color: #3498db; /* Color azul cuando está activo */
+}
+
+/* Hacer que la animación de transición se vea más suave */
+.step-indicator {
+    transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+/* Estilo para los botones */
+button {
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #2ecc71; /* Efecto hover para los botones */
+    transform: scale(1.05);
+}
+
+/* Estilo para los enlaces */
+a {
+    text-decoration: none;
+    color: #e74c3c;
+    transition: color 0.3s ease;
+}
+
+.custom-card {
+    background-color: rgba(128, 128, 128, 0.404);
+    max-width: 160px;
+    padding: 8px;
+    transition: background-color 0.2s ease-in-out;
+    border: 1px solid rgb(133, 133, 133);
+}
+
+.custom-card:hover {
+    background-color: rgba(66, 73, 141, 0.726);
+    cursor: pointer;
+}
+
+.custom-card .form-check-label {
+    font-size: 1.2rem !important;
+    display: flex;
+    align-items: center;
+    user-select: none; /* Evita que el texto sea seleccionable */
+    cursor: pointer;
+}
+
+.custom-card.checked {
+    background-color: rgba(80, 67, 250, 0.733); /* Color cuando el checkbox está marcado */
+}
+
+.custom-card input[type="checkbox"]{
+    display: none;
+}
+
+.steps {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+  
+.step-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.step-circle {
+    width: 25px; /* Ajustamos el tamaño del círculo */
+    height: 25px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #6e7fef, #2b3ca7); /* Degradado azul */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    font-size: 14px; /* Reducimos el tamaño de la letra */
+    transition: transform 0.8s, background 0.8s;
+}
+
+.step-circle.active {
+    background: linear-gradient(145deg, #ff6d6d, #ff3366); /* Degradado para el paso activo */
+    transform: scale(1.4); /* Efecto de escala cuando está activo */
+}
+
+.step-circle span {
+    font-size: 18px; /* Tamaño del icono del tick */
+}
+
+.step-circle.active span {
+    color: white; /* El tick se pone blanco cuando está activo */
+}
+  

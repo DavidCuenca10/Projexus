@@ -1,0 +1,58 @@
+<app-navbar-user></app-navbar-user>
+
+<!-- Hero Section (reemplaza 'Proyectos recientes') -->
+<section class="hero-section text-white text-center">
+  <div class="hero-content">
+    <h1>🚀 Explora proyectos únicos</h1>
+    <p>Colabora, aprende e inspírate con los proyectos de la comunidad</p>
+  </div>
+</section>
+
+<!-- Contenedor de proyectos -->
+<div class="container custom-container">
+
+  <!-- Grid de proyectos -->
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    <div class="col" *ngFor="let project of proyectosActivos" data-aos="zoom-im" data-aos-duration="1500" data-aos-easing="ease-in-out">
+      <div class="custom-card">
+        <div class="custom-card-image">
+          <div class="custom-badge">
+            <span>{{project.category}}</span>
+          </div>
+          <img [src]="project.image_url" class="custom-card-img" alt="Imagen proyecto">
+        </div>
+        <div class="custom-card-body">
+          <h3 class="custom-card-title">{{project.name}}</h3>
+          <p class="custom-card-text">{{project.description}}</p>
+          <div class="custom-card-footer">
+            <span class="badge bg-primary d-flex align-items-center gap-2">
+              <img src="perfiles/pordefecto.png" width="30px" class="rounded-circle"> 
+              <span>{{ project.owner.name }}</span>
+            </span>
+            <div class="container-boton">
+              <button class="saber-mas" [routerLink]="['/proyecto', project.id]">
+                <span>Saber más</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Estadísticas -->
+  <div class="row text-center my-5 stats-section">
+    <div class="col">
+        <h2>{{ proyectosActivos.length }}</h2>
+        <p>Proyectos activos</p>
+    </div>
+    <div class="col">
+        <h2>6</h2>
+        <p>Categorías</p>
+    </div>
+    <div class="col">
+        <h2>900+</h2>
+        <p>Usuarios colaborando</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,449 @@
+/*Diseño contenedores*/
+.container {
+  margin-top: 150px !important;
+  max-width: 1200px;
+}
+
+.custom-container {
+  background-color: #3b3b3b;
+  padding: 20px;
+  border-radius: 8px;
+  color: white;
+  min-height: 300px;
+  overflow-y: auto;
+}
+
+.titulos {
+  font-weight: bold;
+  color: white;
+}
+
+/*Contenedor 1*/
+.contenido-proyecto {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.info-proyecto {
+  padding: 20px;
+  max-width: 550px;
+  width: 100%;
+}
+
+.titulo-proyecto h1 {
+  font-size: 46px;
+  font-weight: bold;
+  color: white;
+}
+
+.bloque-proyecto h2{
+  font-size: 18px;
+  color: #ccc;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+/*Boton elegante para la solicitud y para eliminar el proyecto*/
+.boton-elegante {
+  padding: 10px 20px;
+  border: 2px solid #2c2c2c;
+  background-color: #1a1a1a;
+  color: #ffffff;
+  font-size: 1.2rem;
+  cursor: pointer;
+  border-radius: 30px;
+  transition: all 0.4s ease;
+  outline: none;
+  position: relative;
+  overflow: hidden;
+  font-weight: bold;
+  margin-top: 15px;
+  transition: transform 0.2s ease;
+}
+
+.boton-elegante::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: scale(0);
+  transition: transform 0.5s ease;
+}
+
+.boton-elegante:hover::after {
+  transform: scale(4);
+}
+
+.boton-elegante:hover {
+  border-color: #666666;
+  background: #292929;
+  transform: scale(1.05);
+}
+
+.boton-elegante:focus {
+  transform: scale(1.05);
+}
+
+/* Gradiente verde para "Unirme" */
+.boton-elegante.verde::after {
+  background: radial-gradient(circle, rgba(0, 255, 0, 0.25) 0%, rgba(0, 255, 0, 0) 70%);
+}
+
+/* Gradiente rojo para "Eliminar" */
+.boton-elegante.rojo::after {
+  background: radial-gradient(circle, rgba(255, 0, 0, 0.25) 0%, rgba(255, 0, 0, 0) 70%);
+}
+/*Fin boton*/
+
+.bloque-unirse {
+  background-color: #e9fbe9;
+  border-radius: 15px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.texto-unirse {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #155724;
+}
+
+.imagen-proyecto img {
+  max-height: 250px;
+  border-radius: 8px;
+}
+
+.miembro-actual {
+  margin-top: 25px;
+  background-color: rgba(0, 134, 0, 0.432);
+  border-radius: 25px;
+  padding: 8px;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+}
+
+.miembro-actual::before {
+  content: '\2714';
+  margin-right: 10px;
+}
+
+.solicitud-pendiente {
+  margin-top: 25px;
+  background-color: rgba(153, 87, 0, 0.904);
+  border-radius: 25px;
+  padding: 8px;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+}
+
+.solicitud-pendiente::before {
+  content: '\26A0';
+  margin-right: 10px;
+}
+
+/*Cierre contendor 1*/
+/*Contendor 2*/
+
+.descripcion-contenedor {
+  background-color: rgb(77, 77, 77);
+  border-radius: 15px;
+  padding: 15px;
+  color: rgb(209, 209, 209);
+  border: 1px solid rgb(109, 109, 109);
+  margin-top: 25px;
+}
+
+.datos-linea {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 100px;
+  margin-top: 40px;
+}
+
+/*Media query para que no salgan un espacio enorme entre cada dato-item ventanas pequeñas y medianas.*/
+@media (max-width: 1024px) {
+  .datos-linea {
+    gap: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .datos-linea {
+    gap: 20px;
+  }
+}
+/*Fin media querys*/
+
+.dato-item {
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-size: 1.08rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  background-color: #2e2e2e;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.dato-item .emoji {
+  margin-right: 10px;
+  font-size: 1.5rem;
+}
+
+.estado-indicador {
+  margin-right: 8px;
+  font-size: 1.5rem;
+}
+
+/*Cierre contendor 2*/
+/*Contendor 3*/
+
+.miembro-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.miembro-info img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.miembro-item {
+  background-color: #d1ecf1;
+  border-left: 5px solid #17a2b8;
+  color: black;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.owner-item {
+  background-color: #fc9e9e;
+  border-left: 5px solid #b81717;
+  color: black;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px;
+}
+/*Cierre contendor 3*/
+/*Contendor 4*/
+
+.scroll {
+  max-height: 280px;
+  overflow-y: auto;
+  margin-top: 20px;
+  padding-right: 10px;
+}
+
+.tarea-card {
+  background-color: #383741;
+  border: 1px solid #858484;
+  border-left: 5px solid #2196F3;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: all 0.2s ease;
+}
+
+.tarea-card:hover {
+  transform: scale(1.008);
+}
+
+.tarea-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tarea-info {
+  display: flex;
+  gap: 15px;
+  font-size: 0.9rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.tarea-info span {
+  padding: 4px 8px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.status {
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: white;
+}
+
+.priority {
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: white;
+}
+
+.completed-task {
+  background-color: rgba(92, 255, 119, 0.158);
+  color: white;
+}
+
+.bg-warning {
+  background-color: yellow;
+  color: black;
+}
+
+.bg-danger {
+  background-color: red;
+}
+
+.filters-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.filter-item {
+  flex: 1 1 200px; /* que ocupen mínimo 200px pero crezcan si hay espacio */
+}
+
+.papelera {
+  background-color: red;
+  padding: 7px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.2s ease;
+}
+
+.papelera:hover, .papelera:focus {
+  background-color: #740404;
+  transform: scale(1.1);
+  color: white;
+}
+
+/*Cierre contendor 4*/
+/*Modal*/
+
+#btn-modal {
+  display: none;
+}
+
+.container-modal {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0; left: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.content-modal {
+  width: 100%;
+  max-width: 400px;
+  padding: 30px;
+  background-color: white;
+  border-radius: 12px;
+  color: black;
+  text-align: center;
+}
+
+.content-modal h3 {
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+}
+
+.content-modal p {
+  padding: 15px 0px;
+  border-top: 1px solid #dbdbdb;
+  border-bottom: 1px solid #dbdbdb;
+}
+
+.content-modal .botones-modal {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.content-modal .btn-confirmar {
+  background-color: green;
+  border-radius: 15px;
+  padding: 10px 20px;
+  color: white;
+  cursor: pointer;
+  flex: 1;
+  text-align: center;
+}
+
+.content-modal .btn-confirmar:hover {
+  background-color: rgb(0, 90, 0);
+}
+
+.content-modal .btn-confirmar label {
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+.content-modal .btn-cancelar {
+  background-color: rgb(197, 0, 0);
+  border-radius: 15px;
+  padding: 10px 20px;
+  color: white;
+  cursor: pointer;
+  flex: 1;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.content-modal .btn-cancelar:hover {
+  background-color: rgb(146, 0, 0);
+}
+
+.content-modal .btn-cancelar label {
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+#btn-modal:checked ~ .container-modal {
+  display: flex;
+}
+
+.cerrar-modal {
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  position: absolute;
+}
+/*Cierre modal*/

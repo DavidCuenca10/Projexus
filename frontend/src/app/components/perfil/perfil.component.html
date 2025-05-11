@@ -1,0 +1,89 @@
+<app-navbar-user></app-navbar-user>
+
+<div class="container">
+  <!-- Perfil superior -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="custom-container d-flex align-items-center gap-4 flex-wrap">
+                <div class="perfil-imagen">
+                    <img src="perfiles/pordefecto.png" class="rounded-circle" style="width: 150px;">
+                </div>
+                <div class="perfil-info">
+                    <div *ngIf="usuario">
+                        <h1>{{ usuario.name }}</h1>
+                        <h4>Intereses: {{ usuario.preferences }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tareas -->
+    <div class="row mb-5 d-flex align-items-stretch">
+        <div class="col-lg-8 d-flex">
+            <div class="custom-container flex-fill">
+                <div class="tareas">
+                    <h3>Tareas pendientes</h3>
+                    <div *ngIf="tareasPendientes.length > 0; else noTareas">
+                        <div *ngFor="let tarea of tareasPendientes" class="mb-3 p-2 bg-dark rounded">
+                            <h5>{{ tarea.title }}</h5>
+                            <p>{{ tarea.description }}</p>
+                            <small>Prioridad: {{ tarea.priority }} | Estado: {{ tarea.status }} | Límite: {{ tarea.deadline | date }}</small>
+                        </div>
+                    </div>
+                    <ng-template #noTareas>
+                        <p>No hay tareas asignadas.</p>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+        <!-- Datos -->
+        <div class="col-lg-4 d-flex">
+            <div class="flex-fill d-flex flex-column gap-3">
+                <div class="custom-container flex-fill d-flex flex-column justify-content-center align-items-center text-center text-break w-100">
+                    <h4>Biografía</h4>
+                    <p *ngIf="usuario">{{ usuario.biography || 'Sin biografía' }}</p>
+                </div>
+                <div class="custom-container flex-fill d-flex flex-column justify-content-center align-items-center text-center text-break w-100">
+                    <i class="fas fa-diagram-project fa-2x mb-3 text-success"></i>
+                    <h4>Proyectos</h4>
+                    <span class="badge bg-success fs-5 px-3 py-2">3 activos</span>
+                </div>
+                <div class="custom-container flex-fill d-flex flex-column justify-content-center align-items-center text-center text-break w-100">
+                    <i class="fas fa-calendar-alt fa-2x mb-3 text-warning"></i>
+                    <h4>Cuenta creada el</h4>
+                    <p *ngIf="usuario">{{ usuario.created_at | date:'dd/MM/yyyy' }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row d-flex align-items-stretch">
+        <div class="col-md-6 d-flex">
+            <div class="custom-container flex-fill justify-content-center align-items-center text-center">
+                <i class="fas fa-history fa-2x mb-3 text-info"></i>
+                <h4>Estadísticas</h4>
+                <p><strong>Tareas completadas:</strong> 25</p>
+                <p><strong>Tiempo dedicado:</strong> 40h</p>
+                <p><strong>Nivel de actividad:</strong> 85%</p>
+            </div>
+        </div>
+        <div class="col-md-6 d-flex">
+            <div class="custom-container flex-fill justify-content-center align-items-center text-center">
+                <i class="fas fa-share-alt fa-2x mb-3 text-danger"></i>
+                <h4>Redes Sociales</h4>
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="https://facebook.com" target="_blank" class="text-decoration-none">
+                    <i class="fab fa-facebook fa-2x"></i>
+                    </a>
+                    <a href="https://twitter.com" target="_blank" class="text-decoration-none">
+                    <i class="fab fa-twitter fa-2x"></i>
+                    </a>
+                    <a href="https://linkedin.com" target="_blank" class="text-decoration-none">
+                    <i class="fab fa-linkedin fa-2x"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

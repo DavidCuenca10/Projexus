@@ -1,0 +1,293 @@
+.navigation_image {
+    width: 40px;  /* Ajuste del tamaño de la imagen de perfil */
+    cursor: pointer;
+    border-radius: 50%;  /* Imagen redondeada */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);  /* Sombra sutil */
+    transition: transform 0.2s ease-in-out;  /* Efecto de transformación al pasar el mouse */
+}
+
+.navigation_image:hover {
+    transform: scale(1.1);  /* Aumento de tamaño al pasar el mouse */
+}
+
+/* Aplica la animación al menú desplegable */
+.dropdown-menu {
+    animation: slideIn 0.3s ease-out;  /* Efecto de deslizamiento */
+}
+
+.dropdown-menu-lg {
+    min-width: 18rem;
+    padding: 0px;
+    border-radius: 10px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);  /* Sombra sutil para el menú */
+    transition: opacity 0.3s ease-in-out;
+    background-color: #fff;  /* Fondo blanco */
+}
+
+.dropdown-menu-header {
+    background-color: #ff6f00;  /* Un naranja brillante */
+    color: white;
+    border-radius: 10px 10px 0px 0px;
+    padding: 10px;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);  /* Sombra suave para el encabezado */
+}
+
+.dropdown-menu-header img {
+    width: 50px;
+    border-radius: 50%;
+}
+
+.navigation {
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: rgba(27, 38, 44, 0.8);  /* Fondo semi-transparente */
+    padding: 10px 20px;
+    border-radius: 35px;
+    z-index: 10000;
+    backdrop-filter: blur(10px);  /* Efecto de desenfoque */
+    -webkit-backdrop-filter: blur(10px);  /* Soporte para Safari */
+    border: 1px solid rgba(255, 255, 255, 0.075);
+}
+
+
+.navigation:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);  /* Aumentar sombra al pasar el mouse */
+}
+
+.fa-bars {
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #333;  /* Color gris oscuro para el icono */
+    transition: transform 0.2s ease-in-out;
+}
+
+.fa-bars:hover {
+    transform: scale(1.2);  /* Efecto de zoom en el icono */
+}
+
+.dropdown-menu-section {
+    padding: 12px 16px;
+    cursor: pointer;
+    color: #333;
+    font-size: 1rem;
+    transition: background-color 0.2s ease, padding-left 0.2s ease;  /* Transiciones suaves */
+}
+
+.dropdown-menu-section:hover {
+    background-color: rgba(253, 192, 79, 0.8);  /* Efecto hover más suave */
+    padding-left: 20px;  /* Desplazamiento hacia la izquierda */
+    border-left: 3px solid #ff6f00;  /* Borde izquierdo destacado */
+}
+
+.navbar-brand {
+    font-family: 'Montserrat', sans-serif; /* Usa Montserrat o la que prefieras */
+    font-size: 2rem; /* Puedes ajustar el tamaño */
+    font-weight: 600; /* Puedes cambiar el grosor si te gusta más */
+    color: white;
+}
+
+.navbar-brand:hover {
+    color: rgb(168, 195, 240) !important;
+}
+
+.container {
+    max-width: 100%;
+}
+
+.row {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1300px;  /* Ajusta el ancho máximo sin afectar responsive */
+    width: 80vw;  /* Usa porcentaje del viewport para flexibilidad */
+}
+
+.dropdown-menu-header span {
+    background-color: transparent !important; /* Eliminar fondo blanco si lo tiene */
+    color: white !important; /* Asegurar color del texto */
+    font-weight: bold; /* Hacer que el texto resalte */
+}
+
+.dropdown-menu-section span, 
+.dropdown-menu-section i {
+    background-color: transparent !important; /* Asegurar que no tengan fondo propio */
+    font-weight: bold; /* Resaltar texto */
+}
+
+.boton-normal {
+    color: white;
+    border-radius: 30px;
+    background: transparent;
+    transition: all 0.3s ease;
+}
+
+.boton-normal:hover, 
+.boton-normal:focus {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.boton-register {
+    color: black;
+    background: white;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+}
+
+.boton-register:hover, .boton-register:focus {
+    background-color: #0034c2;
+    color: white;
+}
+
+.boton-crear-proyecto {
+    background-color: #0069d9;
+    color: white;
+    border-radius: 30px;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.boton-crear-proyecto:hover, .boton-crear-proyecto:focus {
+    background-color: #0050a5;
+    transform: scale(1.05);
+    color: white;
+}
+
+.panel-notificaciones {
+    width: 320px;
+    background-color: #1e1e1e;
+    color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+.panel-header {
+    padding: 12px;
+    background-color: #292929;
+    border-bottom: 1px solid #444;
+}
+
+.panel-notificaciones-content {
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 12px;
+    background-color: #2d2d2d;
+}
+
+.notificaciones-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.notificacion-item {
+    background-color: #3c3c3c;
+    margin-bottom: 12px;
+    padding: 12px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.notificacion-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.mensaje {
+    font-size: 1rem;
+    color: #e0e0e0;
+    word-break: break-word;
+}
+
+.estado i {
+    margin-right: 5px;
+    color: #ffc107;
+}
+
+.estado {
+    font-size: 0.8rem;
+    color: #ccc;
+}
+
+.sin-notificaciones,
+.loading {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #999;
+    padding: 16px 0;
+}
+
+.pulse-badge {
+    animation: pulse 1.5s infinite;
+}
+
+.rotate-90 {
+  transform: rotate(90deg);
+  transition: transform 0.3s ease-in-out;
+}
+
+.rotate-back {
+  transform: rotate(0deg);
+  transition: transform 0.3s ease;
+}
+
+
+/* Animación de deslizamiento para el menú */
+@keyframes slideIn {
+    0% {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+  
+@keyframes pulse {
+0% {
+    transform: scale(1) translate(-50%, -50%);
+    opacity: 1;
+}
+50% {
+    transform: scale(1.3) translate(-50%, -50%);
+    opacity: 0.6;
+}
+100% {
+    transform: scale(1) translate(-50%, -50%);
+    opacity: 1;
+}
+}
+  
+
+/*Media querys */
+@media (max-width: 576px) {
+.panel-notificaciones {
+    max-width: 95vw;
+    font-size: 0.9rem;
+}
+
+.notificacion-buttons {
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.notificacion-buttons button {
+    width: 100%;
+}
+}
+
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 1.2rem;
+    }
+
+    .navigation_image {
+        width: 35px;
+    }
+}

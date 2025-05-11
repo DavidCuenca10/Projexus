@@ -1,0 +1,156 @@
+.hero {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    justify-content: center;
+    padding: 100px 0;
+}
+
+.section {
+    color: white;
+}
+
+.hero .main-heading h1 {
+    font-size: 4rem;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -1px;
+    margin: 0;
+}
+
+.separador {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    z-index: -1;
+    position: relative;
+}
+
+.descripcion {
+    font-size: 1rem;
+    line-height: 1.7;
+    margin: 0;
+    color: rgb(187, 187, 187);
+}
+
+
+/*Boton de empezar ahora*/ 
+
+.cta-button {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Estilos generales del contenedor del botón */
+.cta-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.boton-empezar {
+  padding: 17px 40px;
+  border-radius: 10px;
+  border: 0;
+  background-color: rgb(255, 56, 86);
+  letter-spacing: 1.5px;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  box-shadow: rgb(201, 46, 70) 0px 10px 0px 0px;
+  color: hsl(0, 0%, 100%);
+  cursor: pointer;
+}
+
+.boton-empezar:hover {
+  box-shadow: rgb(201, 46, 70) 0px 7px 0px 0px;
+}
+
+.boton-empezar:active {
+  background-color: rgb(255, 56, 86);
+  box-shadow: rgb(201, 46, 70) 0px 0px 0px 0px;
+  transform: translateY(5px);
+  transition: 200ms;
+}
+
+/*Titulo de los headers */
+
+.section-header {
+    color: rgb(87, 132, 255);
+    font-size: 1.5rem;
+}
+
+.section-header h2{
+    font-size: 3rem;
+    font-weight: 600;
+}
+
+
+
+.info {
+    background-color: #0c181f;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    justify-content: center;
+    padding: 100px 0;
+}
+
+.info .info-info {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.info .info-info p {
+    margin-bottom: 40px; /* Espacio entre párrafos */
+}
+
+
+/*Grid*/
+
+.funcionalidad-header {
+    margin: 50px;
+}
+
+.funcionalidad-grid {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    margin-bottom: 200px;
+}
+
+.funcionalidad-grid .funcionalidad-item i {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.funcionalidad-item {
+    background-color: white;
+    padding: 15px;
+    border-radius: 15px;
+    height: 100%;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    line-height: 1.7;
+    transition: box-shadow 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.funcionalidad-item:hover {
+    color: rgb(48, 114, 255);
+    transform: scale(1.06);
+    box-shadow: 0 8px 12px rgba(255, 255, 255, 0.2);
+}
+
+.grid-header {
+    color: white;
+}
+
+.grid-header p {
+    color: gray;
+}
+
