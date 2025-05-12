@@ -110,7 +110,6 @@ class ProjectController extends Controller
     }
 
 
-
     //Enviar solicitud para unirse a un proyecto
     public function enviarSolicitud($projectId){
         // Verifica si el proyecto existe
@@ -300,10 +299,9 @@ class ProjectController extends Controller
     }
 
 
-    //Gestion de actualizar estado del proyeto dependiendo del deadline que tenga
     public function listarProyectosActivos(){
 
-            // Obtener todos los proyectos activos con la relación 'owner' para cada proyecto
+        // Obtener todos los proyectos activos con la relación 'owner' para cada proyecto
         $proyectos = Project::with('owner')->where('estado', 'activo')->get();
 
         return response()->json([
@@ -332,5 +330,28 @@ class ProjectController extends Controller
         }
 
         return response()->json(['members' => $project->members], 200);
+    }
+
+    //Salir del proyecto
+    public function salirDelProyecto ($projectId) {
+
+        $user = Auth::user(); //Obtener el usuario autenticado
+        $project = Project::findOrFail($projectId); //Obtener el proyecto que nos dan por parametro
+
+        // Verificar si el usuario está en el proyecto
+        $member = $project->members()->where('user_id', $user->id)->first();
+
+        if(!$member) {
+            return response()->json([
+                'message' => 'El usuario no es miembro del proyecto'
+            ], 400);
+        }
+
+        // Eliminar la relación entre el usuario y el proyecto
+        $project->members()->detach($user->id);  // Aquí se elimina la relación en la tabla pivote
+
+        return response()->json([
+                'message' => 'Has salido del proyecto'
+        ], 200);
     }
 }

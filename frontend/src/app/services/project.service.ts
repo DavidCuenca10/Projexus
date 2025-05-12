@@ -38,6 +38,7 @@ export class ProjectService {
     });
   }
 
+
   obtenerProyecto(id: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/${id}`, {
       headers: {
@@ -45,6 +46,15 @@ export class ProjectService {
       }
     });
   }
+
+  obtenerProyectosDeUsuario(id: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/usuario/${id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+  }
+
 
   obtenerUsuariosProyecto(projectId: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/${projectId}/miembros`, {
@@ -61,8 +71,6 @@ export class ProjectService {
       }
     });
   }
-
-
 
 //Verificar el rol de un usuario en el proyecto dado para mostrar opciones debidas
   verificarRolProyecto(projectId: number): Observable<any> {
@@ -138,5 +146,14 @@ export class ProjectService {
     });
   
     return this.http.post(this.apiUrl, formData, { headers });
+  }
+
+  //Salir del proyecto
+  salirDelProyecto(projectId: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${projectId}/salir`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    });
   }
 }

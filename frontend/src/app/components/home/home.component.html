@@ -10,10 +10,9 @@
 
 <!-- Contenedor de proyectos -->
 <div class="container custom-container">
-
   <!-- Grid de proyectos -->
-  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-    <div class="col" *ngFor="let project of proyectosActivos" data-aos="zoom-im" data-aos-duration="1500" data-aos-easing="ease-in-out">
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-5">
+    <div class="col" *ngFor="let project of proyectosActivos | paginate: { itemsPerPage: 6, currentPage: page }" data-aos="zoom-im" data-aos-duration="1500" data-aos-easing="ease-in-out">
       <div class="custom-card">
         <div class="custom-card-image">
           <div class="custom-badge">
@@ -40,19 +39,23 @@
     </div>
   </div>
 
+  <div class="paginacion">
+    <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+  </div>
+
   <!-- Estadísticas -->
   <div class="row text-center my-5 stats-section">
     <div class="col">
-        <h2>{{ proyectosActivos.length }}</h2>
-        <p>Proyectos activos</p>
+      <h2>{{ proyectosActivos.length }}</h2>
+      <p>Proyectos activos</p>
     </div>
     <div class="col">
-        <h2>6</h2>
-        <p>Categorías</p>
+      <h2>6</h2>
+      <p>Categorías</p>
     </div>
     <div class="col">
-        <h2>900+</h2>
-        <p>Usuarios colaborando</p>
+      <h2>900+</h2>
+      <p>Usuarios colaborando</p>
     </div>
   </div>
 </div>

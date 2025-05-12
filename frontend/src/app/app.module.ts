@@ -16,6 +16,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CrearProyectoComponent } from './components/crear-proyecto/crear-proyecto.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { PerfilProyectosComponent } from './components/perfil-proyectos/perfil-proyectos.component';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { PerfilProyectosComponent } from './components/perfil-proyectos/perfil-p
     FormsModule,
     MatSnackBarModule,
     BrowserAnimationsModule,
+    NgxPaginationModule,
     HttpClientModule
   ],
   providers: [],

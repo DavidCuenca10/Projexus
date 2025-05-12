@@ -59,9 +59,9 @@ export class ProyectoDetallesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.projectId = Number(this.route.snapshot.paramMap.get('id'));  // Asignamos projectId aquí
+    this.projectId = Number(this.route.snapshot.paramMap.get('id')); //Obtenemos la id de la url que será el projectId
 
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const user = JSON.parse(localStorage.getItem('user') || '{}'); //Obtenemos la id del usuario a traves del token y lo asignamos a currentUserId
     this.currentUserId = user.id;
 
     // Obtener detalles del proyecto

@@ -3,26 +3,35 @@
 <div class="container">
     <h1>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-code-xml"><path d="m18 16 4-4-4-4"></path><path d="m6 8-4 4 4 4"></path><path d="m14.5 4-5 16"></path></svg>
-    Tus proyectos
+    Tus proyectos: <strong style="color: blue;">{{ totalProyectos }}</strong>
     </h1>
-    <div class="row">
-        <div class="col-12">
-            <div class="custom-container d-flex gap-4 flex-wrap">
-                <div class="imagen-proyecto">
-                    <img src="imagenes/abstract_image.jpg" alt="">
+    <div class="row mt-5" *ngFor="let proyecto of proyectosUsuario | paginate: { itemsPerPage: 3, currentPage: page }">
+        <div class="col-md-6">
+            <div class="container-img">
+                <img [src]="proyecto.image_url" class="custom-card-img" alt="Imagen proyecto">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="container-info">
+                <div class="name">
+                    <h2>{{ proyecto.name }}</h2>
                 </div>
-                <div class="proyecto-info">
-                    <h3>Nombre del proyecto</h3>
-                    <div class="categorias d-flex">
-                        <h5>Desarollo</h5>
-                        <h5>Diseño</h5>
-                    </div>
-                    <p>Descripcion</p>
-                    <button>Ver mas</button>
-                    <button>Eliminar proyecto</button>
-                    <button>Salirse</button>
+                <div class="tags">
+                    <h5>{{ proyecto.category }}</h5>
+                </div>
+                <div class="descripcion">
+                    <p>{{ proyecto.description }}</p>
+                </div>
+                <div class="botones">
+                    <button class="boton-elegante" [routerLink]="['/proyecto', proyecto.id]">Ver mas</button>
+                    <button class="boton-elegante rojo" *ngIf="noEsOwner(proyecto.id)" (click)="salirDelProyecto(proyecto.id)">Salir</button>
+                    <button class="boton-elegante rojo" *ngIf="esOwner(proyecto.id)">Eliminar proyecto</button>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
+<div class="paginacion">
+    <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
 </div>

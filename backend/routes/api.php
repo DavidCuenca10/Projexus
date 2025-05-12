@@ -27,6 +27,7 @@ Route::group(["middleware" => ["auth:sanctum"]], function(){
     Route::put("proyectos/{projectId}/usuarios/{userId}/rol/{nuevoRol}", [ProjectController::class, 'cambiarRol']); //Asignar rol
     Route::delete("proyectos/{projectId}/usuarios/{userId}", [ProjectController::class, 'eliminarUsuarioDeProyecto']); //Eliminar usuario de proyecto
     Route::get('proyectos/{projectId}/miembros', [ProjectController::class, 'obtenerUsuariosProyecto']); //Listar usuarios de un proyecto
+    Route::delete('proyectos/{projectId}/salir', [ProjectController::class, 'salirDelProyecto']);
 
     //Verificacion
     Route::get('proyectos/{projectId}/verificar-rol', [TaskController::class, 'verificarRol']); //Verificar rol del usuario en el proyecto

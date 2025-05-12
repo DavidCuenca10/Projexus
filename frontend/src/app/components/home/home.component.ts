@@ -12,6 +12,7 @@ declare var AOS: any;
 export class HomeComponent implements OnInit{
   proyectosActivos: Project[] = [];
   proyectoDetalle: Project | null = null; // Variable para almacenar el proyecto con más detalles
+  public page!: number;
   
   constructor(private projectService: ProjectService) { }
 
@@ -36,7 +37,6 @@ export class HomeComponent implements OnInit{
     this.projectService.obtenerProyecto(id).subscribe(
       (response: any) => {
         this.proyectoDetalle = response.project; // Aquí guardamos el proyecto detallado
-        console.log(this.proyectoDetalle); // Puedes hacer un `console.log` para verificar la respuesta
       },
       (error) => {
         console.error('Error al obtener los detalles del proyecto', error);
