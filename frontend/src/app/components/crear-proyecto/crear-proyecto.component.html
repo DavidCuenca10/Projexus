@@ -20,7 +20,7 @@
             required
             #projectNameField="ngModel"
           />
-          <div *ngIf="projectNameField.invalid && (projectNameField.touched || form.submitted)" class="text-danger">
+          <div *ngIf="form.submitted && !projectName" class="text-danger">
             El nombre del proyecto es obligatorio
           </div>
         </div>
@@ -44,7 +44,7 @@
             <option value="Negocios">Negocios</option>
             <option value="Salud">Salud</option>
           </select>
-          <div *ngIf="projectCategoryField.invalid && (projectCategoryField.touched || form.submitted)" class="text-danger">
+          <div *ngIf="form.submitted && !category" class="text-danger">
             La categoría del proyecto es obligatoria
           </div>
         </div>
@@ -61,8 +61,8 @@
             required
             #projectDescriptionField="ngModel"
           ></textarea>
-          <div *ngIf="projectDescriptionField.invalid && (projectDescriptionField.touched || form.submitted)" class="text-danger">
-            La descripción del proyecto es obligatoria
+          <div *ngIf="form.submitted && !description" class="text-danger">
+            Añade una descripción
           </div>
         </div>
 
@@ -93,8 +93,8 @@
             required
             #projectDeadlineField="ngModel"
           />
-          <div *ngIf="projectDeadlineField.invalid && (projectDeadlineField.touched || form.submitted)" class="text-danger">
-            La fecha del proyecto es obligaria
+          <div *ngIf="form.submitted && !deadline" class="text-danger">
+            Añade una fecha provisional
           </div>
         </div>
 
@@ -123,6 +123,9 @@
                     placeholder="Escribe una etiqueta"
                 />
                 <button type="button" class="btn btn-primary" (click)="addTag()"><i class="fa-solid fa-plus"></i></button>
+            </div>
+            <div *ngIf="form.submitted && !tagInput" class="text-danger">
+              Añade al menos 1 etiqueta
             </div>
         </div>
 

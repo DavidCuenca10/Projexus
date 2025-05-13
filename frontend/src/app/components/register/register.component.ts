@@ -25,15 +25,39 @@ export class RegisterComponent {
   biography = '';
   preferences: string = '';
 
+  areas = [
+    { key: 'salud', label: 'Salud', icon: '🍎' },
+    { key: 'viajes', label: 'Viajes', icon: '🏖️' },
+    { key: 'deporte', label: 'Deporte', icon: '⚽' },
+    { key: 'tecnologias', label: 'Tecnología', icon: '💻' },
+    { key: 'musica', label: 'Música', icon: '🎵' },
+    { key: 'arte', label: 'Arte', icon: '🎨' }
+  ];
+
   constructor(private registerService: RegisterService, private router:Router) {}
 
   nextStep() {
-    if (this.step === 1 && this.name && this.email && this.password) {
-      this.step = 2;
-    } else if (this.step === 2 && Object.values(this.selectedOptions).includes(true)) {
-      this.step = 3;
+  // Validación para el paso 1
+  if (this.step === 1) {
+    // Verifica si todos los campos están completos y las contraseñas coinciden
+    if (this.name && this.email && this.password && this.password === this.password_confirmation) {
+      this.step = 2; // Avanza al paso 2
+    } else {
+      console.log("Las contraseñas no coinciden o faltan campos");
     }
   }
+
+  // Validación para el paso 2
+  else if (this.step === 2) {
+    // Verifica si al menos una opción está seleccionada en las áreas de interés
+    if (Object.values(this.selectedOptions).includes(true)) {
+      this.step = 3; // Avanza al paso 3
+    } else {
+      // Si no se selecciona ninguna opción, puedes mostrar un error o hacer algo
+      console.log("Por favor selecciona al menos una opción");
+    }
+  }
+}
 
   prevStep() {
     if (this.step === 2) {
@@ -93,5 +117,11 @@ export class RegisterComponent {
     this.biography = '';
     this.preferences = '';
     this.step = 1;
+  }
+
+  //Validar el correo
+  isValidEmail(email: string): boolean {
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    return emailPattern.test(email);
   }
 }

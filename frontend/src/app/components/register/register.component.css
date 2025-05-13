@@ -1,148 +1,97 @@
-/* Estilos para el fondo animado */
-body, html {
-    height: 100%;
-    margin: 0;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: Arial, sans-serif;
+body {
+    background-color: #ffffff;
+    color: #333;
 }
 
-/* Estilo para la tarjeta del formulario */
 .card {
-    background: #192f46; /* Fondo oscuro */
-    color: #fff; /* Texto blanco */
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
-    padding: 30px;
-    max-width: 400px;
-    width: 100%;
-    font-size: 16px;
-    margin-bottom: 20px;
-    height: 100%;
-    max-height: 600px;
+    background-color: #fdfdfd;
+    border-radius: 1rem;
+    border: 1px solid #e0e0e0;
 }
 
-/* Estilo para los campos de formulario */
 .form-control {
-    background-color: #34495e;
-    border: 1px solid #2ecc71;
-    color: #fff;
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 20px;
-    transition: all 0.3s;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    color: #333;
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: #007bff;
 }
 
 .form-control::placeholder {
-    color: rgba(255, 255, 255, 0.329);
+    color: #aaa;
 }
 
-/* Estilo para los puntos de los pasos */
-.step-indicator {
-    width: 12px;
-    height: 12px;
-    margin: 0 10px;
-    border-radius: 50%;
-    background-color: #ddd;
-    transition: all 0.3s ease;
+.btn-primary {
+    background-color: #4a5cf1;
+    border-color: #4a5cf1;
 }
 
-/* Cuando el paso está activo, el punto se convierte en una línea */
-.step-indicator.active {
-    width: 50px; /* Hace que el punto se convierta en una línea */
-    background-color: #3498db; /* Color azul cuando está activo */
+.btn-primary:hover {
+    background-color: #3a4bd6;
 }
 
-/* Hacer que la animación de transición se vea más suave */
-.step-indicator {
-    transition: width 0.3s ease, background-color 0.3s ease;
+.btn-outline-danger {
+    border-color: #dc3545;
+    color: #dc3545;
 }
 
-/* Estilo para los botones */
-button {
-    transition: background-color 0.3s ease;
+.btn-outline-danger:hover {
+    background-color: #dc3545;
+    color: white;
 }
 
-button:hover {
-    background-color: #2ecc71; /* Efecto hover para los botones */
-    transform: scale(1.05);
+.interest-card {
+  background-color: #fff;
+  border: 2px solid #e0e0e0;
+  border-radius: 1rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
-/* Estilo para los enlaces */
-a {
-    text-decoration: none;
-    color: #e74c3c;
-    transition: color 0.3s ease;
+.interest-card:hover {
+  border-color: #4a5cf1;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.custom-card {
-    background-color: rgba(128, 128, 128, 0.404);
-    max-width: 160px;
-    padding: 8px;
-    transition: background-color 0.2s ease-in-out;
-    border: 1px solid rgb(133, 133, 133);
-}
-
-.custom-card:hover {
-    background-color: rgba(66, 73, 141, 0.726);
-    cursor: pointer;
-}
-
-.custom-card .form-check-label {
-    font-size: 1.2rem !important;
-    display: flex;
-    align-items: center;
-    user-select: none; /* Evita que el texto sea seleccionable */
-    cursor: pointer;
-}
-
-.custom-card.checked {
-    background-color: rgba(80, 67, 250, 0.733); /* Color cuando el checkbox está marcado */
-}
-
-.custom-card input[type="checkbox"]{
-    display: none;
+.interest-card.selected {
+  border-color: #4a5cf1;
+  background-color: #f0f4ff;
 }
 
 .steps {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 }
-  
+
 .step-item {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
 }
 
-.step-circle {
-    width: 25px; /* Ajustamos el tamaño del círculo */
-    height: 25px;
-    border-radius: 50%;
-    background: linear-gradient(145deg, #6e7fef, #2b3ca7); /* Degradado azul */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    font-weight: bold;
-    font-size: 14px; /* Reducimos el tamaño de la letra */
-    transition: transform 0.8s, background 0.8s;
+.step-line {
+  width: 40px;
+  height: 5px;
+  background-color: #ddd;
+  transition: background-color 0.3s ease;
 }
 
-.step-circle.active {
-    background: linear-gradient(145deg, #ff6d6d, #ff3366); /* Degradado para el paso activo */
-    transform: scale(1.4); /* Efecto de escala cuando está activo */
+.step-line.active {
+  background-color: #4CAF50;
 }
 
-.step-circle span {
-    font-size: 18px; /* Tamaño del icono del tick */
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    transition: background-color 0.3s ease;
 }
 
-.step-circle.active span {
-    color: white; /* El tick se pone blanco cuando está activo */
+.btn-primary:hover {
+    background-color: #0056b3;
 }
-  

@@ -1,98 +1,38 @@
-/* Estilos para el fondo animado */
-body, html {
-    height: 100%;
-    margin: 0;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: Arial, sans-serif;
+.login-container {
+    background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
 }
 
-/* Estilo para el contenedor del formulario */
-.container {
-    position: relative;
-    z-index: 2;
-}
-
-/* Estilo para la tarjeta del formulario */
-.card {
-    background: #192f46; /* Fondo oscuro sólido */
-    color: #fff; /* Texto blanco */
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
-    padding: 30px;
-    max-width: 400px;
+.login-card {
     width: 100%;
-    font-size: 16px;
-    margin-bottom: 20px;
+    max-width: 400px;
+    border-radius: 1rem;
+    background-color: #ffffff;
 }
 
-h1, h4 {
-    color: #fff; /* Título blanco */
-    text-align: center;
-    margin-bottom: 20px;
+.form-label {
+    font-weight: 500;
 }
 
-/* Estilo para los campos de texto */
+.input-group-text {
+    background-color: #f8f9fa;
+    border-right: none;
+}
+
 .form-control {
-    background-color: #34495e; /* Fondo gris oscuro */
-    color: #fff; /* Texto blanco */
-    border: 1px solid #2ecc71; /* Borde verde */
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 20px;
-    transition: all 0.3s;
+    border-left: none;
 }
-
-.form-control::placeholder {
-    color: rgba(255, 255, 255, 0.329);
-}
-
 
 .form-control:focus {
-    border-color: #3498db; /* Borde azul cuando el campo está enfocado */
-    outline: none;
+    box-shadow: none;
+    border-color: #007bff;
 }
 
-/* Estilo para los botones */
-button {
-    background-color: #2ecc71; /* Fondo verde */
-    color: #fff; /* Texto blanco */
+.btn-primary {
+    background-color: #007bff;
     border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    width: 48%;
+    transition: background-color 0.3s ease;
 }
 
-button:hover {
-    background-color: #27ae60; /* Fondo verde más oscuro */
-    transform: scale(1.05);
-}
-
-/* Estilo para los botones "Volver" y "Iniciar sesión" */
-.d-flex {
-    display: flex;
-    justify-content: space-between;
-}
-
-.d-flex button {
-    width: 48%; /* Asegura que los botones ocupen la mitad de su contenedor */
-}
-
-.d-flex a, p {
-    margin-bottom: 0;
-}
-
-/* Botón de "Volver" */
-.btn-secondary {
-    background-color: #7f8c8d; /* Gris oscuro */
-    border: none;
-}
-
-.btn-secondary:hover {
-    background-color: #95a5a6; /* Gris más claro */
+.btn-primary:hover {
+    background-color: #0056b3;
 }

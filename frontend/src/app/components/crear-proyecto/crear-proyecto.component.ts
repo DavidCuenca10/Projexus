@@ -23,10 +23,6 @@ export class CrearProyectoComponent {
   deadline?: string;
   imageFile?: File; // Esta es la variable para la imagen seleccionada
 
-  // Variables de error para mostrar
-  tagsError: boolean = false; // Indica si hay un error con las etiquetas
-  imageError: boolean = false; // Indica si hay un error con la imagen
-
   //Variable para pillar la fehca de hoy para el formulario y no permitir poner menos que la de hoy
   //declaramos objeto de tipo Date al minDate, lo pasamos a ISOString -> "2025-05-11T09:23:45.123Z" y spliteamos por la T para quedarnos con la fehca
   //luego tenemos la fecha actual en el html [min]

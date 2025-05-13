@@ -1,27 +1,42 @@
-<div class="bg"></div>
-<div class="bg bg2"></div>
-<div class="bg bg3"></div>
+<div class="login-wrapper d-flex justify-content-center align-items-center vh-100">
+  <div class="login-card shadow-lg p-5 animate-fade-up">
+    <h2 class="text-center mb-4 fw-bold" style="font-size: 44px;">Bienvenido</h2>
+    <p class="text-muted text-center mb-5">Inicia sesión para continuar</p>
+    <form (ngSubmit)="completeInicio()" #loginForm="ngForm">
+      <!-- Email -->
+      <div class="mb-3">
+        <label for="email" class="form-label">Correo electrónico</label>
+        <div class="input-group">
+          <span class="input-group-text bg-white border-end-0">
+            <i class="fa-solid fa-envelope"></i>
+          </span>
+          <input id="email" type="email" [(ngModel)]="email" name="email" class="form-control" required>
+        </div>
+      </div>
 
-<div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
-    <div class="card shadow-lg p-4" style="width: 100%; max-width: 400px; border-radius: 10px;">
-        <h1 class="text-center mb-4">Logo projexus</h1>
-        <h4 class="text-center mb-4">Inicia sesión</h4>
-        <form (ngSubmit)="completeInicio()" #loginForm="ngForm">
-            <div class="mb-4">
-                <input id="email" type="email" [(ngModel)]="email" name="email" class="form-control" placeholder="Correo electrónico" required>
-            </div>
-            <div class="mb-4">
-                <input id="password" type="password" [(ngModel)]="password" name="password" class="form-control" placeholder="Contraseña" required>
-            </div>
-            <!-- Contenedor para los botones -->
-            <div class="d-flex justify-content-center w-100 mb-4">
-                <!-- Botón Iniciar sesión -->
-                <button type="submit" class="btn btn-success" [disabled]="!loginForm.valid">Iniciar sesión</button>
-            </div>
-            <div class="d-flex align-items-center justify-content-center">
-                <p class="mb-0 me-2">No tienes cuenta?</p>
-                <a type="button" class="btn btn-outline-danger" routerLink="/register">Crear cuenta</a>
-            </div>
-        </form>
+      <!-- Password -->
+      <div class="mb-5">
+        <label for="password" class="form-label">Contraseña</label>
+        <div class="input-group">
+          <span class="input-group-text bg-white border-end-0">
+            <i class="fa-solid fa-lock"></i>
+          </span>
+          <input id="password" type="password" [(ngModel)]="password" name="password" class="form-control" required>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="btn btn-primary w-100 py-2 rounded-pill fw-semibold">
+        <i class="fa-solid fa-right-to-bracket me-2"></i> Iniciar sesión
+      </button>
+    </form>
+
+    <!-- Extra options -->
+    <div class="text-center mt-4">
+      <p class="mb-1">
+        ¿No tienes una cuenta?
+        <a href="/register" class="text-decoration-none fw-semibold text-primary">Regístrate ya</a>
+      </p>
     </div>
+  </div>
 </div>
