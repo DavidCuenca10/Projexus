@@ -1,7 +1,7 @@
 <app-navbar-user></app-navbar-user>
 
 <div class="container my-5">
-  <div class="p-5 form-container shadow rounded-4">
+  <div class="p-5 form-container">
 
     <h2 class="mb-4 fw-bold text-center">Crear nuevo proyecto</h2>
 
@@ -28,17 +28,24 @@
         <!-- Categoría -->
         <div class="col-md-6">
           <label for="category" class="form-label">Categoría</label>
-          <input
-            type="text"
+          <select
             id="category"
             name="category"
             class="form-control"
             [(ngModel)]="category"
             required
             #projectCategoryField="ngModel"
-          />
+          >
+            <option value="" disabled selected>Selecciona una categoría</option>
+            <option value="Tecnología">Tecnología</option>
+            <option value="Educación">Educación</option>
+            <option value="Diseño">Diseño</option>
+            <option value="Marketing">Marketing</option>
+            <option value="Negocios">Negocios</option>
+            <option value="Salud">Salud</option>
+          </select>
           <div *ngIf="projectCategoryField.invalid && (projectCategoryField.touched || form.submitted)" class="text-danger">
-            La categoria del proyecto es obligatoria
+            La categoría del proyecto es obligatoria
           </div>
         </div>
 
@@ -49,7 +56,7 @@
             id="description"
             name="description"
             class="form-control"
-            rows="3"
+            rows="5"
             [(ngModel)]="description"
             required
             #projectDescriptionField="ngModel"
@@ -147,7 +154,7 @@
           </div>
         </div>
       </div>
-
+      
       <!-- Botón -->
       <div class="d-flex justify-content-center mt-5">
         <button type="submit" class="btn btn-primary px-4 py-2">
@@ -156,4 +163,50 @@
       </div>
     </form>
   </div>
+
+  <div class="container my-5">
+    <h2 class="text-center text-light mb-3">¿Necesitas ayuda?</h2>
+    <div class="accordion" id="faqAccordion">
+        <!-- Pregunta 1 -->
+        <div class="accordion-item mb-3 border border-dark rounded">
+            <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button rounded-3 custom-accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    ¿Qué servicios ofrecen?
+                </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
+                <div class="accordion-body custom-accordion-body">
+                    Ofrecemos una gama de servicios, que incluyen asesoría tecnológica, mantenimiento de equipos, soporte técnico personalizado y la venta de productos de alta calidad.
+                </div>
+            </div>
+        </div>
+
+        <!-- Pregunta 2 -->
+        <div class="accordion-item mb-3 border border-dark rounded">
+            <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button rounded-3 custom-accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    ¿Cómo puedo contactar con soporte?
+                </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
+                <div class="accordion-body custom-accordion-body">
+                    Puedes contactar con nuestro equipo de soporte a través de nuestro formulario de contacto en el sitio web, por correo electrónico o redes sociales.
+                </div>
+            </div>
+        </div>
+
+        <!-- Pregunta 3 -->
+        <div class="accordion-item mb-3 border border-dark rounded">
+            <h2 class="accordion-header" id="headingThree">
+                <button class="accordion-button rounded-3 custom-accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    ¿Tienen garantía en sus productos?
+                </button>
+            </h2>
+            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
+                <div class="accordion-body custom-accordion-body">
+                    Sí, todos nuestros productos tienen garantía de fábrica. Además, ofrecemos opciones de extensión de garantía para algunos productos específicos.
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

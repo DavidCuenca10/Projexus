@@ -15,14 +15,12 @@
   font-size: 55px;
 }
 
-.tareas {
+.tareas-card {
   max-height: 550px;
   height: 100%;
   overflow-y: auto;
   margin: 10px;
-}
-
-.bg-dark {
-  background-color: #292929 !important;
-  margin: 10px;
+  border-radius: 20px;
+  border: 1px solid gray;
+  background-color: #383741;
 }

@@ -7,4 +7,5 @@ export interface Task {
     status: string;
     priority: string;
     deadline: string;
+    anteriorStatus?: string;
 }

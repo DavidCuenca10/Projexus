@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PerfilService } from '../../services/perfil.service';
 import { Task } from '../../interfaces/task';
+import { ProjectService } from '../../services/project.service';
 
 @Component({
   selector: 'app-perfil',
@@ -12,9 +13,12 @@ export class PerfilComponent implements OnInit {
   token: string | null = null;
   usuario: any = null;
   usuarioId: number = 0;
-  tareasPendientes: Task[] = [];  // Aseguramos que la propiedad existe para almacenar las tareas
+  tareas: Task[] = [];
 
-  constructor(private perfilService: PerfilService) {}
+  constructor(
+    private perfilService: PerfilService,
+    private projectService: ProjectService
+  ) {}
 
   ngOnInit(): void {
     this.token = localStorage.getItem('token');
@@ -22,9 +26,7 @@ export class PerfilComponent implements OnInit {
     if (this.token) {
       this.perfilService.getProfile().subscribe({
         next: (response) => {
-          // El perfil viene en response.data
           this.usuario = response.data;
-
           this.usuarioId = this.usuario.id;
           this.cargarTareas(this.usuarioId);
         },
@@ -38,9 +40,40 @@ export class PerfilComponent implements OnInit {
   cargarTareas(id: number) {
     this.perfilService.obtenerTareasUsuario(id).subscribe({
       next: (response) => {
-        this.tareasPendientes = response.tareas;
+        this.tareas = response.tareas.map((tarea: Task) => ({
+          ...tarea,
+          anteriorStatus: tarea.status // este es el que vamos a comparar
+        }));
       },
       error: (error) => console.error('Error al cargar tareas', error)
     });
+  }
+
+  actualizarTareaEstado(tarea: any) {
+    const projectId = tarea.project_id;
+    const taskId = tarea.id;
+    const nuevoStatus = tarea.status;
+
+    this.projectService.actualizarTarea(projectId, taskId, nuevoStatus).subscribe({
+      next: (response) => {
+        tarea.anteriorStatus = nuevoStatus;
+        console.log('Tarea actualizada', response);
+      },
+      error: (error) => {
+        console.error('Error al actualizar tarea', error);
+      }
+    });
+  }
+
+  get tareasPendientes(): Task[] {
+    return this.tareas.filter(t => t.status === 'pending');
+  }
+
+  get tareasEnProceso(): Task[] {
+    return this.tareas.filter(t => t.status === 'in_progress');
+  }
+
+  get tareasCompletadas(): Task[] {
+    return this.tareas.filter(t => t.status === 'completed');
   }
 }

@@ -89,8 +89,6 @@ export class ProjectService {
     });
   }
 
-
-
   //Enviar solicitud de unión al proyecto
   solicitarAccesoProyecto(projectId: number): Observable<any> {
     const headers = {
@@ -102,8 +100,8 @@ export class ProjectService {
 
   //Cambiar rol de un miembro solo con el owner
   cambiarRol(projectId: number, userId: number, nuevoRol: string): Observable<any> {
-    const url = `${this.apiUrl}/${projectId}/usuarios/${userId}/rol/${nuevoRol}`;
-    return this.http.put(url, {}, {
+    const url = `${this.apiUrl}/${projectId}/usuarios/${userId}/rol`;
+    return this.http.put(url, { role: nuevoRol }, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
@@ -151,6 +149,16 @@ export class ProjectService {
   //Salir del proyecto
   salirDelProyecto(projectId: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${projectId}/salir`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+  }
+
+  //Cambiar estado de la tarea
+  actualizarTarea(projectId:number, taskId: number, newStatus: string): Observable<any> {
+    const url = `${this.apiUrl}/${projectId}/tareas/${taskId}/`;
+    return this.http.put(url, { status: newStatus }, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }

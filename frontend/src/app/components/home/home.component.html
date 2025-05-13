@@ -15,13 +15,13 @@
     <div class="col" *ngFor="let project of proyectosActivos | paginate: { itemsPerPage: 6, currentPage: page }" data-aos="zoom-im" data-aos-duration="1500" data-aos-easing="ease-in-out">
       <div class="custom-card">
         <div class="custom-card-image">
-          <div class="custom-badge">
+          <div class="custom-badge-categoria">
             <span>{{project.category}}</span>
           </div>
           <img [src]="project.image_url" class="custom-card-img" alt="Imagen proyecto">
         </div>
         <div class="custom-card-body">
-          <h3 class="custom-card-title">{{project.name}}</h3>
+          <h3 class="custom-card-title">{{project.name}}</h3><p class="mb-2" style="color: rgb(107, 107, 248); font-weight: bold;">{{ project.current_members }} / {{ project.max_members }}</p>
           <p class="custom-card-text">{{project.description}}</p>
           <div class="custom-card-footer">
             <span class="badge bg-primary d-flex align-items-center gap-2">

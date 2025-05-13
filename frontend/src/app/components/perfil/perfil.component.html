@@ -23,16 +23,37 @@
         <div class="col-lg-8 d-flex">
             <div class="custom-container flex-fill">
                 <div class="tareas">
-                    <h3>Tareas pendientes</h3>
-                    <div *ngIf="tareasPendientes.length > 0; else noTareas">
-                        <div *ngFor="let tarea of tareasPendientes" class="mb-3 p-2 bg-dark rounded">
-                            <h5>{{ tarea.title }}</h5>
-                            <p>{{ tarea.description }}</p>
-                            <small>Prioridad: {{ tarea.priority }} | Estado: {{ tarea.status }} | Límite: {{ tarea.deadline | date }}</small>
+                    <h3 class="mb-4">Tareas</h3>
+                    <div *ngIf="tareas.length > 0; else noTareas">
+                        <div *ngFor="let tarea of tareas" class="tareas-card mb-3 p-4">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h5>{{ tarea.title }}</h5>
+                                    <small class="text-white">{{ tarea.description }}</small>
+                                </div>
+                                <div class="d-flex align-items-end">
+                                    <select [(ngModel)]="tarea.status" class="form-select me-2">
+                                        <option value="pending">Pendiente</option>
+                                        <option value="in_progress">En progreso</option>
+                                        <option value="completed">Completada</option>
+                                    </select>
+
+                                    <button 
+                                        *ngIf="tarea.status !== tarea.anteriorStatus"
+                                        (click)="actualizarTareaEstado(tarea)"
+                                        class="btn btn-sm btn-success">
+                                        Guardar
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between mt-3">
+                                <p class="text-white"><strong>Estado:</strong> {{ tarea.status }}</p>
+                                <p class="text-white"><strong>Prioridad:</strong> {{ tarea.priority }} | <strong>Límite:</strong> {{ tarea.deadline | date: 'dd/MM/yyyy' }}</p>
+                            </div>
                         </div>
                     </div>
                     <ng-template #noTareas>
-                        <p>No hay tareas asignadas.</p>
+                        <p class="text-center text-muted">No hay tareas asignadas.</p>
                     </ng-template>
                 </div>
             </div>
@@ -54,34 +75,11 @@
                     <h4>Cuenta creada el</h4>
                     <p *ngIf="usuario">{{ usuario.created_at | date:'dd/MM/yyyy' }}</p>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row d-flex align-items-stretch">
-        <div class="col-md-6 d-flex">
-            <div class="custom-container flex-fill justify-content-center align-items-center text-center">
-                <i class="fas fa-history fa-2x mb-3 text-info"></i>
-                <h4>Estadísticas</h4>
-                <p><strong>Tareas completadas:</strong> 25</p>
-                <p><strong>Tiempo dedicado:</strong> 40h</p>
-                <p><strong>Nivel de actividad:</strong> 85%</p>
-            </div>
-        </div>
-        <div class="col-md-6 d-flex">
-            <div class="custom-container flex-fill justify-content-center align-items-center text-center">
-                <i class="fas fa-share-alt fa-2x mb-3 text-danger"></i>
-                <h4>Redes Sociales</h4>
-                <div class="d-flex justify-content-center gap-3">
-                    <a href="https://facebook.com" target="_blank" class="text-decoration-none">
-                    <i class="fab fa-facebook fa-2x"></i>
-                    </a>
-                    <a href="https://twitter.com" target="_blank" class="text-decoration-none">
-                    <i class="fab fa-twitter fa-2x"></i>
-                    </a>
-                    <a href="https://linkedin.com" target="_blank" class="text-decoration-none">
-                    <i class="fab fa-linkedin fa-2x"></i>
-                    </a>
+                <div class="custom-container flex-fill d-flex flex-column justify-content-center align-items-center text-center text-break w-100">
+                    <h4>Estadísticas</h4>
+                    <p><strong>Tareas pendiendes:</strong> {{ tareasPendientes.length }}</p>
+                    <p><strong>Tareas en progeso:</strong> {{ tareasEnProceso.length }}</p>
+                    <p><strong>Tareas activas:</strong> {{ tareasCompletadas.length }}</p>
                 </div>
             </div>
         </div>

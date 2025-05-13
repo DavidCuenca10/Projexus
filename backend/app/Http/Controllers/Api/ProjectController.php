@@ -276,27 +276,34 @@ class ProjectController extends Controller
 
     
     //Modificar rol de usuario
-    public function cambiarRol(Request $request, $projectId, $userId, $nuevoRol){
-        // Verificar si el usuario autenticado es el Owner del proyecto
+    public function cambiarRol(Request $request, $projectId, $userId){
+        // Validar el rol que viene en el body
+        $validated = $request->validate([
+            'role' => 'required|in:admin,member'
+        ]);
+
+        // Buscar el proyecto
         $project = Project::findOrFail($projectId);
-    
+
+        // Verificar si el usuario autenticado es el Owner
         if ($project->owner_id !== Auth::id()) {
             return response()->json(['message' => 'No tienes permiso para cambiar el rol de este usuario'], 403);
         }
-    
+
         // Verificar si el usuario es miembro del proyecto
         $member = $project->members()->where('user_id', $userId)->first();
-    
+
         if (!$member) {
             return response()->json(['message' => 'El usuario no es miembro del proyecto'], 400);
         }
-    
-        // Cambiar el rol en la tabla intermedia (project_members)
-        $member->pivot->role = $nuevoRol;
+
+        // Cambiar el rol
+        $member->pivot->role = $validated['role'];
         $member->pivot->save();
-    
+
         return response()->json(['message' => 'Rol cambiado con éxito'], 200);
     }
+
 
 
     public function listarProyectosActivos(){

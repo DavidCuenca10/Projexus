@@ -67,6 +67,7 @@ class TaskController extends Controller
     //Crear un tarea en un proyecto
     public function crearTarea(Request $request, $projectId){
 
+
         // Buscar el proyecto a partir del id
         $project = Project::findOrFail($projectId);
 
@@ -77,25 +78,20 @@ class TaskController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'status' => 'required|in:pending,in_progress,completed',
             'assigned_to' => 'nullable|exists:users,id', // Asegura que el usuario asignado exista en la tabla users
             'deadline' => 'nullable|date', //String si quiero cambiar el formato de fechas para el backend
             'priority' => 'nullable|in:low,medium,high',
         ]);
 
-        //Cambiar formato de fecha para que sea envíe 'd/m/Y'
-        /*$deadline = null;
-        if ($request->deadline) {
-            $deadline = Carbon::createFromFormat('d/m/Y', $request->deadline)->format('Y-m-d');
-        }
-        */
+        //Estado cuando se crea la tarea siempre será "pending" de primeras
+        $status = 'pending';
 
         // Crear la tarea
         $task = Task::create([
             'project_id' => $project->id,
             'title' => $request->title,
             'description' => $request->description,
-            'status' => $request->status,
+            'status' => $status,
             'assigned_to' => $request->assigned_to,
             'priority' => $request->priority,
             'deadline' => $request->deadline,
@@ -106,7 +102,6 @@ class TaskController extends Controller
             'task' => $task,
         ], 201);
     }
-    
 
 
     //Obtener las tareas de un proyecto
@@ -130,40 +125,28 @@ class TaskController extends Controller
         // Buscar el proyecto a partir del id
         $project = Project::findOrFail($projectId);
 
-        //Llamo al metodo verificarPermiso
-        $this->verificarPermiso($project);
+        // Verificar si el usuario está en el proyecto
+        $member = $project->members()->where('user_id', Auth::id())->first();
     
         if (!$member) {
-            return response()->json(['message' => 'El usuario no es miembro del proyecto'], 400);
-        }
-    
-        // Verificar si el rol del usuario en la tabla project_members es admin o owner
-        if (!in_array($member->pivot->role, ['owner', 'admin'])) {
-            return response()->json(['message' => 'El usuario no tiene permisos para crear tareas'], 400);
+            return response()->json(['message' => 'No eres miembro del proyecto para editar esta tarea'], 400);
         }
 
         // Validación de los datos
         $request->validate([
-            'title' => 'required|string|max:255',
             'status' => 'required|in:pending,in_progress,completed',
-            'assigned_to' => 'nullable|exists:users,id',
-            'due_date' => 'nullable|date',
         ]);
 
         // Buscar el proyecto y la tarea
-        $project = Project::findOrFail($projectId);
         $task = $project->tasks()->findOrFail($taskId);
 
         // Actualizar la tarea
         $task->update([
-            'title' => $request->title,
             'status' => $request->status,
-            'assigned_to' => $request->assigned_to,
-            'due_date' => $request->due_date,
         ]);
 
         return response()->json([
-            'message' => 'Tarea actualizada con éxito',
+            'message' => 'Estado de la tarea actualizado',
             'task' => $task,
         ], 200);
     }

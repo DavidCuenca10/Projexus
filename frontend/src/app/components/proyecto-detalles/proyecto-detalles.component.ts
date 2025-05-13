@@ -45,7 +45,6 @@ export class ProyectoDetallesComponent implements OnInit {
   nuevaTarea = {
     title: '',
     description: '',
-    status: 'pending',
     assigned_to: null,
     priority: 'low',
     deadline: ''
@@ -217,8 +216,6 @@ export class ProyectoDetallesComponent implements OnInit {
     });
   }
 
-
-
   //Guardar los datos del desplegable de cambio de rol para el owner
   guardarCambioRol(miembro: Members) {
     const nuevoRol = miembro.pivot.role;
@@ -245,7 +242,6 @@ export class ProyectoDetallesComponent implements OnInit {
     const tareaFormateada = {
       title: this.nuevaTarea.title,
       description: this.nuevaTarea.description,
-      status: this.nuevaTarea.status,
       assigned_to: this.nuevaTarea.assigned_to,
       priority: this.nuevaTarea.priority,
       deadline: this.nuevaTarea.deadline,
@@ -268,7 +264,6 @@ export class ProyectoDetallesComponent implements OnInit {
         this.nuevaTarea = {
           title: '',
           description: '',
-          status: 'pending',
           assigned_to: null,
           priority: 'low',
           deadline: ''
