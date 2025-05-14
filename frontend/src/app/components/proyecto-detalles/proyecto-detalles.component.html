@@ -13,12 +13,15 @@
               <h1>{{ project.name }}</h1>
             </div>
             <div class="bloque-proyecto">
-              <h2>👑 Proyecto creado por: {{ nombreOwner }}</h2>
+              <h2><img [src]="imageOwner || 'perfiles/pordefecto.png'" class="me-2" style="width: 40px; height: 40px; border-radius: 50%;"> {{ nombreOwner }}</h2>
               <!-- Si no eres miembro mostrar el boton "Unirme" -->
-              <div *ngIf="!isMember && project.current_members < project.max_members" class="bloque-unirse" (click)="solicitarAcceso()">
+              <div *ngIf="rolCargado && !isMember && project.current_members < project.max_members"
+                  class="bloque-unirse" 
+                  (click)="solicitarAcceso()">
                 <span class="texto-unirse">🤝 ¿Te gusta este proyecto? ¡Solicita unirte ahora!</span>
                 <button class="boton-elegante verde" [disabled]="project.current_members >= project.max_members">Unirme</button>
               </div>
+
 
               <!-- Mensaje de solicitud -->
               <p *ngIf="mensajeSolicitud" class="solicitud-pendiente">{{ mensajeSolicitud }}</p>
@@ -30,12 +33,15 @@
               <!-- Si eres miembro mostrarlo"-->
               <p *ngIf="isMember || isOwner || isAdmin" class="miembro-actual">Ya eres miembro de este proyecto</p>
               <!-- Si eres el owner puede eliminar el proyecto -->
-              <button *ngIf="isOwner" class="boton-elegante rojo" (click)="eliminarProyecto()">Eliminar proyecto</button>
+              <label *ngIf="isOwner" for="btn-modal" class="boton-elegante rojo" (click)="seleccionarProyectoParaEliminar()">
+                Eliminar proyecto
+              </label>
+
             </div>
           </div>
           <!-- Columna para la imagen del proyecto -->
           <div class="imagen-proyecto">
-            <img [src]="project.image_url" alt="Imagen del proyecto" class="img-fluid" />
+            <img [src]="project.image_url || 'imagenes/abstract_image.jpg'" alt="Imagen del proyecto" class="img-fluid" />
           </div>
         </div>
       </div>
@@ -87,10 +93,10 @@
       <div class="custom-container flex-fill"> <!-- flex-fill hace que este contenedor crezca para ocupar todo el alto disponible dentro de su columna -->
         <!-- Datos contenedor 3 -->
         <h2 class="titulos">Miembros del proyecto</h2>
-        <p>{{ project?.current_members }} / {{ project?.max_members }}</p>
+        <p class="mb-2" style="color: rgb(107, 107, 248);">{{ project?.current_members }} / {{ project?.max_members }}</p>
         
         <div *ngFor="let miembro of members" class="miembro-info">
-          <img src="perfiles/pordefecto.png" alt="Imagen de perfil del miembro">
+          <img [src]="miembro.image_url || 'perfiles/pordefecto.png'" style="width:45px; height: 45px;">
 
           <!-- Si el usuario es owner y el miembro no es el owner del proyecto -->
           <div *ngIf="isOwner && miembro.id !== project?.owner_id" class="miembro-item">
@@ -209,6 +215,11 @@
               <strong>{{ usuarioSeleccionado?.name }}</strong> del proyecto?
             </h3>
 
+            <h3 *ngIf="tipoModal === 'eliminarProyecto'">
+              ¿Estás seguro que deseas eliminar el proyecto?:
+              <strong>{{ project?.name }}</strong>
+            </h3>
+
             
             <h3 *ngIf="tipoModal === 'crearTarea'">
               <!-- Formulario para crear la tarea -->
@@ -304,8 +315,8 @@
         </div>
 
         <!-- Botón para crear tarea -->
-        <label for="btn-modal" (click)="abrirModalCrearTarea()">
-          <button *ngIf="isAdmin || isOwner" class="btn btn-success mt-3">Crear tarea</button>
+        <label *ngIf="isAdmin || isOwner" for="btn-modal" class="boton-elegante verde" (click)="abrirModalCrearTarea()">
+          Crea tarea
         </label>
 
       </div>

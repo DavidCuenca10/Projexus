@@ -3,6 +3,7 @@ export interface Project {
     owner_id: number
     owner: {
       name: string;
+      image_url: string;
     };
     name: string;
     description: string;

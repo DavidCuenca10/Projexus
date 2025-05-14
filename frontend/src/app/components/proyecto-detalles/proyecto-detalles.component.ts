@@ -17,9 +17,6 @@ export class ProyectoDetallesComponent implements OnInit {
   members: Members[] = [];
   tasks: Task[] = [];
 
-  // Tarea seleccionada para eliminar
-  tareaSeleccionada: any = null;
-
   // Nuevos filtros
   filtroEstado: string = 'all';
   filtroPrioridad: string = 'all';
@@ -40,7 +37,9 @@ export class ProyectoDetallesComponent implements OnInit {
 
   //Variables para los modales
   usuarioSeleccionado: Members | null = null;
-  tipoModal: 'eliminarTarea' | 'usuario' | 'crearTarea' | null = null;
+  // Tarea seleccionada para eliminar
+  tareaSeleccionada: any = null;
+  tipoModal: 'eliminarProyecto' | 'eliminarTarea' | 'usuario' | 'crearTarea' | null = null;
 
   nuevaTarea = {
     title: '',
@@ -49,7 +48,8 @@ export class ProyectoDetallesComponent implements OnInit {
     priority: 'low',
     deadline: ''
   };
-
+  rolCargado: boolean = false;
+  
   constructor(
     private route: ActivatedRoute,
     private projectService: ProjectService,
@@ -108,6 +108,8 @@ export class ProyectoDetallesComponent implements OnInit {
         this.isAdmin = response.isAdmin;
         this.isMember = response.isMember;
         //console.log('Mostrarndo botones');
+
+        this.rolCargado = true;
       },
       error: (error) => {
         console.error('Error al verificar el rol del usuario', error);
@@ -116,6 +118,8 @@ export class ProyectoDetallesComponent implements OnInit {
         this.isAdmin = false;
         this.isMember = false;
         console.log('Error al mostrar botones');
+
+        this.rolCargado = true;
       }
     });
   }
@@ -143,20 +147,12 @@ export class ProyectoDetallesComponent implements OnInit {
   abrirModalCrearTarea() {
     // Cambiar el tipo de modal a 'crearTarea'
     this.tipoModal = 'crearTarea';
-    
-    // Seleccionar el checkbox que controla la apertura del modal
-    // Buscamos el checkbox usando su 'id' ('btn-modal') en el DOM
-    const modalCheckbox = document.getElementById('btn-modal') as HTMLInputElement;
-    
-    // Comprobar si el checkbox existe y marcarlo
-    // Verificamos si efectivamente el elemento se ha encontrado en el DOM
-    if (modalCheckbox) {
-      // Si el checkbox existe, lo marcamos
-      // Establecemos la propiedad `checked` a `true` para marcar el checkbox y abrir el modal
-      modalCheckbox.checked = true; 
-    }
   }
   
+  seleccionarProyectoParaEliminar() {
+    // Cambiar el tipo de modal a 'eliminarProyecto'
+    this.tipoModal = 'eliminarProyecto';
+  }
 
   // Método de eliminación
   confirmarEliminacion() {
@@ -176,7 +172,6 @@ export class ProyectoDetallesComponent implements OnInit {
           }
         }
       });
-
     //Eliminar usuario
     } else if (this.tipoModal === 'usuario' && this.usuarioSeleccionado) {
       const userId = this.usuarioSeleccionado.id;
@@ -193,6 +188,16 @@ export class ProyectoDetallesComponent implements OnInit {
           }
         }
       });
+    } else if (this.tipoModal === 'eliminarProyecto') {
+      this.projectService.eliminarProyecto(this.projectId).subscribe({
+        next: () => {
+          this.mostrarToast('Miembro eliminado correctamente', 'success');;
+          this.router.navigate(['/home']);
+        },
+        error: (error) => {
+          this.mostrarToast('Error al eliminar el proyecto', 'error');
+        }
+      })
     }
   
     // Reset
@@ -282,9 +287,6 @@ export class ProyectoDetallesComponent implements OnInit {
 
   //Eliminar proyecto
   eliminarProyecto() {
-    // Confirmación antes de eliminar el proyecto
-    const confirmacion = confirm('¿Estás seguro de que deseas eliminar este proyecto?');
-    if (confirmacion) {
       this.projectService.eliminarProyecto(this.projectId).subscribe(
         (response) => {
           console.log('Proyecto eliminado con éxito');
@@ -294,7 +296,6 @@ export class ProyectoDetallesComponent implements OnInit {
           console.error('Error al eliminar el proyecto:', error);
         }
       );
-    }
   }
 
   //Funcion para mostar los toast
@@ -315,5 +316,13 @@ export class ProyectoDetallesComponent implements OnInit {
     // owner con los atributos de miembro con lo cual podemos acceder a su nombre a traves de owner(variable).name(atributo del miembro).
     const owner = this.members.find(m => m.id === this.project?.owner_id);
     return owner ? owner.name : 'Cargando...';
+  }
+
+  get imageOwner(): string{
+    // Hacemos find para encontrar la primera coincidencia que tenga, la m representa el miembro, accedemos al 
+    // id del miembro (m.id) y compararmos esa id con el owner de proyecto, si existe se guarda en la variable 
+    // owner con los atributos de miembro con lo cual podemos acceder a su nombre a traves de owner(variable).name(atributo del miembro).
+    const owner = this.members.find(m => m.id === this.project?.owner_id);
+    return owner ? owner.image_url : 'Cargando...';
   }
 }

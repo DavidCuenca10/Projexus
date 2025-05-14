@@ -2,36 +2,60 @@
   <div class="login-card shadow-lg p-5 animate-fade-up">
     <h2 class="text-center mb-4 fw-bold" style="font-size: 44px;">Bienvenido</h2>
     <p class="text-muted text-center mb-5">Inicia sesión para continuar</p>
+    
     <form (ngSubmit)="completeInicio()" #loginForm="ngForm">
+      
       <!-- Email -->
       <div class="mb-3">
-        <label for="email" class="form-label">Correo electrónico</label>
-        <div class="input-group">
-          <span class="input-group-text bg-white border-end-0">
-            <i class="fa-solid fa-envelope"></i>
-          </span>
-          <input id="email" type="email" [(ngModel)]="email" name="email" class="form-control" required>
+        <div class="input-container">
+          <input
+            id="email"
+            type="email"
+            [(ngModel)]="email"
+            name="email"
+            class="form-control"
+            required
+            (input)="errorMensaje = ''"
+          >
+          <label for="input" class="label"><i class="fa-solid fa-envelope"></i> Correo electrónico</label>
+          <div class="underline"></div>
         </div>
+        <div *ngIf="loginForm.submitted &&  !email && !errorMensaje" class="text-danger">Añade un correo electrónico.</div>
       </div>
 
       <!-- Password -->
       <div class="mb-5">
-        <label for="password" class="form-label">Contraseña</label>
-        <div class="input-group">
-          <span class="input-group-text bg-white border-end-0">
-            <i class="fa-solid fa-lock"></i>
-          </span>
-          <input id="password" type="password" [(ngModel)]="password" name="password" class="form-control" required>
+        <div class="input-container">
+          <input
+            id="password"
+            type="password"
+            [(ngModel)]="password"
+            name="password"
+            class="form-control"
+            required
+            (input)="errorMensaje = ''"
+          >
+          <label for="input" class="label"><i class="fa-solid fa-lock"></i> Contraseña</label>
+          <div class="underline"></div>
         </div>
+        <div *ngIf="loginForm.submitted && !password && !errorMensaje" class="text-danger">Añade una contraseña.</div>
       </div>
 
-      <!-- Submit Button -->
-      <button type="submit" class="btn btn-primary w-100 py-2 rounded-pill fw-semibold">
+      <!-- Mensaje de error del backend -->
+      <div *ngIf="errorMensaje" class="text-danger text-center mb-3">
+        {{ errorMensaje }}
+      </div>
+
+      <!-- Botón -->
+      <button
+        type="submit"
+        class="btn btn-primary w-100 py-2 rounded-pill fw-semibold"
+      >
         <i class="fa-solid fa-right-to-bracket me-2"></i> Iniciar sesión
       </button>
     </form>
 
-    <!-- Extra options -->
+    <!-- Extra -->
     <div class="text-center mt-4">
       <p class="mb-1">
         ¿No tienes una cuenta?

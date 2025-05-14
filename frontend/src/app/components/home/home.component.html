@@ -18,14 +18,14 @@
           <div class="custom-badge-categoria">
             <span>{{project.category}}</span>
           </div>
-          <img [src]="project.image_url" class="custom-card-img" alt="Imagen proyecto">
+          <img [src]="project.image_url || 'imagenes/abstract_image.jpg'" class="custom-card-img" alt="Imagen proyecto">
         </div>
         <div class="custom-card-body">
           <h3 class="custom-card-title">{{project.name}}</h3><p class="mb-2" style="color: rgb(107, 107, 248); font-weight: bold;">{{ project.current_members }} / {{ project.max_members }}</p>
           <p class="custom-card-text">{{project.description}}</p>
           <div class="custom-card-footer">
             <span class="badge bg-primary d-flex align-items-center gap-2">
-              <img src="perfiles/pordefecto.png" width="30px" class="rounded-circle"> 
+              <img [src]="project.owner.image_url || 'perfiles/pordefecto.png'" class="rounded-circle" style="width: 30px; height: 30px;"> 
               <span>{{ project.owner.name }}</span>
             </span>
             <div class="container-boton">

@@ -19,6 +19,7 @@ export class NavbarUserComponent implements OnInit {
   loading: boolean = false;
 
   isDropdownOpen = false; // Para manejar si el dropdown está abierto o no
+  userImage: string = 'perfiles/pordefecto.png'
 
   constructor(
     private perfilService: PerfilService,
@@ -41,6 +42,11 @@ export class NavbarUserComponent implements OnInit {
           if (response.status) {
             this.name = response.data.name;  // Aquí guardamos el nombre del usuario
             this.userId = response.data.id; //Sacamos el id del usuario para utilizarlo
+
+            //Pillamos la imagen de perfil del usuario
+            if(response.data.image_url) {
+              this.userImage = response.data.image_url;
+            }
           }
         },
         error => {

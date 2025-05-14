@@ -16,7 +16,8 @@ class User extends Authenticatable
         'email',
         'password',
         'biography',   // Agregar biography
-        'preferences'
+        'preferences',
+        'image_url'
     ];
 
     protected $hidden = [

@@ -11,10 +11,16 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   email = '';
   password = '';
+  errorMensaje: string = '';
 
   constructor(private loginService: LoginService, private router: Router) {}
 
   completeInicio() {
+    // Validación simple antes de enviar
+    if (!this.email || !this.password) {
+      return;
+    }
+
     const inicioDatos = {
       email: this.email,
       password: this.password
@@ -22,21 +28,19 @@ export class LoginComponent {
 
     this.loginService.login(inicioDatos).subscribe(
       (response) => {
-        if (response.status) { // Verifica que el backend devuelva status = true
-          console.log('Inicio exitoso:');
-          
-          // Usar LoginService para guardar el token en lugar de localStorage directamente
-          this.loginService.setToken(response.token); // Usamos el método de LoginService
+        if (response.status) {
+          this.loginService.setToken(response.token);
           this.resetForm();
           this.router.navigate(['/home']);
         } else {
-          alert(response.message || 'Error en el inicio de sesión.');
+          this.errorMensaje = response.message || 'Error en el inicio de sesión.';
         }
       },
       (error) => {
         console.error('Error al iniciar sesión:', error);
-        alert(error.error.message || 'Hubo un problema con iniciar sesión.');
-        this.resetForm();
+        if (this.email && this.password) {
+          this.errorMensaje = error.error.message || 'Error en el inicio de sesión.';
+        }
       }
     );
   }
@@ -44,5 +48,6 @@ export class LoginComponent {
   resetForm() {
     this.email = '';
     this.password = '';
+    this.errorMensaje = '';
   }
 }

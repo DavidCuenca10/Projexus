@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProjectService } from '../../services/project.service';
 import { Project } from '../../interfaces/project';
 import { ActivatedRoute } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-perfil-proyectos',
@@ -12,14 +13,18 @@ import { ActivatedRoute } from '@angular/router';
 export class PerfilProyectosComponent implements OnInit {
   proyectosUsuario: Project[] = [];
   public page!: number;
+  rolCargado: boolean = false; //Para gestionar tema de cargas de botones
 
   // Objeto para guardar roles por proyecto
   rolesPorProyecto: { [id: number]: { isOwner: boolean, isAdmin: boolean, isMember: boolean } } = {};
+  //rolesPorProyecto = {
+  //1: { isOwner: true, isAdmin: false, isMember: true },};
   totalProyectos: number = 0;
 
   constructor(
     private projectService: ProjectService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -53,8 +58,9 @@ export class PerfilProyectosComponent implements OnInit {
         this.rolesPorProyecto[projectId] = {
           isOwner: response.isOwner,
           isAdmin: response.isAdmin,
-          isMember: response.isMember
+          isMember: response.isMember,
         };
+        this.rolCargado = true
       },
       error: (error) => {
         console.error('Error verificando rol para el proyecto', error);
@@ -64,6 +70,7 @@ export class PerfilProyectosComponent implements OnInit {
           isAdmin: false,
           isMember: false
         };
+        this.rolCargado = true
       }
     });
   }
@@ -72,14 +79,30 @@ export class PerfilProyectosComponent implements OnInit {
   salirDelProyecto(projectId:number){
     this.projectService.salirDelProyecto(projectId).subscribe({
       next: (response) => {
-        // Aquí puedes realizar alguna acción como recargar la lista de proyectos o notificar al usuario
         this.proyectosUsuario = this.proyectosUsuario.filter(proyecto => proyecto.id !== projectId);
         this.totalProyectos = this.proyectosUsuario.length
+        this.mostrarToast('Te has salido del proyecto', 'success');
       },
       error: (error) => {
-        console.error('Error al salir del proyecto:', error);
+        this.mostrarToast('No te has podido salir', 'error');
       }
     })
+  }
+
+  //Eliminar proyecto
+  eliminarProyecto(projectId:number) {
+    this.projectService.eliminarProyecto(projectId).subscribe({
+      next: (response) => {
+      // Eliminar el proyecto del array local
+      this.proyectosUsuario = this.proyectosUsuario.filter(proyecto => proyecto.id !== projectId);
+      this.totalProyectos = this.proyectosUsuario.length;
+
+      this.mostrarToast('Proyecto eliminado correctamente', 'success');
+      },
+      error: (error) => {
+        this.mostrarToast('No se he podido eliminar el proyecto', 'error');
+      }
+    });
   }
 
   // Comprobar si el usuario es Owner
@@ -90,5 +113,15 @@ export class PerfilProyectosComponent implements OnInit {
   // Comprobar si el usuario no es Owner (para ocultar el botón "Eliminar proyecto")
   noEsOwner(id: number): boolean {
     return !this.esOwner(id);
+  }
+
+  mostrarToast(mensaje: string, tipo: 'success' | 'error' = 'success') {
+    //console.log('Clase aplicada:', tipo === 'success' ? 'snackbar-success' : 'snackbar-error');
+    this.snackBar.open(mensaje, 'X', {
+      duration: 5000,
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom',
+      panelClass: tipo === 'success' ? ['snackbar-success'] : ['snackbar-error']
+    });
   }
 }

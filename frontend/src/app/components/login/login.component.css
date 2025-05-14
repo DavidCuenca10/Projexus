@@ -9,19 +9,6 @@
     background-color: #ffffff;
 }
 
-.form-label {
-    font-weight: 500;
-}
-
-.input-group-text {
-    background-color: #f8f9fa;
-    border-right: none;
-}
-
-.form-control {
-    border-left: none;
-}
-
 .form-control:focus {
     box-shadow: none;
     border-color: #007bff;

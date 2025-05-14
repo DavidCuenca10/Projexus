@@ -24,6 +24,7 @@ export class RegisterComponent {
   };
   biography = '';
   preferences: string = '';
+  imageFile?: File;
 
   areas = [
     { key: 'salud', label: 'Salud', icon: '🍎' },
@@ -69,6 +70,7 @@ export class RegisterComponent {
 
   completeRegistration() {
 
+    //Biografia por defecto
     if(!this.biography) {
       this.biography = 'Hola soy';
     }
@@ -77,17 +79,21 @@ export class RegisterComponent {
                       .filter(key => this.selectedOptions[key])
                       .join(', ');
 
-    const registrationData = {
-      name: this.name,
-      email: this.email,
-      password: this.password,
-      password_confirmation: this.password_confirmation,
-      selectedOptions: this.selectedOptions,
-      biography: this.biography,
-      preferences: this.preferences
-    };
+    const formData = new FormData();
 
-    this.registerService.register(registrationData).subscribe(
+    formData.append('name', this.name);
+    formData.append('email', this.email);
+    formData.append('password', this.password);
+    formData.append('password_confirmation', this.password_confirmation);
+    formData.append('biography', this.biography);
+    formData.append('preferences', this.preferences);
+
+    // Verificar que hay una imagen y agregarla al FormData
+    if (this.imageFile) {
+      formData.append('image_url', this.imageFile, this.imageFile.name);
+    }
+
+    this.registerService.register(formData).subscribe(
       (response) => {
         console.log('Registro exitoso:', response);
         this.router.navigate(['/login']);
@@ -124,4 +130,12 @@ export class RegisterComponent {
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
     return emailPattern.test(email);
   }
+
+    onImageSelect(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.imageFile = input.files[0];
+    }
+  }
+
 }

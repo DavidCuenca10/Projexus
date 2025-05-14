@@ -6,7 +6,7 @@
         <div class="col-12">
             <div class="custom-container d-flex align-items-center gap-4 flex-wrap">
                 <div class="perfil-imagen">
-                    <img src="perfiles/pordefecto.png" class="rounded-circle" style="width: 150px;">
+                    <img *ngIf="usuario" [src]="usuario.image_url" class="rounded-circle" style="width: 150px; height: 150px;" alt="Foto de perfil">
                 </div>
                 <div class="perfil-info">
                     <div *ngIf="usuario">
@@ -53,7 +53,7 @@
                         </div>
                     </div>
                     <ng-template #noTareas>
-                        <p class="text-center text-muted">No hay tareas asignadas.</p>
+                        <p class="text-center text-white">No hay tareas asignadas.</p>
                     </ng-template>
                 </div>
             </div>

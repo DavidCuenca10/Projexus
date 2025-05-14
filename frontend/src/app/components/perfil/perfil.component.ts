@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PerfilService } from '../../services/perfil.service';
 import { Task } from '../../interfaces/task';
 import { ProjectService } from '../../services/project.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-perfil',
@@ -17,7 +18,8 @@ export class PerfilComponent implements OnInit {
 
   constructor(
     private perfilService: PerfilService,
-    private projectService: ProjectService
+    private projectService: ProjectService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -75,5 +77,15 @@ export class PerfilComponent implements OnInit {
 
   get tareasCompletadas(): Task[] {
     return this.tareas.filter(t => t.status === 'completed');
+  }
+
+  mostrarToast(mensaje: string, tipo: 'success' | 'error' = 'success') {
+    //console.log('Clase aplicada:', tipo === 'success' ? 'snackbar-success' : 'snackbar-error');
+    this.snackBar.open(mensaje, 'X', {
+      duration: 5000,
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom',
+      panelClass: tipo === 'success' ? ['snackbar-success'] : ['snackbar-error']
+    });
   }
 }

@@ -1,5 +1,5 @@
 <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
-    <div class="card shadow-lg p-4">
+    <div class="card shadow-lg p-5">
         <div *ngIf="step === 1">
           <h1 class="text-center mb-2 fw-bold" style="font-size: 36px; color: #333;">Projexus</h1>
           <p class="text-center text-muted mb-4" style="font-size: 18px;">Paso 1: Información Básica</p>
@@ -7,51 +7,43 @@
           <form #formStep1="ngForm" (ngSubmit)="nextStep()">
             <!-- Nombre -->
             <div class="mb-4">
-              <label for="name" class="form-label fw-semibold">Nombre de usuario</label>
-              <div class="d-flex align-items-center">
-                <i class="fa-solid fa-user me-3 text-secondary fs-5"></i>
-                <input id="name" type="text" [(ngModel)]="name" name="name" class="form-control" placeholder="Tu nombre" required>
+              <div class="input-container">
+                <input id="name" type="text" [(ngModel)]="name" name="name" class="form-control" required>
+                <label for="input" class="label"><i class="fa-solid fa-user"></i> Nombre de usuario</label>
+                <div class="underline"></div>
               </div>
-              <div *ngIf="formStep1.submitted && !name" class="text-danger mt-2">El nombre de usuario es obligatorio.</div>
+              <div *ngIf="formStep1.submitted && !name" class="text-danger">El nombre de usuario es obligatorio.</div>
             </div>
 
             <!-- Correo -->
             <div class="mb-4">
-              <label for="email" class="form-label fw-semibold">Correo electrónico</label>
-              <div class="d-flex align-items-center">
-                <i class="fa-solid fa-envelope me-3 text-secondary fs-5"></i>
-                <input id="email" type="email" [(ngModel)]="email" name="email" class="form-control" placeholder="tucorreo@ejemplo.com" required>
-              </div>
-              <div *ngIf="formStep1.submitted && email && !isValidEmail(email)" class="text-danger mt-2">El correo electrónico no es válido.</div>
+                <div class="input-container">
+                  <input id="email" type="email" [(ngModel)]="email" name="email" class="form-control" required>
+                  <label for="input" class="label"><i class="fa-solid fa-envelope"></i> Correo electrónico</label>
+                  <div class="underline"></div>
+                </div>
+                <div *ngIf="formStep1.submitted && !email" class="text-danger">Añade un correo electrónico</div>
+                <div *ngIf="formStep1.submitted && email && !isValidEmail(email)" class="text-danger">El correo electrónico no es válido.</div>
             </div>
 
             <!-- Contraseña -->
             <div class="mb-4">
-              <label for="password" class="form-label fw-semibold">Contraseña</label>
-              <div class="d-flex align-items-center">
-                <i class="fa-solid fa-lock me-3 text-secondary fs-5"></i>
-                <input id="password" type="password" [(ngModel)]="password" name="password" class="form-control" placeholder="••••••••" required>
+              <div class="input-container">
+                <input id="password" type="password" [(ngModel)]="password" name="password" class="form-control" required>
+                <label for="input" class="label"><i class="fa-solid fa-lock"></i> Contraseña</label>
+                <div class="underline"></div>
               </div>
-              <div *ngIf="formStep1.submitted && !password" class="text-danger mt-2">La contraseña es obligatoria.</div>
+              <div *ngIf="formStep1.submitted && !password" class="text-danger">La contraseña es obligatoria.</div>
             </div>
 
             <!-- Repite contraseña -->
             <div class="mb-4">
-              <label for="password_confirmation" class="form-label fw-semibold">Repite la contraseña</label>
-              <div class="d-flex align-items-center">
-                <i class="fa-solid fa-lock me-3 text-secondary fs-5"></i>
+              <div class="input-container">
                 <input id="password_confirmation" type="password" [(ngModel)]="password_confirmation" name="password_confirmation" class="form-control" required>
+                <label for="input" class="label"><i class="fa-solid fa-lock"></i> Contraseña</label>
+                <div class="underline"></div>
               </div>
               <div *ngIf="formStep1.submitted && password && password_confirmation && password !== password_confirmation" class="text-danger mt-2">Las contraseñas no coinciden.</div>
-            </div>
-
-            <!-- Imagen de perfil -->
-            <div class="mb-4">
-              <label for="avatar" class="form-label fw-semibold">Imagen de perfil</label>
-              <div class="d-flex align-items-center">
-                <i class="fa-solid fa-image me-3 text-secondary fs-5"></i>
-                <input type="file" id="avatar" name="avatar" class="form-control" accept="image/*">
-              </div>
             </div>
 
             <!-- Botón siguiente -->
@@ -112,9 +104,25 @@
             <form>
                 <div class="mb-3">
                     <label for="bio" class="form-label">Biografía (Opcional)</label>
-                    <textarea id="biography" [(ngModel)]="biography" name="biography" class="form-control" rows="10"></textarea>
+                    <textarea id="biography" [(ngModel)]="biography" name="biography" class="form-control" rows="8"></textarea>
                 </div>
             </form>
+            <!-- Imagen de perfil -->
+            <div class="mb-4">
+              <label for="image" class="form-label fw-semibold">Imagen de perfil</label>
+              <div class="d-flex align-items-center">
+                <i class="fa-solid fa-image me-3 text-secondary fs-5"></i>
+                <input 
+                  type="file" 
+                  id="image" 
+                  name="image" 
+                  class="form-control" 
+                  accept="image/*"
+                  (change)="onImageSelect($event)" 
+                />
+                <!-- (change) Para recoger el file porque ngModel no puedo pillar archivos-->
+              </div>
+            </div>
             <div class="d-flex justify-content-between mt-4">
               <button *ngIf="step > 1" (click)="prevStep()" class="btn btn-secondary rounded-pill px-4 me-4"><i class="fa-solid fa-arrow-left me-2"></i> Anterior</button>
               <button *ngIf="step === 3" (click)="completeRegistration()" class="btn btn-primary rounded-pill fw-semibold"><i class="fa-solid fa-check-circle me-2"></i>

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('owner_id')->constrained('users'); // Clave foránea que hace referencia a users
             $table->integer('max_members');
             $table->integer('current_members')->default(0);
+            $table->enum('estado', ['activo', 'completo'])->default('activo');
             $table->timestamp('deadline')->nullable();
             $table->text('tags')->nullable();
             $table->string('image_url')->nullable();

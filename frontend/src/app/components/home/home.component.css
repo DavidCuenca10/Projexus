@@ -36,6 +36,14 @@
     border-top-right-radius: 8px;
 }
 
+.custom-card-image img {
+    transition: transform .2s;
+}
+
+.custom-card-image img:hover {
+    transform: scale(1.05);
+}
+
 .custom-card-img {
     width: 100%;
     height: 100%;
@@ -52,6 +60,7 @@
     border-radius: 5px;
     font-size: 0.75rem;
     pointer-events: none; /* Para que no interfiera con clics */
+    z-index: 1;
 }
 
 /* Estilo para la fecha dentro de la tarjeta */
@@ -175,41 +184,4 @@
 
 .mensaje-idea {
     color: white;
-}
-
-/* Ajustes responsivos */
-@media (max-width: 768px) {
-    .custom-card-body {
-        padding: 10px;
-    }
-
-    .custom-card-title {
-        font-size: 1.15rem;
-    }
-
-    .custom-card-text {
-        font-size: 0.85rem;
-    }
-
-    .custom-card-image {
-        height: 120px;
-    }
-}
-
-@media (max-width: 576px) {
-    .custom-card-body {
-        padding: 8px; /* Más pequeño en pantallas muy pequeñas */
-    }
-
-    .custom-card-title {
-        font-size: 1rem; /* Acomoda el tamaño del título */
-    }
-
-    .custom-card-text {
-        font-size: 0.8rem; /* Ajusta el tamaño del texto */
-    }
-
-    .custom-card-image {
-        height: 100px; /* Ajusta la altura de la imagen en pantallas muy pequeñas */
-    }
 }

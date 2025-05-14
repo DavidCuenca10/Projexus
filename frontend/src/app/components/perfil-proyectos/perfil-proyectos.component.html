@@ -8,7 +8,7 @@
     <div class="row mt-5" *ngFor="let proyecto of proyectosUsuario | paginate: { itemsPerPage: 3, currentPage: page }">
         <div class="col-md-6">
             <div class="container-img">
-                <img [src]="proyecto.image_url" class="custom-card-img" alt="Imagen proyecto">
+                <img [src]="proyecto.image_url || 'imagenes/abstract_image.jpg'" class="custom-card-img" alt="Imagen proyecto">
             </div>
         </div>
         <div class="col-md-6">
@@ -24,8 +24,8 @@
                 </div>
                 <div class="botones">
                     <button class="boton-elegante" [routerLink]="['/proyecto', proyecto.id]">Ver mas</button>
-                    <button class="boton-elegante rojo" *ngIf="noEsOwner(proyecto.id)" (click)="salirDelProyecto(proyecto.id)">Salir</button>
-                    <button class="boton-elegante rojo" *ngIf="esOwner(proyecto.id)">Eliminar proyecto</button>
+                    <button class="boton-elegante rojo" *ngIf="rolCargado && noEsOwner(proyecto.id)" (click)="salirDelProyecto(proyecto.id)">Salir</button>
+                    <button class="boton-elegante rojo" *ngIf="rolCargado && esOwner(proyecto.id)" (click)="eliminarProyecto(proyecto.id)">Eliminar proyecto</button>
                 </div>
             </div>
         </div>

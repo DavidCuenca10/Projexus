@@ -1,47 +1,34 @@
 body {
-    background-color: #ffffff;
-    color: #333;
+  background-color: #ffffff;
+  color: #333;
 }
 
 .card {
-    background-color: #fdfdfd;
-    border-radius: 1rem;
-    border: 1px solid #e0e0e0;
+  background-color: #fdfdfd;
+  border-radius: 1rem;
+  border: 1px solid #e0e0e0;
 }
 
 .form-control {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    color: #333;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  color: #333;
 }
 
 .form-control:focus {
-    box-shadow: none;
-    border-color: #007bff;
-}
-
-.form-control::placeholder {
-    color: #aaa;
+  box-shadow: none;
 }
 
 .btn-primary {
-    background-color: #4a5cf1;
-    border-color: #4a5cf1;
+  background-color: #007bff;
+  border: none;
+  transition: background-color 0.3s ease;
 }
 
 .btn-primary:hover {
-    background-color: #3a4bd6;
+  background-color: #0056b3;
 }
 
-.btn-outline-danger {
-    border-color: #dc3545;
-    color: #dc3545;
-}
-
-.btn-outline-danger:hover {
-    background-color: #dc3545;
-    color: white;
-}
 
 .interest-card {
   background-color: #fff;
@@ -84,14 +71,4 @@ body {
 
 .step-line.active {
   background-color: #4CAF50;
-}
-
-.btn-primary {
-    background-color: #007bff;
-    border: none;
-    transition: background-color 0.3s ease;
-}
-
-.btn-primary:hover {
-    background-color: #0056b3;
 }

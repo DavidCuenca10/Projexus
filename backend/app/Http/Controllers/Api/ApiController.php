@@ -17,14 +17,24 @@ class ApiController extends Controller
             "email" => "required|email|unique:users,email",
             "password" => "required|confirmed",
             "biography" => "nullable|string",
-            'preferences' => 'required|string'
+            'preferences' => 'required|string',
+            'image_url' => 'nullable|file|mimes:jpg,jpeg,png,webp|max:2048'
         ]);
 
-        if (empty($request->biography)) {
-            $request->merge(['biography' => 'Hola soy']);
+        // Guardar la imagen (si se ha enviado)
+        $imagePath = null;
+        if ($request->hasFile('image_url')) {
+            $imagePath = $request->file('image_url')->store('perfiles', 'public');
         }
 
-        User::create($request->all());
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'biography' => $request->biography,
+            'preferences' => $request->preferences,
+            'image_url' => $imagePath ? asset('storage/' . $imagePath) : null, // Ruta accesible desde el frontend
+        ]);
         
         return response()->json([
             "status" => true,
@@ -53,13 +63,13 @@ class ApiController extends Controller
             } else {
                 return response()->json([
                     "status" => false,
-                    "message" => "Password didn't match",
+                    "message" => "La contraseña no coincide",
                 ], 401);
             }
         } else {
             return response()->json([
                 "status" => false,
-                "message" => "No account found with this email",
+                "message" => "No existe usuario con ese email",
             ], 404);
         }
     }

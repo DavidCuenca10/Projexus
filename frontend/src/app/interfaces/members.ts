@@ -10,6 +10,7 @@ export interface Members {
       role: string;
       status: string;
     };
+    image_url: string;
     originalRole?: string;
   }
   

@@ -1,9 +1,11 @@
 .navigation_image {
     width: 40px;  /* Ajuste del tamaño de la imagen de perfil */
+    height: 40px;
     cursor: pointer;
     border-radius: 50%;  /* Imagen redondeada */
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);  /* Sombra sutil */
     transition: transform 0.2s ease-in-out;  /* Efecto de transformación al pasar el mouse */
+    object-fit: cover;
 }
 
 .navigation_image:hover {
@@ -234,7 +236,6 @@
   transform: rotate(0deg);
   transition: transform 0.3s ease;
 }
-
 
 /* Animación de deslizamiento para el menú */
 @keyframes slideIn {
