@@ -53,6 +53,9 @@ export class ProyectoDetallesComponent implements OnInit {
   token: string | null = null;
   messages: any[] = [];
   message = '';
+
+  //Usamos un mapa para el chat, de maner que guardadmos el usuario y su imagen para no tener que pedirlas constantemente
+  userImage = new Map<string, string>();
   
   constructor(
     private route: ActivatedRoute,
@@ -64,6 +67,8 @@ export class ProyectoDetallesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.projectId = Number(this.route.snapshot.paramMap.get('id')); //Obtenemos la id de la url que será el projectId
+    this.token = localStorage.getItem('token');
 
     Pusher.logToConsole = true;
 
@@ -71,15 +76,12 @@ export class ProyectoDetallesComponent implements OnInit {
       cluster: 'eu'
     });
 
-    const channel = pusher.subscribe('chat');
+    const channel = pusher.subscribe(`chat.${this.projectId}`);
+
     channel.bind('message', (data: any) => {
       this.messages.push(data);
     });
 
-
-
-    this.projectId = Number(this.route.snapshot.paramMap.get('id')); //Obtenemos la id de la url que será el projectId
-    this.token = localStorage.getItem('token');
 
     if (this.token) {
       this.perfilService.getProfile().subscribe({
@@ -111,10 +113,21 @@ export class ProyectoDetallesComponent implements OnInit {
     // Obtener miembros del proyecto
     this.projectService.obtenerUsuariosProyecto(this.projectId).subscribe({
       next: (data) => {
+        // map(): recorre cada elemento de la lista y crea una nueva lista transformada.
+        // miembro: es cada usuario dentro del array mientras lo recorremos en map.
+        // ...miembro: spread, copia todas las propiedades del miembro original a un nuevo objeto.
+        // originalRole: añadimos esta propiedad nueva al objeto, con el valor que viene de miembro.pivot.role (rol en el proyecto).
+        // Hacemos una copia del miembro y le añadimos un campo extra (originalRole) que contiene el rol, para poder acceder a ese dato fácilmente sin meternos dentro de propiedades anidadas.
         this.members = data.members.map((miembro: Members) => ({
           ...miembro,
           originalRole: miembro.pivot.role // copiamos el rol original
         }));
+
+        // Aquí llenamos el mapa con las imagenes de cada usuario para el chat
+        this.members.forEach(member => {
+          //Rellenamos con key nombre y imagen value, de manera que ya tenemos todas las imagenes de los miembros
+          this.userImage.set(member.name, member.image_url || 'perfiles/pordefecto.png');
+        });
       },
       error: (error) => {
         console.error('Error cargando miembros:', error);
@@ -155,23 +168,23 @@ export class ProyectoDetallesComponent implements OnInit {
   }
 
   submit(): void {
-  if (!this.token) {
-    alert('No estás autenticado');
-    return;
-  }
+    if (!this.token) {
+      return;
+    }
 
-  const headers = {
-    'Authorization': `Bearer ${this.token}`
-  };
+    const headers = {
+      'Authorization': `Bearer ${this.token}`
+    };
 
-  this.http.post('http://127.0.0.1:8000/api/messages', {
-    username: this.nombreUsuario,
-    message: this.message
-  }, { headers }).subscribe(() => {
-    this.message = '';
-  }, error => {
-    console.error('Error enviando mensaje:', error);
-  });
+    this.http.post('http://127.0.0.1:8000/api/messages', {
+      username: this.nombreUsuario,
+      message: this.message,
+      project_id: this.projectId
+    }, { headers }).subscribe(() => {
+      this.message = '';
+    }, error => {
+      console.error('Error enviando mensaje:', error);
+    });
   }
 
   // Método para filtrar tareas
@@ -371,5 +384,9 @@ export class ProyectoDetallesComponent implements OnInit {
   get imageOwner(): string{
     const owner = this.members.find(m => m.id === this.project?.owner_id);
     return owner ? owner.image_url : 'Cargando...';
+  }
+
+  getImagePorUsuario(username: string): string {
+    return this.userImage.get(username) || 'perfiles/pordefecto.png';
   }
 }

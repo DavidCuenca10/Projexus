@@ -133,6 +133,7 @@ export class NavbarUserComponent implements OnInit {
   
 
   // Detecta clics fuera del área del dropdown y cierra el dropdown
+  //Simplemente es para la aniumacion de la flechita
   @HostListener('document:click', ['$event']) //Todos los clicks en el documento
   closeDropdown(event: MouseEvent) {
     // `event.target` es el objeto que recibió el clic.
@@ -140,7 +141,6 @@ export class NavbarUserComponent implements OnInit {
     
     // `closest('.btn')` busca el elemento más cercano al que se hizo clic que tenga la clase `.btn`.
     // Esto nos permite saber si el clic fue dentro del botón del dropdown.
-
     // .closest('.btn') busca el ancestro más cercano (incluyéndose a sí mismo) que tenga la clase 'btn'
     const dropdownButton = target.closest('.btn');  // Verifica si el clic fue en el botón del dropdown
 

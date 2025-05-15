@@ -87,30 +87,86 @@
   <!-- Chat -->
   <div class="row mb-3">
     <div class="col-12">
-      <!-- Datos contenedor 2 -->
-      <div class="custom-container bg-dark text-white rounded shadow-sm p-4">
-        <div class="chat" *ngIf="isMember">
-          <!-- Mensajes -->
-          <!-- input del nombre escondido para llevarlo al backend y al pusher -->
+      <!-- Contenedor general -->
+      <div class="custom-container bg-dark text-white rounded shadow-sm p-4 d-flex flex-column" style="height: 500px;">
+        <h2 class="titulos justify-content-center text-center">Chat en vivo</h2>
+        <div class="chat d-flex flex-column h-100" *ngIf="isMember">
+          <!-- Input oculto para nombre -->
           <input type="hidden" name="nombreUsuario" id="name" [(ngModel)]="nombreUsuario" required>
-          <div class="d-flex flex-column gap-2 mb-4" style="max-height: 400px; overflow-y: auto;">
-            <div class="card p-3 bg-secondary text-white" *ngFor="let msg of messages">
-              <small class="fw-bold">{{ msg.username }}</small>
-              <p class="mb-0">{{ msg.message }}</p>
+
+          <!-- Zona de mensajes con scroll -->
+          <div class="flex-grow-1 overflow-auto mb-3">
+            <div
+              *ngFor="let msg of messages"
+              [ngClass]="{'justify-content-end': msg.username === nombreUsuario, 'justify-content-start': msg.username !== nombreUsuario}"
+              class="d-flex mb-2"
+            >
+              <!-- Mensaje de otro usuario -->
+              <ng-container *ngIf="msg.username !== nombreUsuario">
+                <img
+                  [src]="getImagePorUsuario(msg.username) || 'perfiles/pordefecto.png'"
+                  alt="Avatar"
+                  class="rounded-circle me-2"
+                  style="width: 45px; height: 45px; object-fit: cover;"
+                />
+                <div class="card bg-secondary text-white p-3" style="min-width: 100px; max-width: 80%;">
+                  <small class="fw-bold">{{ msg.username }}</small>
+                  <p class="mb-2">{{ msg.message }}</p>
+                  <small class="text-light position-absolute" style="bottom: 5px; right: 10px;" *ngIf="msg.timestamp">
+                    {{ msg.timestamp | date:'shortTime' }}
+                  </small>
+                </div>
+                
+              </ng-container>
+
+              <!-- Mensaje del usuario actual -->
+              <ng-container *ngIf="msg.username === nombreUsuario">
+                <div class="card text-white p-3" style="min-width: 100px; max-width: 80%; background-color: rgb(77, 77, 77);">
+                  <small class="fw-bold text-end d-block text-warning">Tú</small>
+                  <p class="mb-2 text-start">{{ msg.message }}</p>
+                  <small class="text-light position-absolute" style="bottom: 5px; right: 10px;" *ngIf="msg.timestamp">
+                    {{ msg.timestamp | date:'shortTime' }}
+                  </small>
+                </div>
+                <img
+                  [src]="getImagePorUsuario(msg.username) || 'perfiles/pordefecto.png'"
+                  alt="Avatar"
+                  class="rounded-circle ms-2"
+                  style="width: 45px; height: 45px; object-fit: cover;"
+                />
+              </ng-container>
             </div>
           </div>
+
           <!-- Formulario -->
-          <form (ngSubmit)="submit()" #chatForm="ngForm" class="d-flex gap-2">
-            <input class="form-control" placeholder="Escribe algo" name="message" [(ngModel)]="message" required>
-            <button type="submit" class="btn btn-primary" [disabled]="!chatForm.form.valid">Enviar</button>
+          <form (ngSubmit)="submit()" #chatForm="ngForm" class="d-flex gap-2 mt-auto">
+            <input
+              class="form-control"
+              placeholder="Escribe algo"
+              name="message"
+              [(ngModel)]="message"
+              required
+              autocomplete="off"
+            />
+            <button
+              type="submit"
+              class="btn btn-primary" style="border-radius: 20px;"
+              [disabled]="!chatForm.form.valid"
+            >
+              Enviar
+            </button>
           </form>
         </div>
-        <div class="justify-content-center align-items-center text-center" *ngIf="!isMember" style="height: 150px;">Chat exclusivo para miembros del proyecto</div>
+        <!-- Si no es miembro -->
+        <div class="justify-content-center text-center" *ngIf="!isMember" style="height: 150px;">
+          Chat exclusivo para miembros del proyecto
+          <div class="mt-2" style="font-size: 80px;">
+            <i class="fa-solid fa-lock fa-lg"></i>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  
-
 
   <!-- Contenedor 3 y 4 -->
   <div class="row align-items-stretch"><!-- asegura que las columnas (contenedores 3 y 4) se estiren y tengan la misma altura -->
@@ -224,7 +280,6 @@
             </div>
           </ng-container>
         </div>
-
 
         <!-- Modal (checkbox que controla la apertura del modal) -->
         <input type="checkbox" id="btn-modal" hidden>
