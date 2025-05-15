@@ -15,6 +15,7 @@ export class PerfilComponent implements OnInit {
   usuario: any = null;
   usuarioId: number = 0;
   tareas: Task[] = [];
+  proyectosActivosUsuario: number = 0;
 
   constructor(
     private perfilService: PerfilService,
@@ -31,6 +32,7 @@ export class PerfilComponent implements OnInit {
           this.usuario = response.data;
           this.usuarioId = this.usuario.id;
           this.cargarTareas(this.usuarioId);
+          this.cargarProyectosActivos(this.usuarioId);
         },
         error: (error) => {
           console.log('Perfil no encontrado', error);
@@ -86,6 +88,17 @@ export class PerfilComponent implements OnInit {
       horizontalPosition: 'end',
       verticalPosition: 'bottom',
       panelClass: tipo === 'success' ? ['snackbar-success'] : ['snackbar-error']
+    });
+  }
+
+  cargarProyectosActivos(userId: number) {
+    this.projectService.obtenerProyectosDeUsuario(userId).subscribe({
+      next: (response) => {
+        this.proyectosActivosUsuario = response.projects.length      
+      },
+      error: (error) => {
+        console.error('Error al cargar proyectos', error);
+      }
     });
   }
 }

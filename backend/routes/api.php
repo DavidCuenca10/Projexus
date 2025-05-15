@@ -35,10 +35,10 @@ Route::group(["middleware" => ["auth:sanctum"]], function(){
 
     
     //Solicitudes
-    Route::post('/proyectos/{projectId}/solicitar', [ProjectController::class, 'enviarSolicitud']); //Enviar solicitud de union
+    Route::post('proyectos/{projectId}/solicitar', [ProjectController::class, 'enviarSolicitud']); //Enviar solicitud de union
     Route::put("proyectos/{projectId}/miembro/{userId}/aceptar", [ProjectController::class, 'aceptarMiembro']); //Aceptar solicitud
     Route::put("proyectos/{projectId}/miembro/{userId}/rechazar", [ProjectController::class, 'rechazarMiembro']); //Rechazar solicitud
-    Route::get('/solicitudes', [NotificationController::class, 'obtenerSolicitudesPendientes']); //Obtener solicitudeds pendiendes del usuario autenticado
+    Route::get('solicitudes', [NotificationController::class, 'obtenerSolicitudesPendientes']); //Obtener solicitudeds pendiendes del usuario autenticado
 
 
     //Tareas

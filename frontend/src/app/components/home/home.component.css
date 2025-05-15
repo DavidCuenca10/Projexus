@@ -54,13 +54,15 @@
     position: absolute;
     top: 8px;
     right: 8px;
-    background-color: rgba(0, 0, 0, 0.6); /* Fondo semitransparente */
     color: white;
     padding: 4px 8px;
     border-radius: 5px;
-    font-size: 0.75rem;
-    pointer-events: none; /* Para que no interfiera con clics */
+    font-size: 0.95rem;
+    pointer-events: none;
     z-index: 1;
+    font-weight: 500;
+    color: white;
+    font-family: Onest,sans-serif;
 }
 
 /* Estilo para la fecha dentro de la tarjeta */

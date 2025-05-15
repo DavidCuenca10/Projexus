@@ -36,7 +36,6 @@
               <label *ngIf="isOwner" for="btn-modal" class="boton-elegante rojo" (click)="seleccionarProyectoParaEliminar()">
                 Eliminar proyecto
               </label>
-
             </div>
           </div>
           <!-- Columna para la imagen del proyecto -->
@@ -76,7 +75,7 @@
             </span>
             {{ project?.estado }}
           </div>
-            <div class="dato-item"><span class="emoji">🏷️</span> {{ project?.category }}</div>
+            <div class="dato-item"><span class="emoji">🏷️</span> {{ project?.category === 'Diseno' ? 'Diseño' : project?.category }}</div>
             <div class="dato-item"><span class="emoji">📅</span> {{ project?.deadline | date:'dd/MM/yyyy' }}</div>
             <div class="dato-item"><span class="emoji">🔖</span> {{ project?.tags }}</div>
           </div>
@@ -205,12 +204,12 @@
 
           <!-- Si el miembro es el owner del proyecto -->
           <div *ngIf="miembro.id === project?.owner_id" class="miembro-item owner-item">
-            <span>👑 {{ miembro.name }} - {{ miembro.pivot.role }}</span>
+            <span>👑 {{ miembro.name }} - Dueño</span>
           </div>
 
           <!-- Si no se cumple ninguno de los anteriores casos (ej: eres miembro viendo a otro miembro) -->
           <div *ngIf="!isOwner && miembro.id !== project?.owner_id" class="miembro-item">
-            <span>{{ miembro.name }} - {{ miembro.pivot.role }}</span>
+            <span>{{ miembro.name }} - {{ miembro.pivot.role === 'member' ? 'Miembro' : 'Admin'}}</span>
           </div>
         </div>
       </div>
@@ -286,27 +285,40 @@
 
         <div class="container-modal">
           <div class="content-modal">
+
+            <!--Modal para eliminar tarea-->
             <h3 *ngIf="tipoModal === 'eliminarTarea'">
               ¿Estás seguro que deseas eliminar la tarea: 
-              <strong>{{ tareaSeleccionada?.title }}</strong>?
+              <strong>"{{ tareaSeleccionada?.title }}"</strong>?
             </h3>
+            <p *ngIf="tipoModal === 'eliminarTarea'">
+              Esta acción no se puede deshacer. Una vez eliminada, la tarea desaparecerá de todas las listas y no podrá ser recuperada. ¿Quieres continuar?
+            </p>
 
+            <!--Modal para eliminar usuario-->
             <h3 *ngIf="tipoModal === 'usuario'">
               ¿Estás seguro que deseas eliminar al usuario:
-              <strong>{{ usuarioSeleccionado?.name }}</strong> del proyecto?
+              <strong>"{{ usuarioSeleccionado?.name }}"</strong> del proyecto?
             </h3>
+            <p *ngIf="tipoModal === 'usuario'">
+              Al eliminar a este usuario, perderá acceso al proyecto y a su chat en vivo.
+            </p>
 
+            <!--Modal para eliminar proyecto-->
             <h3 *ngIf="tipoModal === 'eliminarProyecto'">
-              ¿Estás seguro que deseas eliminar el proyecto?:
-              <strong>{{ project?.name }}</strong>
+              ⚠️ Vas a eliminar el proyecto <strong>"{{ project?.name }}"</strong>
             </h3>
+            <p *ngIf="tipoModal === 'eliminarProyecto'">
+              Esta acción es permanente y no se podrá recuperar. ¿Deseas continuar?
+            </p>
 
-            
-            <h3 *ngIf="tipoModal === 'crearTarea'">
-              <!-- Formulario para crear la tarea -->
-            <form (ngSubmit)="crearTarea()" #taskForm="ngForm">
+            <!--Modal para crear tarea-->
+            <h2 *ngIf="tipoModal === 'crearTarea'">Crear nueva tarea</h2>
+            <hr>
+            <!-- Formulario modal para crear la tarea -->
+            <form *ngIf="tipoModal === 'crearTarea'" (ngSubmit)="crearTarea()" #taskForm="ngForm">
               <!-- Título de la tarea -->
-              <div class="form-group">
+              <div class="form-group mt-2">
                 <label for="titulo">Título</label>
                 <input
                   type="text"
@@ -318,7 +330,7 @@
               </div>
 
               <!-- Descripción -->
-              <div class="form-group">
+              <div class="form-group mt-2">
                 <label for="descripcion">Descripción</label>
                 <textarea
                   id="descripcion"
@@ -330,7 +342,7 @@
               </div>
 
               <!-- Asignada a (desplegable de usuarios del proyecto) -->
-              <div class="form-group">
+              <div class="form-group mt-2">
                 <label for="asignada">Asignada a</label>
                 <select
                   id="asignada"
@@ -345,7 +357,7 @@
               </div>
 
               <!-- Priority (alta, baja, media) -->
-              <div class="form-group">
+              <div class="form-group mt-2">
                 <label for="priority">Prioridad</label>
                 <select
                   id="priority"
@@ -360,7 +372,7 @@
               </div>
 
               <!-- Deadline (fecha máxima) -->
-              <div class="form-group">
+              <div class="form-group mt-2">
                 <label for="deadline">Fecha límite</label>
                 <input
                   type="date"
@@ -368,26 +380,26 @@
                   name="deadline"
                   class="form-control"
                   [(ngModel)]="nuevaTarea.deadline"
+                  [min]="minDate"
                   required>
               </div>
 
               <!-- Botones de confirmación -->
               <hr>
               <div class="botones-modal">
-                <button type="submit" class="btn-confirmar" [disabled]="!taskForm.valid">Crear tarea</button>
                 <div class="btn-cancelar">
                   <label for="btn-modal">Cancelar</label>
                 </div>
+                <button type="submit" class="btn-confirmar" [disabled]="!taskForm.valid">Crear tarea</button>
               </div>
             </form>
-            </h3>
-
+            
             <div class="botones-modal" *ngIf="tipoModal !== 'crearTarea'">
-              <div class="btn-confirmar" (click)="confirmarEliminacion()">
-                <label for="btn-modal">Confirmar</label>
-              </div>
               <div class="btn-cancelar">
                 <label for="btn-modal">Cancelar</label>
+              </div>
+              <div class="btn-confirmar" (click)="confirmarEliminacion()">
+                <label for="btn-modal">Confirmar</label>
               </div>
             </div>
           </div>
@@ -399,7 +411,6 @@
         <label *ngIf="isAdmin || isOwner" for="btn-modal" class="boton-elegante verde" (click)="abrirModalCrearTarea()">
           Crea tarea
         </label>
-
       </div>
     </div>
   </div>

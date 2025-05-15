@@ -357,8 +357,8 @@ class ProjectController extends Controller
         // Eliminar la relación entre el usuario y el proyecto
         $project->members()->detach($user->id);  // Aquí se elimina la relación en la tabla pivote
 
-        //Bajar 1 el current members pq se ha ido un miembro del proyecto
-        $project->current_mumbers = $project->current_members - 1;
+        // Actualizar el contador de miembros del proyecto
+        $project->current_members -= 1;
         $project->save();
 
         return response()->json([

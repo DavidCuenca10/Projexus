@@ -40,7 +40,8 @@ export class ProyectoDetallesComponent implements OnInit {
   // Tarea seleccionada para eliminar
   tareaSeleccionada: any = null;
   tipoModal: 'eliminarProyecto' | 'eliminarTarea' | 'usuario' | 'crearTarea' | null = null;
-
+  minDate: string = new Date().toISOString().split('T')[0]; // formato 'YYYY-MM-DD'
+  
   nuevaTarea = {
     title: '',
     description: '',
@@ -226,6 +227,7 @@ export class ProyectoDetallesComponent implements OnInit {
         next: () => {
           this.tasks = this.tasks.filter(t => t.id !== taskId);
           this.mostrarToast('Tarea eliminada correctamente', 'success');
+          this.tipoModal = null; //Vaciamos el valor del modal
         },
         error: (error) => {
           if (error.status === 403) {
@@ -242,6 +244,7 @@ export class ProyectoDetallesComponent implements OnInit {
         next: () => {
           this.members = this.members.filter(m => m.id !== userId);
           this.mostrarToast('Miembro eliminado correctamente', 'success');
+          this.tipoModal = null; //Vaciamos el valor del modal
         },
         error: (error) => {
           if (error.status === 403) {
@@ -256,6 +259,7 @@ export class ProyectoDetallesComponent implements OnInit {
         next: () => {
           this.mostrarToast('Miembro eliminado correctamente', 'success');;
           this.router.navigate(['/home']);
+          this.tipoModal = null; //Vaciamos el valor del modal
         },
         error: (error) => {
           this.mostrarToast('Error al eliminar el proyecto', 'error');
@@ -337,6 +341,7 @@ export class ProyectoDetallesComponent implements OnInit {
           deadline: ''
         };
         this.mostrarToast('Tarea creada correctamente', 'success');
+        this.tipoModal = null; //Vaciamos el valor del modal
       },
       error: (error) => {
         if (error.status === 403) {

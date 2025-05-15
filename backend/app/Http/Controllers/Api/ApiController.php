@@ -42,6 +42,7 @@ class ApiController extends Controller
         ]);
     }
 
+    
     //Login
     public function login(Request $request){
         $request->validate([

@@ -16,7 +16,7 @@
 
 .badge {
     font-size: 1.1rem;
-    background-color: #3d3d3d;
+    background-color: #000000;
     display: inline-flex;
     align-items: center;
 }
@@ -87,6 +87,10 @@ h2.text-light {
 .custom-accordion-button:hover {
     background-color: #333333;
     color: #fff;
+}
+
+.custom-accordion-button:focus {
+    box-shadow: none;
 }
 
 .accordion-collapse.show {

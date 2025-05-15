@@ -38,14 +38,14 @@
   font-size: 25px;
 }
 
-.tags {
-  background-color: rgba(179, 95, 0, 0.85);
-  align-items: center;
-  text-align: center;
-  justify-content: center;
-  max-width: 130px;
+.categoria h5{
+  max-width: 150px;
   width: 100%;
   border-radius: 15px;
+  text-align: center;
+  justify-content: center;
+  padding: 4px;
+  font-family: Onest,sans-serif;
 }
 
 .descripcion {

@@ -4,6 +4,7 @@ import { PerfilService } from '../../services/perfil.service';
 import { Router } from '@angular/router';
 import { SolicitudesService } from '../../services/solicitudes.service';
 import { ProjectService } from '../../services/project.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-navbar-user',
@@ -20,33 +21,35 @@ export class NavbarUserComponent implements OnInit {
 
   isDropdownOpen = false; // Para manejar si el dropdown está abierto o no
   userImage: string = 'perfiles/pordefecto.png'
+  intervalId: any;
 
   constructor(
     private perfilService: PerfilService,
     private router: Router,
     private solicitudesService: SolicitudesService,
-    private projectService: ProjectService
+    private projectService: ProjectService,
+    private snackBar: MatSnackBar,
   ) {}
 
   ngOnInit(): void {
     this.token = localStorage.getItem('token');
 
-    this.obtenerSolicitudes(); // primera carga
-      /*setInterval(() => {
-        this.obtenerSolicitudes(); // actualiza cada 10 segundos
-      }, 10000);
-    */
     if (this.token) {
       this.perfilService.getProfile().subscribe(
         (response: any) => {
           if (response.status) {
-            this.name = response.data.name;  // Aquí guardamos el nombre del usuario
-            this.userId = response.data.id; //Sacamos el id del usuario para utilizarlo
+            this.name = response.data.name;
+            this.userId = response.data.id;
 
-            //Pillamos la imagen de perfil del usuario
-            if(response.data.image_url) {
+            if (response.data.image_url) {
               this.userImage = response.data.image_url;
             }
+
+            this.obtenerSolicitudes();
+            
+            this.intervalId = setInterval(() => {
+              this.obtenerSolicitudes();
+            }, 20000);
           }
         },
         error => {
@@ -54,6 +57,10 @@ export class NavbarUserComponent implements OnInit {
         }
       );
     }
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.intervalId);
   }
 
   obtenerSolicitudes(): void {
@@ -77,9 +84,12 @@ export class NavbarUserComponent implements OnInit {
     this.projectService.aceptarMiembro(projectId, userId).subscribe(
       response => {
         console.log('Usuario aceptado', response);
+        this.ocultarNotificacionLocal(projectId, userId);
+        this.mostrarToast('Has aceptado la solicitud', 'success');
       },
       error => {
         console.error('Error al aceptar al miembro', error);
+        this.mostrarToast('Ha habido un error con la solicitud', 'error');
       }
     );
   }
@@ -89,7 +99,8 @@ export class NavbarUserComponent implements OnInit {
     this.projectService.rechazarMiembro(projectId, userId).subscribe(
       response => {
         console.log('Solicitud rechazada', response);
-        // Aquí puedes manejar el cambio en la interfaz o lo que necesites
+        this.ocultarNotificacionLocal(projectId, userId);
+        this.mostrarToast('Has rechazado la solicitud', 'error');
       },
       error => {
         console.error('Error al rechazar al miembro', error);
@@ -149,5 +160,23 @@ export class NavbarUserComponent implements OnInit {
     if (this.isDropdownOpen && !dropdownButton) {
       this.isDropdownOpen = false;  // Cierra el dropdown si el clic es fuera del área del botón o del dropdown
     }
+  }
+
+  //Metodo para eliminar la notificacion cuando se le da el click
+  ocultarNotificacionLocal(projectId: number, userId: number) {
+    //Crea un nuevo array con las notificaciones que no son las que acabamos de procesas, filtramos la que acabamos de procesar y mostramos el nuevo array sin ella
+    this.notificaciones = this.notificaciones.filter(
+      noti => !(noti.project_id === projectId && noti.user_id === userId)
+    );
+  }
+
+  mostrarToast(mensaje: string, tipo: 'success' | 'error' = 'success') {
+    //console.log('Clase aplicada:', tipo === 'success' ? 'snackbar-success' : 'snackbar-error');
+    this.snackBar.open(mensaje, 'X', {
+      duration: 5000,
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom',
+      panelClass: tipo === 'success' ? ['snackbar-success'] : ['snackbar-error']
+    });
   }
 }

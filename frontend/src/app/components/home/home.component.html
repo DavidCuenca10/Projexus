@@ -15,8 +15,8 @@
     <div class="col" *ngFor="let project of proyectosActivos | paginate: { itemsPerPage: 6, currentPage: page }" data-aos="zoom-im" data-aos-duration="1500" data-aos-easing="ease-in-out">
       <div class="custom-card">
         <div class="custom-card-image">
-          <div class="custom-badge-categoria">
-            <span>{{project.category}}</span>
+          <div class="custom-badge-categoria" [ngClass]="project.category.toLowerCase()">
+            <span>{{project.category === 'Diseno' ? 'Diseño' : project.category}}</span>
           </div>
           <img [src]="project.image_url || 'imagenes/abstract_image.jpg'" class="custom-card-img" alt="Imagen proyecto">
         </div>
@@ -54,8 +54,8 @@
       <p>Categorías</p>
     </div>
     <div class="col">
-      <h2>900+</h2>
-      <p>Usuarios colaborando</p>
+      <h2>365</h2>
+      <p>Días activos</p>
     </div>
   </div>
 </div>

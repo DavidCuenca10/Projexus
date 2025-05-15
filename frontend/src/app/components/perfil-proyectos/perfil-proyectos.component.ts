@@ -20,6 +20,7 @@ export class PerfilProyectosComponent implements OnInit {
   //rolesPorProyecto = {
   //1: { isOwner: true, isAdmin: false, isMember: true },};
   totalProyectos: number = 0;
+  tipoModal: 'eliminarProyecto' | null = null;
 
   constructor(
     private projectService: ProjectService,
@@ -89,6 +90,11 @@ export class PerfilProyectosComponent implements OnInit {
     })
   }
 
+  seleccionarProyectoParaEliminar() {
+    // Cambiar el tipo de modal a 'eliminarProyecto'
+    this.tipoModal = 'eliminarProyecto';
+  }
+
   //Eliminar proyecto
   eliminarProyecto(projectId:number) {
     this.projectService.eliminarProyecto(projectId).subscribe({
@@ -98,6 +104,7 @@ export class PerfilProyectosComponent implements OnInit {
       this.totalProyectos = this.proyectosUsuario.length;
 
       this.mostrarToast('Proyecto eliminado correctamente', 'success');
+      this.tipoModal = null; //Vaciamos el valor del modal
       },
       error: (error) => {
         this.mostrarToast('No se he podido eliminar el proyecto', 'error');

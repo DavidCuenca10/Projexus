@@ -292,3 +292,20 @@
   color: white;
 }
 /*Cierre contendor 4*/
+
+.form-control {
+  background-color: #4e4e4e;
+  border: 1px solid #5c5c5c;
+  color: #333;
+  padding: 8px;
+  border-radius: 5px;
+  font-size: 1rem;
+  color: white;
+}
+
+.form-control:focus {
+  border-color: #666;
+  background-color: #3b3b3b;
+  outline: none;
+  box-shadow: none;
+}

@@ -16,8 +16,8 @@
                 <div class="name">
                     <h2>{{ proyecto.name }}</h2>
                 </div>
-                <div class="tags">
-                    <h5>{{ proyecto.category }}</h5>
+                <div class="categoria" [ngClass]="proyecto.category.toLowerCase()">
+                    <h5>{{ proyecto.category === 'Diseno' ? 'Diseño' : proyecto.category }}</h5>
                 </div>
                 <div class="descripcion">
                     <p>{{ proyecto.description }}</p>
@@ -25,13 +25,37 @@
                 <div class="botones">
                     <button class="boton-elegante" [routerLink]="['/proyecto', proyecto.id]">Ver mas</button>
                     <button class="boton-elegante rojo" *ngIf="rolCargado && noEsOwner(proyecto.id)" (click)="salirDelProyecto(proyecto.id)">Salir</button>
-                    <button class="boton-elegante rojo" *ngIf="rolCargado && esOwner(proyecto.id)" (click)="eliminarProyecto(proyecto.id)">Eliminar proyecto</button>
+                    <label *ngIf="rolCargado && esOwner(proyecto.id)" for="btn-modal" class="boton-elegante rojo" (click)="seleccionarProyectoParaEliminar()">
+                        Eliminar proyecto
+                    </label>
                 </div>
             </div>
+        </div>
+
+        <!-- Modal (checkbox que controla la apertura del modal) -->
+        <input type="checkbox" id="btn-modal" hidden>
+
+        <div class="container-modal">
+            <div class="content-modal">
+                <h3 *ngIf="tipoModal === 'eliminarProyecto'">
+                    ⚠️ Vas a eliminar el proyecto <strong>"{{ proyecto.name }}"</strong>
+                </h3>
+                <p>Esta acción es permanente y no se podrá recuperar. ¿Deseas continuar?</p>
+                <div class="botones-modal">
+                    <div class="btn-cancelar">
+                        <label for="btn-modal">Cancelar</label>
+                    </div>
+                    <div class="btn-confirmar" (click)="eliminarProyecto(proyecto.id)">
+                        <label for="btn-modal">Confirmar</label>
+                    </div>
+                </div>
+            <label for="btn-modal" class="cerrar-modal"></label>
         </div>
     </div>
 </div>
 
-<div class="paginacion">
+<div class="paginacion" style="margin-top: 100px; margin-bottom: 100px;">
     <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
 </div>
+
+<div style="height: 1px;"></div>

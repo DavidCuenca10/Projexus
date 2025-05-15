@@ -27,12 +27,12 @@ export class RegisterComponent {
   imageFile?: File;
 
   areas = [
-    { key: 'salud', label: 'Salud', icon: '🍎' },
-    { key: 'viajes', label: 'Viajes', icon: '🏖️' },
-    { key: 'deporte', label: 'Deporte', icon: '⚽' },
-    { key: 'tecnologias', label: 'Tecnología', icon: '💻' },
-    { key: 'musica', label: 'Música', icon: '🎵' },
-    { key: 'arte', label: 'Arte', icon: '🎨' }
+    { key: 'Marketing', label: 'Marketing', icon: '📈' },
+    { key: 'Negocios', label: 'Negocios', icon: '💼' },
+    { key: 'Deporte', label: 'Deporte', icon: '⚽' },
+    { key: 'Tecnologia', label: 'Tecnología', icon: '💻' },
+    { key: 'Musica', label: 'Música', icon: '🎵' },
+    { key: 'Diseño', label: 'Diseño', icon: '🎨' }
   ];
 
   constructor(private registerService: RegisterService, private router:Router) {}
@@ -72,7 +72,7 @@ export class RegisterComponent {
 
     //Biografia por defecto
     if(!this.biography) {
-      this.biography = 'Hola soy';
+      this.biography = `👋 Hola, soy ${this.name} y me apasiona aprender y compartir conocimientos en mis áreas favoritas como ${this.preferences} 🌟. ¡Encantado/a de estar aquí! 😊`;
     }
 
     this.preferences = Object.keys(this.selectedOptions)
@@ -137,5 +137,4 @@ export class RegisterComponent {
       this.imageFile = input.files[0];
     }
   }
-
 }
