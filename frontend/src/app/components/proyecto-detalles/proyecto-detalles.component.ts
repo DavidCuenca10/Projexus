@@ -5,6 +5,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Members } from '../../interfaces/members';
 import { Task } from '../../interfaces/task';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { PerfilService } from '../../services/perfil.service';
+import Pusher from 'pusher-js';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-proyecto-detalles',
@@ -32,9 +35,6 @@ export class ProyectoDetallesComponent implements OnInit {
   // ProjectId se asignará en el ngOnInit
   projectId!: number; // Aquí usamos la opción del modificador "!"
 
-  //
-  currentUserId: number = 0;
-
   //Variables para los modales
   usuarioSeleccionado: Members | null = null;
   // Tarea seleccionada para eliminar
@@ -49,19 +49,49 @@ export class ProyectoDetallesComponent implements OnInit {
     deadline: ''
   };
   rolCargado: boolean = false;
+  nombreUsuario:string = '';
+  token: string | null = null;
+  messages: any[] = [];
+  message = '';
   
   constructor(
     private route: ActivatedRoute,
     private projectService: ProjectService,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private perfilService: PerfilService,
+    private http: HttpClient
   ) { }
 
   ngOnInit(): void {
-    this.projectId = Number(this.route.snapshot.paramMap.get('id')); //Obtenemos la id de la url que será el projectId
 
-    const user = JSON.parse(localStorage.getItem('user') || '{}'); //Obtenemos la id del usuario a traves del token y lo asignamos a currentUserId
-    this.currentUserId = user.id;
+    Pusher.logToConsole = true;
+
+    const pusher = new Pusher('af5d3d381fa66787c245', {
+      cluster: 'eu'
+    });
+
+    const channel = pusher.subscribe('chat');
+    channel.bind('message', (data: any) => {
+      this.messages.push(data);
+    });
+
+
+
+    this.projectId = Number(this.route.snapshot.paramMap.get('id')); //Obtenemos la id de la url que será el projectId
+    this.token = localStorage.getItem('token');
+
+    if (this.token) {
+      this.perfilService.getProfile().subscribe({
+        next: (response) => {
+          // Solo asignas el nombre del usuario
+          this.nombreUsuario = response.data.name;
+        },
+        error: (error) => {
+          console.log('Perfil no encontrado', error);
+        }
+      });
+    }
 
     // Obtener detalles del proyecto
     this.projectService.obtenerProyecto(this.projectId).subscribe(
@@ -122,6 +152,26 @@ export class ProyectoDetallesComponent implements OnInit {
         this.rolCargado = true;
       }
     });
+  }
+
+  submit(): void {
+  if (!this.token) {
+    alert('No estás autenticado');
+    return;
+  }
+
+  const headers = {
+    'Authorization': `Bearer ${this.token}`
+  };
+
+  this.http.post('http://127.0.0.1:8000/api/messages', {
+    username: this.nombreUsuario,
+    message: this.message
+  }, { headers }).subscribe(() => {
+    this.message = '';
+  }, error => {
+    console.error('Error enviando mensaje:', error);
+  });
   }
 
   // Método para filtrar tareas
@@ -319,9 +369,6 @@ export class ProyectoDetallesComponent implements OnInit {
   }
 
   get imageOwner(): string{
-    // Hacemos find para encontrar la primera coincidencia que tenga, la m representa el miembro, accedemos al 
-    // id del miembro (m.id) y compararmos esa id con el owner de proyecto, si existe se guarda en la variable 
-    // owner con los atributos de miembro con lo cual podemos acceder a su nombre a traves de owner(variable).name(atributo del miembro).
     const owner = this.members.find(m => m.id === this.project?.owner_id);
     return owner ? owner.image_url : 'Cargando...';
   }

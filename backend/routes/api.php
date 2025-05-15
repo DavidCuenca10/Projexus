@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\TaskController;
 use App\Http\Controllers\Api\NotificationController;
+use App\Http\Controllers\Api\ChatController;
 
 Route::post("register", [ApiController::class, "register"]);
 Route::post("login", [ApiController::class, "login"]);
@@ -47,6 +48,7 @@ Route::group(["middleware" => ["auth:sanctum"]], function(){
     Route::delete("proyectos/{projectId}/tarea/{taskId}", [TaskController::class, 'eliminarTarea']); //Eliminar tarea
     Route::get("profile/usuario/{userId}", [TaskController::class, 'listarTareasUsuario']); //Listar todas las tareas que tiene el usuario
 
+    Route::post('messages', [ChatController::class, 'message']);
 });
 
 //Route::get('/user', function (Request $request) {

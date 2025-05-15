@@ -51,9 +51,8 @@
   <!-- Contenedor 2 -->
   <div class="row mb-3">
     <div class="col-12">
-      <div class="custom-container">
         <!-- Datos contenedor 2 -->
-        <div class="col-12 custom-container">
+        <div class="custom-container">
           <h2 class="titulos">Información del proyecto</h2>
 
           <div class="descripcion-contenedor">
@@ -81,10 +80,37 @@
             <div class="dato-item"><span class="emoji">📅</span> {{ project?.deadline | date:'dd/MM/yyyy' }}</div>
             <div class="dato-item"><span class="emoji">🔖</span> {{ project?.tags }}</div>
           </div>
-        </div>
       </div>
     </div>
   </div>
+
+  <!-- Chat -->
+  <div class="row mb-3">
+    <div class="col-12">
+      <!-- Datos contenedor 2 -->
+      <div class="custom-container bg-dark text-white rounded shadow-sm p-4">
+        <div class="chat" *ngIf="isMember">
+          <!-- Mensajes -->
+          <!-- input del nombre escondido para llevarlo al backend y al pusher -->
+          <input type="hidden" name="nombreUsuario" id="name" [(ngModel)]="nombreUsuario" required>
+          <div class="d-flex flex-column gap-2 mb-4" style="max-height: 400px; overflow-y: auto;">
+            <div class="card p-3 bg-secondary text-white" *ngFor="let msg of messages">
+              <small class="fw-bold">{{ msg.username }}</small>
+              <p class="mb-0">{{ msg.message }}</p>
+            </div>
+          </div>
+          <!-- Formulario -->
+          <form (ngSubmit)="submit()" #chatForm="ngForm" class="d-flex gap-2">
+            <input class="form-control" placeholder="Escribe algo" name="message" [(ngModel)]="message" required>
+            <button type="submit" class="btn btn-primary" [disabled]="!chatForm.form.valid">Enviar</button>
+          </form>
+        </div>
+        <div class="justify-content-center align-items-center text-center" *ngIf="!isMember" style="height: 150px;">Chat exclusivo para miembros del proyecto</div>
+      </div>
+    </div>
+  </div>
+  
+
 
   <!-- Contenedor 3 y 4 -->
   <div class="row align-items-stretch"><!-- asegura que las columnas (contenedores 3 y 4) se estiren y tengan la misma altura -->
