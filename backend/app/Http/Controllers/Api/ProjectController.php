@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Project;
 use App\Models\ProjectMember;
 use App\Models\SolicitudProyecto;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -78,6 +79,16 @@ class ProjectController extends Controller
             return response()->json([
                 'message' => 'No tienes permiso para eliminar este proyecto.'
             ], 403);
+        }
+
+        // Obtener la ruta relativa a partir de la URL completa
+        if ($proyecto->image_url) {
+            // Quitar la parte del dominio y "storage/"
+            $rutaRelativa = str_replace(url('/storage') . '/', '', $proyecto->image_url);
+
+            if (Storage::disk('public')->exists($rutaRelativa)) {
+                Storage::disk('public')->delete($rutaRelativa);
+            }
         }
 
         $proyecto->members()->detach();
