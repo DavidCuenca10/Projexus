@@ -5,27 +5,27 @@
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-code-xml"><path d="m18 16 4-4-4-4"></path><path d="m6 8-4 4 4 4"></path><path d="m14.5 4-5 16"></path></svg>
     Tus proyectos: <strong style="color: blue;">{{ totalProyectos }}</strong>
     </h1>
-    <div class="row mt-5" *ngFor="let proyecto of proyectosUsuario | paginate: { itemsPerPage: 3, currentPage: page }">
+    <div class="row mt-5" *ngFor="let project of proyectosUsuario | paginate: { itemsPerPage: 3, currentPage: page }">
         <div class="col-md-6">
             <div class="container-img">
-                <img [src]="proyecto.image_url || 'imagenes/abstract_image.jpg'" class="custom-card-img" alt="Imagen proyecto">
+                <img [src]="project.image_url ? (environment.apiUrl + '/' + project.image_url) : 'imagenes/abstract_image.jpg'" class="custom-card-img" alt="Imagen proyecto"/>
             </div>
         </div>
         <div class="col-md-6">
             <div class="container-info">
                 <div class="name">
-                    <h2>{{ proyecto.name }}</h2>
+                    <h2>{{ project.name }}</h2>
                 </div>
-                <div class="categoria" [ngClass]="proyecto.category.toLowerCase()">
-                    <h5>{{ proyecto.category === 'Diseno' ? 'Diseño' : proyecto.category }}</h5>
+                <div class="categoria" [ngClass]="project.category.toLowerCase()">
+                    <h5>{{ project.category === 'Diseno' ? 'Diseño' : project.category }}</h5>
                 </div>
                 <div class="descripcion">
-                    <p>{{ proyecto.description }}</p>
+                    <p>{{ project.description }}</p>
                 </div>
                 <div class="botones">
-                    <button class="boton-elegante" [routerLink]="['/proyecto', proyecto.id]">Ver mas</button>
-                    <button class="boton-elegante rojo" *ngIf="rolCargado && noEsOwner(proyecto.id)" (click)="salirDelProyecto(proyecto.id)">Salir</button>
-                    <label *ngIf="rolCargado && esOwner(proyecto.id)" for="btn-modal" class="boton-elegante rojo" (click)="seleccionarProyectoParaEliminar()">
+                    <button class="boton-elegante" [routerLink]="['/proyecto', project.id]">Ver mas</button>
+                    <button class="boton-elegante rojo" *ngIf="rolCargado && noEsOwner(project.id)" (click)="salirDelProyecto(project.id)">Salir</button>
+                    <label *ngIf="rolCargado && esOwner(project.id)" for="btn-modal" class="boton-elegante rojo" (click)="seleccionarProyectoParaEliminar()">
                         Eliminar proyecto
                     </label>
                 </div>
@@ -38,14 +38,14 @@
         <div class="container-modal">
             <div class="content-modal">
                 <h3 *ngIf="tipoModal === 'eliminarProyecto'">
-                    ⚠️ Vas a eliminar el proyecto <strong>"{{ proyecto.name }}"</strong>
+                    ⚠️ Vas a eliminar el proyecto <strong>"{{ project.name }}"</strong>
                 </h3>
                 <p>Esta acción es permanente y no se podrá recuperar. ¿Deseas continuar?</p>
                 <div class="botones-modal">
                     <div class="btn-cancelar">
                         <label for="btn-modal">Cancelar</label>
                     </div>
-                    <div class="btn-confirmar" (click)="eliminarProyecto(proyecto.id)">
+                    <div class="btn-confirmar" (click)="eliminarProyecto(project.id)">
                         <label for="btn-modal">Confirmar</label>
                     </div>
                 </div>

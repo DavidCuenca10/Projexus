@@ -63,3 +63,9 @@
   gap: 15px;
   word-wrap: break-word;
 }
+
+@media (max-width:576px){
+  .container-img {
+    margin-bottom: 15px;
+  }
+}

@@ -8,12 +8,9 @@ use App\Models\Project;
 use App\Models\Task;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
-//use Illuminate\Support\Facades\Log;
 
 class TaskController extends Controller
 {
-    //
-
 
     //Funcion privada para verificar permisos de usuario en el proyecto para el backend
     private function verificarPermiso($project){
@@ -31,7 +28,6 @@ class TaskController extends Controller
     }
 
 
-    
     //Funcion publica para verificar permisos de usuario en el proyecto para manejarlo en el frontend
     public function verificarRol($projectId){
         // Obtener el proyecto
@@ -55,26 +51,16 @@ class TaskController extends Controller
             'isAdmin' => $member && $member->pivot->role === 'admin',
             'isMember' => $member !== null, // true si está en el proyecto, sea cual sea el rol
         ]);
-
-        /*if ($member && in_array($member->pivot->role, ['owner', 'admin'])) {
-            return response()->json(['isAdminOrOwner' => true]);
-        } else {
-            return response()->json(['isAdminOrOwner' => false]);
-        }
-        */
     }
 
     //Crear un tarea en un proyecto
     public function crearTarea(Request $request, $projectId){
 
-
-        // Buscar el proyecto a partir del id
         $project = Project::findOrFail($projectId);
 
         //Llamo al metodo verificarPermiso
         $this->verificarPermiso($project);
     
-        // Validación de los datos
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
@@ -107,10 +93,7 @@ class TaskController extends Controller
     //Obtener las tareas de un proyecto
     public function obtenerTareas($projectId){
 
-        // Buscar el proyecto a partir del id
         $project = Project::findOrFail($projectId);
-
-        //Obtener las tareas asociadas al proyecto
         $tasks = $project->tasks;
 
         return response()->json([
@@ -122,7 +105,6 @@ class TaskController extends Controller
     //Actualizar las tareas
     public function actualizarTarea(Request $request, $projectId, $taskId){
 
-        // Buscar el proyecto a partir del id
         $project = Project::findOrFail($projectId);
 
         // Verificar si el usuario está en el proyecto
@@ -132,12 +114,11 @@ class TaskController extends Controller
             return response()->json(['message' => 'No eres miembro del proyecto para editar esta tarea'], 400);
         }
 
-        // Validación de los datos
         $request->validate([
             'status' => 'required|in:pending,in_progress,completed',
         ]);
 
-        // Buscar el proyecto y la tarea
+        // Buscar la tarea
         $task = $project->tasks()->findOrFail($taskId);
 
         // Actualizar la tarea
@@ -155,8 +136,6 @@ class TaskController extends Controller
     //Eliminar tareas
     public function eliminarTarea($projectId, $taskId){
 
-
-        // Buscar el proyecto a partir del id
         $project = Project::findOrFail($projectId);
 
         //Llamo al metodo verificarPermiso
@@ -175,7 +154,6 @@ class TaskController extends Controller
         $project = Project::findOrFail($projectId);
         $task = $project->tasks()->findOrFail($taskId);
 
-        //Eliminar la tarea encontrada
         $task->delete();
 
         return response()->json([

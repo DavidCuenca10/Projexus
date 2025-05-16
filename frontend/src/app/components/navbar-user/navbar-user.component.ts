@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { SolicitudesService } from '../../services/solicitudes.service';
 import { ProjectService } from '../../services/project.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { environment } from '../../../environments/environment.development';
 
 @Component({
   selector: 'app-navbar-user',
@@ -13,14 +14,16 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./navbar-user.component.css']
 })
 export class NavbarUserComponent implements OnInit {
+  public environment = environment;
   name: string = '';
   token: string | null = null;
   userId: number | null = null;
   notificaciones: any[] = [];
   loading: boolean = false;
+  imagenCargada: boolean = false;
 
   isDropdownOpen = false; // Para manejar si el dropdown está abierto o no
-  userImage: string = 'perfiles/pordefecto.png'
+  userImage: string | null = null;
   intervalId: any;
 
   constructor(
@@ -43,6 +46,7 @@ export class NavbarUserComponent implements OnInit {
 
             if (response.data.image_url) {
               this.userImage = response.data.image_url;
+              this.imagenCargada = true;
             }
 
             this.obtenerSolicitudes();

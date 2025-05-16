@@ -3,6 +3,8 @@ import { ProjectService } from '../../services/project.service';
 import { Project } from '../../interfaces/project';
 import { ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { environment } from '../../../environments/environment.development';
+
 
 @Component({
   selector: 'app-perfil-proyectos',
@@ -11,6 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './perfil-proyectos.component.css'
 })
 export class PerfilProyectosComponent implements OnInit {
+  public environment = environment;
   proyectosUsuario: Project[] = [];
   public page!: number;
   rolCargado: boolean = false; //Para gestionar tema de cargas de botones

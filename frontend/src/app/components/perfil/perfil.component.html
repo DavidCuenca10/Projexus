@@ -6,7 +6,7 @@
         <div class="col-12">
             <div class="custom-container d-flex align-items-center gap-4 flex-wrap">
                 <div class="perfil-imagen">
-                    <img *ngIf="usuario" [src]="usuario.image_url" class="rounded-circle" style="width: 150px; height: 150px;" alt="Foto de perfil">
+                    <img *ngIf="usuario" [src]="usuario.image_url ? (environment.apiUrl + '/' + usuario.image_url) : 'perfiles/pordefecto.png'" class="rounded-circle" style="width: 150px; height: 150px;" alt="Foto de perfil">
                 </div>
                 <div class="perfil-info">
                     <div *ngIf="usuario">

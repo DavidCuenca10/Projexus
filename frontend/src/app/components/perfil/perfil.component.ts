@@ -3,6 +3,7 @@ import { PerfilService } from '../../services/perfil.service';
 import { Task } from '../../interfaces/task';
 import { ProjectService } from '../../services/project.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { environment } from '../../../environments/environment.development';
 
 @Component({
   selector: 'app-perfil',
@@ -11,6 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './perfil.component.css'
 })
 export class PerfilComponent implements OnInit {
+  public environment = environment;
   token: string | null = null;
   usuario: any = null;
   usuarioId: number = 0;

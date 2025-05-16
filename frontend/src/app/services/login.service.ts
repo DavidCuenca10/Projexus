@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
 
-  private apiUrl = 'http://127.0.0.1:8000/api/login';
+  private apiUrl = `${environment.apiUrl}/api/login`;
 
   constructor(private http: HttpClient) { }
 
@@ -22,9 +23,7 @@ export class LoginService {
   }
 
   // Método para guardar el token en el localStorage
-  // login.service.ts
   setToken(token: string): void {
     localStorage.setItem('token', token);
-    console.log('Token guardado en localStorage:', token); // Verifica que el token se guarda
   }
 }

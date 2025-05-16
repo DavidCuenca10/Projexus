@@ -24,3 +24,9 @@
   border: 1px solid gray;
   background-color: #383741;
 }
+
+@media (max-width: 576px){
+  .custom-container {
+    margin-bottom: 10px;
+  }
+}

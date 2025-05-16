@@ -24,7 +24,6 @@ Route::group(["middleware" => ["auth:sanctum"]], function(){
 
 
     // Gestión de usuarios en proyectos
-    Route::post("proyectos/{projectId}/usuarios", [ProjectController::class, 'agregarUsuarioAProyecto']); //Agregar usuario a proyecto
     Route::put("proyectos/{projectId}/usuarios/{userId}/rol", [ProjectController::class, 'cambiarRol']); //Asignar rol
     Route::delete("proyectos/{projectId}/usuarios/{userId}", [ProjectController::class, 'eliminarUsuarioDeProyecto']); //Eliminar usuario de proyecto
     Route::get('proyectos/{projectId}/miembros', [ProjectController::class, 'obtenerUsuariosProyecto']); //Listar usuarios de un proyecto

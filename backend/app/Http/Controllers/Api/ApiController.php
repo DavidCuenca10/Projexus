@@ -33,7 +33,7 @@ class ApiController extends Controller
             'password' => Hash::make($request->password),
             'biography' => $request->biography,
             'preferences' => $request->preferences,
-            'image_url' => $imagePath ? asset('storage/' . $imagePath) : null, // Ruta accesible desde el frontend
+            'image_url' => $imagePath ? 'storage/' . $imagePath : null,
         ]);
         
         return response()->json([

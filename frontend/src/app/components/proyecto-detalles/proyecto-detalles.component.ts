@@ -8,6 +8,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { PerfilService } from '../../services/perfil.service';
 import Pusher from 'pusher-js';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment.development';
 
 @Component({
   selector: 'app-proyecto-detalles',
@@ -16,6 +17,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrl: './proyecto-detalles.component.css'
 })
 export class ProyectoDetallesComponent implements OnInit {
+  public environment = environment;
   project: Project | undefined;
   members: Members[] = [];
   tasks: Task[] = [];
@@ -392,6 +394,8 @@ export class ProyectoDetallesComponent implements OnInit {
   }
 
   getImagePorUsuario(username: string): string {
-    return this.userImage.get(username) || 'perfiles/pordefecto.png';
+    const imagePath = this.userImage.get(username) || 'perfiles/pordefecto.png';
+    // Concatenar la base del backend y devolver ruta completa
+    return `${environment.apiUrl}/${imagePath}`;
   }
 }

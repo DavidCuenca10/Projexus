@@ -10,5 +10,9 @@ declare var AOS: any;
 export class WelcomeComponent implements OnInit{
   ngOnInit(): void {
     AOS.init();
+    // Forzar refresco de AOS tras una pequeña espera para que detecte bien
+    setTimeout(() => {
+      AOS.refresh();
+    }, 100);
   }
 }

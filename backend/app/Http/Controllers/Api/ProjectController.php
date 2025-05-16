@@ -13,10 +13,8 @@ use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
-    // Crear un nuevo proyecto
     public function crearProyecto(Request $request)
     {
-        // Validación de los datos recibidos
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
@@ -43,14 +41,12 @@ class ProjectController extends Controller
             'current_members' => 1,  // El propietario siempre cuenta como miembro
             'deadline' => $request->has('deadline') ? $request->deadline : null,
             'tags' => $request->has('tags') ? $request->tags : null,
-            'image_url' => $imagePath ? asset('storage/' . $imagePath) : null, // Ruta accesible desde el frontend
+            'image_url' => $imagePath ? 'storage/' . $imagePath : null,
         ]);
-
 
         if (!$project) {
             return response()->json(['message' => 'Error al crear el proyecto'], 500);
         }
-
 
         // Añadir al propietario como miembro automáticamente
         $project->members()->attach(Auth::id(), ['role' => 'owner', 'status' => 'accepted']);
@@ -62,12 +58,9 @@ class ProjectController extends Controller
     }
 
 
-    //Eliminar proyecto
     public function eliminarProyecto($projectId){
-        // Buscar el proyecto
         $proyecto = Project::find($projectId);
 
-        // Verificar si existe
         if (!$proyecto) {
             return response()->json([
                 'message' => 'Proyecto no encontrado.'
@@ -81,19 +74,18 @@ class ProjectController extends Controller
             ], 403);
         }
 
-        // Obtener la ruta relativa a partir de la URL completa
+        // Eliminar imagen del proyecto si existe
         if ($proyecto->image_url) {
-            // Quitar la parte del dominio y "storage/"
-            $rutaRelativa = str_replace(url('/storage') . '/', '', $proyecto->image_url);
+            // Eliminar el prefijo 'storage/' para que quede 'projects/xxxx...'
+            $imagePath = str_replace('storage/', '', $proyecto->image_url);
 
-            if (Storage::disk('public')->exists($rutaRelativa)) {
-                Storage::disk('public')->delete($rutaRelativa);
+            // Eliminar archivo usando disco 'public'
+            if (Storage::disk('public')->exists($imagePath)) {
+                Storage::disk('public')->delete($imagePath);
             }
         }
 
         $proyecto->members()->detach();
-
-        // Eliminar el proyecto
         $proyecto->delete();
 
         return response()->json([
@@ -102,8 +94,6 @@ class ProjectController extends Controller
     }
 
 
-
-    //Listar proyectos que tiene el usuario
     public function listarProyectosUsuario($userId){
         // Verificar que el usuario autenticado coincida con el usuario de la URL
         if (Auth::id() !== (int) $userId) {
@@ -121,7 +111,6 @@ class ProjectController extends Controller
     }
 
 
-    //Enviar solicitud para unirse a un proyecto
     public function enviarSolicitud($projectId){
         // Verifica si el proyecto existe
         $project = Project::find($projectId);
@@ -150,50 +139,15 @@ class ProjectController extends Controller
     }
 
 
-
-    // Agregar usuario a proyecto
-    public function agregarUsuarioAProyecto(Request $request, $projectId)
-    {
-        // Validar que el usuario sea el propietario del proyecto o admin
-        $project = Project::findOrFail($projectId);
-
-        // Verificar que el usuario autenticado sea el propietario o admin
-        if (Auth::id() !== $project->owner_id) {
-            return response()->json(['message' => 'No autorizado'], 403);  // 403 Forbidden
-        }
-
-        // Validar que el proyecto no haya alcanzado el número máximo de miembros
-        if ($project->current_members >= $project->max_members) {
-            return response()->json(['message' => 'El proyecto ha alcanzado el número máximo de miembros'], 400);  // 400 Bad Request
-        }
-
-        // Validar que el usuario no esté ya en el proyecto
-        $user = User::findOrFail($request->user_id);
-        if ($project->members()->where('user_id', $user->id)->exists()) {
-            return response()->json(['message' => 'El usuario ya está en el proyecto'], 400);  // 400 Bad Request
-        }
-
-        // Agregar al usuario con el rol predeterminado (miembro) y estado "pending"
-        $project->members()->attach($user->id, ['role' => 'member', 'status' => 'pending']);
-
-        // Actualizar el contador de miembros del proyecto
-        $project->current_members += 1;
-        $project->save();
-
-        return response()->json(['message' => 'Usuario agregado con éxito'], 200);
-    }
-
-
-    // Aceptar miembro en el proyecto
     public function aceptarMiembro(Request $request, $projectId, $userId){
-        // Verificar si el usuario autenticado es el Owner del proyecto
+
         $project = Project::findOrFail($projectId);
     
         if ($project->owner_id !== Auth::id()) {
             return response()->json(['message' => 'No tienes permiso para aceptar a este usuario'], 403);
         }
     
-        // Buscar la solicitud pendiente en la tabla correcta
+        // Buscar la solicitud pendiente
         $solicitud = SolicitudProyecto::where([
             'project_id' => $projectId,
             'user_id' => $userId,
@@ -216,14 +170,12 @@ class ProjectController extends Controller
             return response()->json(['message' => 'El proyecto ya ha alcanzado el número máximo de miembros'], 400);
         }
     
-        // Aceptar la solicitud
         $solicitud->estado = 'aceptada';
         $solicitud->save();
     
         // Agregar el usuario a la tabla members con rol 'member'
         $project->members()->attach($userId, ['status' => 'accepted', 'role' => 'member']);
     
-        // Actualizar el contador de miembros del proyecto
         $project->current_members += 1;
         $project->save();
     
@@ -231,16 +183,15 @@ class ProjectController extends Controller
     }
     
 
-    // Rechazar miembro en el proyecto
     public function rechazarMiembro(Request $request, $projectId, $userId){
-        // Verificar si el usuario autenticado es el Owner del proyecto
+
         $project = Project::findOrFail($projectId);
 
         if ($project->owner_id !== Auth::id()) {
             return response()->json(['message' => 'No tienes permiso para rechazar a este usuario'], 403);
         }
 
-        // Buscar la solicitud pendiente en la tabla correcta
+        // Buscar la solicitud pendiente
         $solicitud = SolicitudProyecto::where([
             'project_id' => $projectId,
             'user_id' => $userId,
@@ -259,19 +210,17 @@ class ProjectController extends Controller
     }
 
 
-    // Eliminar usuario de proyecto
     public function eliminarUsuarioDeProyecto($projectId, $userId)
     {
-        // Validar que el usuario autenticado sea el propietario del proyecto
         $project = Project::findOrFail($projectId);
 
         if (Auth::id() !== $project->owner_id) {
-            return response()->json(['message' => 'No autorizado'], 403);  // 403 Forbidden
+            return response()->json(['message' => 'No autorizado'], 403);
         }
 
         // Verificar que el usuario exista en el proyecto
         if (!$project->members()->where('user_id', $userId)->exists()) {
-            return response()->json(['message' => 'El usuario no pertenece al proyecto'], 400);  // 400 Bad Request
+            return response()->json(['message' => 'El usuario no pertenece al proyecto'], 400);
         }
 
         // Eliminar al usuario
@@ -285,10 +234,8 @@ class ProjectController extends Controller
     }
 
 
-    
-    //Modificar rol de usuario
     public function cambiarRol(Request $request, $projectId, $userId){
-        // Validar el rol que viene en el body
+
         $validated = $request->validate([
             'role' => 'required|in:admin,member'
         ]);
@@ -316,7 +263,6 @@ class ProjectController extends Controller
     }
 
 
-
     public function listarProyectosActivos(){
 
         // Obtener todos los proyectos activos con la relación 'owner' para cada proyecto
@@ -326,6 +272,7 @@ class ProjectController extends Controller
             'projects' => $proyectos,
         ], 200);
     }
+
 
     public function obtenerProyecto ($projectId) {
         
@@ -338,7 +285,7 @@ class ProjectController extends Controller
         return response()->json(['project' => $project], 200);
     }
 
-    //Obtener miembros de un proyecto
+
     public function obtenerUsuariosProyecto ($projectId){
 
         $project = Project::with('members')->find($projectId);
@@ -350,7 +297,7 @@ class ProjectController extends Controller
         return response()->json(['members' => $project->members], 200);
     }
 
-    //Salir del proyecto
+
     public function salirDelProyecto ($projectId) {
 
         $user = Auth::user(); //Obtener el usuario autenticado
@@ -368,7 +315,6 @@ class ProjectController extends Controller
         // Eliminar la relación entre el usuario y el proyecto
         $project->members()->detach($user->id);  // Aquí se elimina la relación en la tabla pivote
 
-        // Actualizar el contador de miembros del proyecto
         $project->current_members -= 1;
         $project->save();
 

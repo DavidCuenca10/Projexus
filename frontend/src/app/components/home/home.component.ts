@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectService } from '../../services/project.service';
 import { Project } from '../../interfaces/project';
+import { environment } from '../../../environments/environment.development';
 declare var AOS: any;
 
 @Component({
@@ -10,6 +11,7 @@ declare var AOS: any;
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit{
+  public environment = environment;
   proyectosActivos: Project[] = [];
   proyectoDetalle: Project | null = null; // Variable para almacenar el proyecto con más detalles
   public page!: number;

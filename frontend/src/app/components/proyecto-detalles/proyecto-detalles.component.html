@@ -13,7 +13,7 @@
               <h1>{{ project.name }}</h1>
             </div>
             <div class="bloque-proyecto">
-              <h2><img [src]="imageOwner || 'perfiles/pordefecto.png'" class="me-2" style="width: 40px; height: 40px; border-radius: 50%;"> {{ nombreOwner }}</h2>
+              <h2><img [src]="imageOwner ? (environment.apiUrl + '/' + imageOwner) : 'perfiles/pordefecto.png'" class="me-2" style="width: 40px; height: 40px; border-radius: 50%;"> {{ nombreOwner }}</h2>
               <!-- Si no eres miembro mostrar el boton "Unirme" -->
               <div *ngIf="rolCargado && !isMember && project.current_members < project.max_members"
                   class="bloque-unirse" 
@@ -40,7 +40,7 @@
           </div>
           <!-- Columna para la imagen del proyecto -->
           <div class="imagen-proyecto">
-            <img [src]="project.image_url || 'imagenes/abstract_image.jpg'" alt="Imagen del proyecto" class="img-fluid" />
+            <img [src]="project.image_url ? (environment.apiUrl + '/' + project.image_url) : 'imagenes/abstract_image.jpg'" alt="Imagen del proyecto" class="img-fluid"/>
           </div>
         </div>
       </div>
@@ -177,7 +177,7 @@
         <p class="mb-2" style="color: rgb(107, 107, 248);">{{ project?.current_members }} / {{ project?.max_members }}</p>
         
         <div *ngFor="let miembro of members" class="miembro-info">
-          <img [src]="miembro.image_url || 'perfiles/pordefecto.png'" style="width:45px; height: 45px;">
+          <img [src]="miembro.image_url ? (environment.apiUrl + '/' + miembro.image_url) : 'perfiles/pordefecto.png'" style="width:45px; height: 45px;">
 
           <!-- Si el usuario es owner y el miembro no es el owner del proyecto -->
           <div *ngIf="isOwner && miembro.id !== project?.owner_id" class="miembro-item">
