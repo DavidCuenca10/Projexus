@@ -69,6 +69,11 @@ export class ProyectoDetallesComponent implements OnInit {
     private http: HttpClient
   ) { }
 
+  ngAfterViewChecked() {
+    this.scrollToBottom();
+  }
+
+
   ngOnInit(): void {
     this.projectId = Number(this.route.snapshot.paramMap.get('id')); //Obtenemos la id de la url que será el projectId
     this.token = localStorage.getItem('token');
@@ -129,7 +134,7 @@ export class ProyectoDetallesComponent implements OnInit {
         // Aquí llenamos el mapa con las imagenes de cada usuario para el chat
         this.members.forEach(member => {
           //Rellenamos con key nombre y imagen value, de manera que ya tenemos todas las imagenes de los miembros
-          this.userImage.set(member.name, member.image_url || 'perfiles/pordefecto.png');
+          this.userImage.set(member.name, member.image_url);
         });
       },
       error: (error) => {
@@ -204,7 +209,6 @@ export class ProyectoDetallesComponent implements OnInit {
     this.tipoModal = 'eliminarTarea';
   }
 
-  // Método para seleccionar un miembro para mostar su modal
   seleccionarUsuario(usuario: Members) {
     this.usuarioSeleccionado = usuario;
     this.tipoModal = 'usuario';
@@ -216,7 +220,6 @@ export class ProyectoDetallesComponent implements OnInit {
   }
   
   seleccionarProyectoParaEliminar() {
-    // Cambiar el tipo de modal a 'eliminarProyecto'
     this.tipoModal = 'eliminarProyecto';
   }
 
@@ -246,7 +249,7 @@ export class ProyectoDetallesComponent implements OnInit {
         next: () => {
           this.members = this.members.filter(m => m.id !== userId);
           this.mostrarToast('Miembro eliminado correctamente', 'success');
-          this.tipoModal = null; //Vaciamos el valor del modal
+          this.tipoModal = null;
         },
         error: (error) => {
           if (error.status === 403) {
@@ -261,7 +264,7 @@ export class ProyectoDetallesComponent implements OnInit {
         next: () => {
           this.mostrarToast('Miembro eliminado correctamente', 'success');;
           this.router.navigate(['/home']);
-          this.tipoModal = null; //Vaciamos el valor del modal
+          this.tipoModal = null;
         },
         error: (error) => {
           this.mostrarToast('Error al eliminar el proyecto', 'error');
@@ -394,8 +397,21 @@ export class ProyectoDetallesComponent implements OnInit {
   }
 
   getImagePorUsuario(username: string): string {
-    const imagePath = this.userImage.get(username) || 'perfiles/pordefecto.png';
-    // Concatenar la base del backend y devolver ruta completa
-    return `${environment.apiUrl}/${imagePath}`;
+    //Si imagenPath es null metemos la ruta local. Si la izquierda es null devuelve la derecha basicamente
+    const imagePath = this.userImage.get(username) ?? 'perfiles/pordefecto.png';
+    //Si existe una iamgenPath empezando con perfiles/, me devuelves directamente imagenPath, sino concatenas el env con la imagenPath que nos da el map
+    return imagePath.startsWith('perfiles/') ? imagePath : `${environment.apiUrl}/${imagePath}`;
+  }
+
+  //Funcion para que se haga scroll automatico en el chat
+  scrollToBottom() {
+    try {
+      const container = document.getElementById('chatMensajesContainer');
+      if(container) {
+        container.scrollTop = container.scrollHeight;
+      }
+    } catch (error) {
+      console.error('Error haciend scroll')
+    }
   }
 }

@@ -84,7 +84,6 @@ export class PerfilComponent implements OnInit {
   }
 
   mostrarToast(mensaje: string, tipo: 'success' | 'error' = 'success') {
-    //console.log('Clase aplicada:', tipo === 'success' ? 'snackbar-success' : 'snackbar-error');
     this.snackBar.open(mensaje, 'X', {
       duration: 5000,
       horizontalPosition: 'end',

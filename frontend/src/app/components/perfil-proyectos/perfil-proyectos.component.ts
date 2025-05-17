@@ -115,7 +115,7 @@ export class PerfilProyectosComponent implements OnInit {
     });
   }
 
-  // Comprobar si el usuario es Owner
+  // Comprobar si el usuario es Owner, sino false
   esOwner(id: number): boolean {
     return this.rolesPorProyecto[id]?.isOwner ?? false;
   }
@@ -126,11 +126,10 @@ export class PerfilProyectosComponent implements OnInit {
   }
 
   mostrarToast(mensaje: string, tipo: 'success' | 'error' = 'success') {
-    //console.log('Clase aplicada:', tipo === 'success' ? 'snackbar-success' : 'snackbar-error');
     this.snackBar.open(mensaje, 'X', {
       duration: 5000,
-      horizontalPosition: 'end',
-      verticalPosition: 'bottom',
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
       panelClass: tipo === 'success' ? ['snackbar-success'] : ['snackbar-error']
     });
   }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RegisterService } from '../../services/register.service'; // Asegúrate de que la ruta sea correcta
+import { RegisterService } from '../../services/register.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -25,6 +25,9 @@ export class RegisterComponent {
   biography = '';
   preferences: string = '';
   imageFile?: File;
+  registrationError: string | null = null;
+  errorCheckbox: boolean = false;
+  errorPreferencias: string = '';
 
   areas = [
     { key: 'Marketing', label: 'Marketing', icon: '📈' },
@@ -53,9 +56,11 @@ export class RegisterComponent {
     // Verifica si al menos una opción está seleccionada en las áreas de interés
     if (Object.values(this.selectedOptions).includes(true)) {
       this.step = 3; // Avanza al paso 3
+      this.errorCheckbox = false;
     } else {
-      // Si no se selecciona ninguna opción, puedes mostrar un error o hacer algo
-      console.log("Por favor selecciona al menos una opción");
+      const error = "Selecciona al menos una opción"
+      this.errorCheckbox = true;
+      this.errorPreferencias = error; 
     }
   }
 }
@@ -72,7 +77,7 @@ export class RegisterComponent {
 
     //Biografia por defecto
     if(!this.biography) {
-      this.biography = `👋 Hola, soy ${this.name} y me apasiona aprender y compartir conocimientos en mis áreas favoritas como ${this.preferences} 🌟. ¡Encantado/a de estar aquí! 😊`;
+      this.biography = `👋 Hola, soy ${this.name} y me apasiona aprender y compartir conocimientos en mis áreas favoritas. ¡Encantado/a de estar aquí! 😊`;
     }
 
     this.preferences = Object.keys(this.selectedOptions)
@@ -101,7 +106,7 @@ export class RegisterComponent {
       },
       (error) => {
         console.error('Error en el registro:', error);
-        alert(error.error.message || 'Hubo un problema con el registro.');
+        this.registrationError = error.error.message || 'Hubo un problema con el registro.';
         this.resetForm();
       }
     );
@@ -125,13 +130,7 @@ export class RegisterComponent {
     this.step = 1;
   }
 
-  //Validar el correo
-  isValidEmail(email: string): boolean {
-    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-    return emailPattern.test(email);
-  }
-
-    onImageSelect(event: Event): void {
+  onImageSelect(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       this.imageFile = input.files[0];

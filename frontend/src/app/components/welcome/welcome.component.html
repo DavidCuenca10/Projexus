@@ -4,9 +4,12 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-8 col-12">
-        <div class="content text-center" data-aos="zoom-in" data-aos-duration="500">
+        <div class="content text-center" data-aos="zoom-in" data-aos-duration="2000">
+          <div class="badge-estado mb-3">
+            <span class="bola"></span> ¡Crea tu proyecto!
+          </div>
           <div class="main-heading">
-            <h1>CREA Y COLABORA EN PROYECTOS</h1>
+            <h1>Crea y colabora en proyectos.</h1>
           </div>
 
           <div class="separador"><hr></div>
@@ -17,8 +20,22 @@
 
           <div class="cta-button">
             <button class="boton-empezar" routerLink="/register">
-              EMPIEZA AHORA
+              COMENZAR
             </button>
+          </div>
+          <div class="stats-bar">
+            <div class="stat-item">
+              <strong>24/7</strong>
+              <span>Colaboración en tiempo real</span>
+            </div>
+            <div class="stat-item">
+              <strong>Gratis</strong>
+              <span>Sin costes</span>
+            </div>
+            <div class="stat-item">
+              <strong>Open Source</strong>
+              <span>Proyecto académico</span>
+            </div>
           </div>
         </div>
       </div>
@@ -26,7 +43,7 @@
   </div>
 </section>
 
-<section id="projexus-info" class="info section">
+<section id="projexus-info" class="info section" style="background-color: rgb(39, 39, 39);">
   <div class="container section-title aos-init aos-animate" data-aos="fade-up" data-aos-duration="800">
     <div class="row">
       <div class="col-lg-7">
@@ -48,7 +65,17 @@
         </div>
       </div>
       <div class="col-lg-5">
-        <img src="imagenes/networking.png" alt="Imagen que es projexus" class="fluid-img" data-aos="fade-left" data-aos-duration="800">
+        <div class="projexus-img-container">
+          <img src="imagenes/networking.png" alt="Imagen que es projexus" class="fluid-img" data-aos="fade-left" data-aos-duration="800">
+
+          <div class="badge-blur" routerLink="/register">
+            <i class="fa-solid fa-globe" style="font-size: 25px;"></i>
+              Conecta talento, visión y acción en un mismo lugar
+              <a class="ms-3" style="color: white;">
+                <i class="fa-solid fa-arrow-right"></i>
+              </a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -58,91 +85,111 @@
   <div class="container section-title aos-init aos-animate" data-aos="fade-up" data-aos-duration="1500">
     <div class="row justify-content-center">
       <div class="col-12 aos-init aos-animate" data-aos="fade-up" data-aos-duration="1500">
+
         <div class="content text-center">
           <div class="section-header" style="margin-top: 90px; margin-bottom: 50px;">
             <h2>CÓMO FUNCIONA</h2>
+            <p class="detalle-intermedio text-center" style="max-width: 900px; margin: auto; color: rgb(196, 196, 196);">
+              Tanto si quieres crear tu propio proyecto como si prefieres unirte a uno existente, aquí te mostramos cómo funciona Projexus paso a paso.
+            </p>
           </div>
         </div>
         
         <!-- Gestion de proyectos -->
-        <div class="grid-proyectos">
-          <div class="grid-header">
-            <h3>Gestión de proyectos</h3>
-            <p>Gestiona tus proyectos de manera fácil y eficaz desde Projexus.</p>
-          </div>
 
-          <!-- Grid con bootstrap-->
-          <div class="row funcionalidad-grid" data-aos="zoom-in" data-aos-duration="1500">
-            <div class="col-md-3">
-              <div class="funcionalidad-item">
-                <i class="fa-solid fa-lightbulb"></i>
-                <h4>Idea</h4>
-                <p>Antes de comenzar, reflexiona sobre el propósito y los objetivos de tu proyecto. Define lo que deseas lograr y qué recursos necesitarás.</p>
-              </div>
+        <div class="grid-header">
+          <h3>Gestión de proyectos</h3>
+          <p>Desde la idea inicial hasta la ejecución, Projexus te acompaña en cada paso. Organiza tu proyecto de forma visual, intuitiva y colaborativa.</p>
+        </div>
+
+        <div class="row funcionalidad-grid" data-aos="zoom-in" data-aos-duration="1500">
+          <div class="col-md-3 mb-2">
+            <div class="funcionalidad-item">
+              <i class="fa-solid fa-lightbulb"></i>
+              <h4>Idea</h4>
+              <p>Antes de comenzar, reflexiona sobre el propósito y los objetivos de tu proyecto. Define lo que deseas lograr y qué recursos necesitarás.</p>
             </div>
-            <div class="col-md-3">
-              <div class="funcionalidad-item">
-                <i class="fa-solid fa-plus"></i>
-                <h4>Crea</h4>
-                <p>Una vez tengas tu idea clara, completa el formulario de creación del proyecto. Establece un nombre, descripción, fechas clave y otros detalles importantes.</p>
-              </div>
+          </div>
+          <div class="col-md-3 mb-2">
+            <div class="funcionalidad-item">
+              <i class="fa-solid fa-plus"></i>
+              <h4>Crea</h4>
+              <p>Una vez tengas tu idea clara, completa el formulario de creación del proyecto. Establece un nombre, descripción, fechas clave y otros detalles importantes.</p>
             </div>
-            <div class="col-md-3">
-              <div class="funcionalidad-item">
-                <i class="fa-solid fa-calendar"></i>
-                <h4>Planifica</h4>
-                <p>Organiza el flujo de trabajo y asigna tareas a los miembros del equipo. Define hitos, fechas límite y recursos para que el proyecto avance sin problemas.</p>
-              </div>
+          </div>
+          <div class="col-md-3 mb-2">
+            <div class="funcionalidad-item">
+              <i class="fa-solid fa-calendar"></i>
+              <h4>Planifica</h4>
+              <p>Organiza el flujo de trabajo y asigna tareas a los miembros del equipo. Define hitos, fechas límite y recursos para que el proyecto avance sin problemas.</p>
             </div>
-            <div class="col-md-3">
-              <div class="funcionalidad-item">
-                <i class="fa-solid fa-people-arrows"></i>
-                <h4>Colabora</h4>
-                <p>Invita a miembros del equipo para que se unan al proyecto. Comparte ideas, divide tareas y mantén la comunicación fluida durante todo el proceso.</p>
-              </div>
+          </div>
+          <div class="col-md-3 mb-2">
+            <div class="funcionalidad-item">
+              <i class="fa-solid fa-people-arrows"></i>
+              <h4>Colabora</h4>
+              <p>Invita a miembros del equipo para que se unan al proyecto. Comparte ideas, divide tareas y mantén la comunicación fluida durante todo el proceso a traves de un chat en vivo.</p>
             </div>
           </div>
         </div>
 
         <!-- Explorar proyectos -->
-        <div class="grid-proyectos">
-          <div class="grid-header">
-            <h3>Explorar proyectos</h3>
-            <p>Explora proyectos.</p>
-          </div>
+        <div class="grid-header">
+          <h3>Explorar proyectos</h3>
+          <p>Descubre ideas innovadoras y únete a proyectos que te apasionen.</p>
+        </div>
 
-          <!-- Grid con bootstrap-->
-          <div class="row funcionalidad-grid" data-aos="zoom-out" data-aos-duration="1500">
-            <div class="col-md-3">
-              <div class="funcionalidad-item">
-                <h4>Idea</h4>
-                <p>Antes de comenzar, reflexiona sobre el propósito y los objetivos de tu proyecto. Define lo que deseas lograr y qué recursos necesitarás.</p>
-              </div>
+        <div class="row funcionalidad-grid" data-aos="zoom-out" data-aos-duration="1500">
+          <div class="col-md-3 mb-2">
+            <div class="funcionalidad-item">
+              <i class="fa-solid fa-user-plus"></i>
+              <h4>Regístrate</h4>
+              <p>Crea una cuenta gratuita o inicia sesión para poder explorar y unirte a proyectos colaborativos. Así como desbloquear todas las funcionalidades de la plataforma.</p>
             </div>
-            <div class="col-md-3">
-              <div class="funcionalidad-item">
-                <h4>Crea</h4>
-                <p>Una vez tengas tu idea clara, completa el formulario de creación del proyecto. Establece un nombre, descripción, fechas clave y otros detalles importantes.</p>
-              </div>
+          </div>
+          <div class="col-md-3 mb-2">
+            <div class="funcionalidad-item">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <h4>Explora</h4>
+              <p>Navega por una amplia variedad de proyectos disponibles. Descubre iniciativas activas, conoce a sus creadores y encuentra oportunidades para participar según tus intereses y habilidades.</p>
             </div>
-            <div class="col-md-3">
-              <div class="funcionalidad-item">
-                <h4>Planifica</h4>
-                <p>Organiza el flujo de trabajo y asigna tareas a los miembros del equipo. Define hitos, fechas límite y recursos para que el proyecto avance sin problemas.</p>
-              </div>
+          </div>
+          <div class="col-md-3 mb-2">
+            <div class="funcionalidad-item">
+              <i class="fa-solid fa-envelope-open-text"></i>
+              <h4>Solicita unirte</h4>
+              <p>Una vez encuentres un proyecto que te inspire, revisa su descripción, objetivos y equipo actual. Si crees que puedes aportar, envía tu solicitud para ser colaborador.</p>
             </div>
-            <div class="col-md-3">
-              <div class="funcionalidad-item">
-                <h4>Colabora</h4>
-                <p>Invita a miembros del equipo para que se unan al proyecto. Comparte ideas, divide tareas y mantén la comunicación fluida durante todo el proceso.</p>
-              </div>
+          </div>
+          <div class="col-md-3 mb-2">
+            <div class="funcionalidad-item">
+              <i class="fa-solid fa-handshake"></i>
+              <h4>Colabora</h4>
+              <p>Cuando tu solicitud sea aceptada, empieza a trabajar codo a codo con el equipo. Comunícate a través del chat en vivo integrado para compartir ideas y coordinar tareas</p>
             </div>
+          </div>
+          <hr style="color: white; margin-top: 100px;">
+          <div class="text-center mt-5" data-aos="fade-up" data-aos-duration="1000" style="color: white;">
+            <h4>¿Listo para empezar tu camino en Projexus?</h4>
+            <p>Ya sea creando o colaborando, tienes una comunidad esperando por ti.</p>
+            <a class="btn btn-outline-light mt-3" routerLink="/register">ÚNETE AHORA</a>
           </div>
         </div>
       </div>
     </div>
   </div>
 </section>
-<footer style="background-color: #f0f0f0; color: #888; text-align: center; padding: 12px 0; font-size: 0.9rem; border-top: 1px solid #ddd; margin-top: 40px;">
-  © 2025 TuEmpresa. Todos los derechos reservados. | <a href="#" style="color: #aaa; text-decoration: none;">Política de privacidad</a>
+
+<footer class="text-center text-white" style="background-color: #262d33;">
+  <div class="container p-4 pb-0">
+      <p class="d-flex justify-content-center align-items-center">
+        <span class="me-3">Regístrate gratis</span>
+        <button type="button" class="btn btn-outline-light btn-rounded" routerLink="/register">
+          Empieza ahora
+        </button>
+      </p>
+    </div>
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+      © 2025 Copyright: David Cuenca
+    </div>
 </footer>

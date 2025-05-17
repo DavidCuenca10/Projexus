@@ -33,16 +33,4 @@ export class HomeComponent implements OnInit{
       }
     );
   }
-
-  //Metodo que se activará cuando el usuario haga
-  verDetallesProyecto(id: number): void {
-    this.projectService.obtenerProyecto(id).subscribe(
-      (response: any) => {
-        this.proyectoDetalle = response.project; // Aquí guardamos el proyecto detallado
-      },
-      (error) => {
-        console.error('Error al obtener los detalles del proyecto', error);
-      }
-    );
-  }
 }

@@ -1,37 +1,41 @@
 .navigation_image {
-    width: 40px;  /* Ajuste del tamaño de la imagen de perfil */
+    width: 40px;
     height: 40px;
     cursor: pointer;
-    border-radius: 50%;  /* Imagen redondeada */
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);  /* Sombra sutil */
-    transition: transform 0.2s ease-in-out;  /* Efecto de transformación al pasar el mouse */
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease-in-out;
     object-fit: cover;
 }
 
 .navigation_image:hover {
-    transform: scale(1.1);  /* Aumento de tamaño al pasar el mouse */
+    transform: scale(1.1); 
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
 }
 
 /* Aplica la animación al menú desplegable */
 .dropdown-menu {
-    animation: slideIn 0.3s ease-out;  /* Efecto de deslizamiento */
+    animation: slideIn 0.3s ease-out;
 }
 
 .dropdown-menu-lg {
     min-width: 18rem;
     padding: 0px;
     border-radius: 10px;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);  /* Sombra sutil para el menú */
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
     transition: opacity 0.3s ease-in-out;
-    background-color: #fff;  /* Fondo blanco */
+    background-color: #fff;
 }
 
 .dropdown-menu-header {
-    background-color: #ff6f00;  /* Un naranja brillante */
+    background-color: #ff6f00;
     color: white;
     border-radius: 10px 10px 0px 0px;
     padding: 10px;
-    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);  /* Sombra suave para el encabezado */
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
 }
 
 .dropdown-menu-header img {
@@ -42,29 +46,29 @@
 .navigation {
     position: relative;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: rgba(27, 38, 44, 0.8);  /* Fondo semi-transparente */
+    background-color: rgba(27, 38, 44, 0.8);
     padding: 10px 20px;
     border-radius: 35px;
     z-index: 10000;
-    backdrop-filter: blur(10px);  /* Efecto de desenfoque */
-    -webkit-backdrop-filter: blur(10px);  /* Soporte para Safari */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.075);
 }
 
 
 .navigation:hover {
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);  /* Aumentar sombra al pasar el mouse */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .fa-bars {
     cursor: pointer;
     font-size: 1.2rem;
-    color: #333;  /* Color gris oscuro para el icono */
+    color: #333; 
     transition: transform 0.2s ease-in-out;
 }
 
 .fa-bars:hover {
-    transform: scale(1.2);  /* Efecto de zoom en el icono */
+    transform: scale(1.2);
 }
 
 .dropdown-menu-section {
@@ -72,19 +76,18 @@
     cursor: pointer;
     color: #333;
     font-size: 1rem;
-    transition: background-color 0.2s ease, padding-left 0.2s ease;  /* Transiciones suaves */
+    transition: background-color 0.2s ease, padding-left 0.2s ease;
 }
 
 .dropdown-menu-section:hover {
-    background-color: rgba(253, 192, 79, 0.8);  /* Efecto hover más suave */
-    padding-left: 20px;  /* Desplazamiento hacia la izquierda */
-    border-left: 3px solid #ff6f00;  /* Borde izquierdo destacado */
+    background-color: rgba(253, 192, 79, 0.8);
+    padding-left: 20px;
+    border-left: 3px solid #ff6f00;
 }
 
 .navbar-brand {
-    font-family: 'Montserrat', sans-serif; /* Usa Montserrat o la que prefieras */
-    font-size: 2rem; /* Puedes ajustar el tamaño */
-    font-weight: 600; /* Puedes cambiar el grosor si te gusta más */
+    font-size: 2rem;
+    font-weight: 600;
     color: white;
 }
 
@@ -99,20 +102,20 @@
 .row {
     margin-left: auto;
     margin-right: auto;
-    max-width: 1300px;  /* Ajusta el ancho máximo sin afectar responsive */
-    width: 80vw;  /* Usa porcentaje del viewport para flexibilidad */
+    max-width: 1300px;
+    width: 80vw;
 }
 
 .dropdown-menu-header span {
-    background-color: transparent !important; /* Eliminar fondo blanco si lo tiene */
-    color: white !important; /* Asegurar color del texto */
-    font-weight: bold; /* Hacer que el texto resalte */
+    background-color: transparent !important;
+    color: white !important;
+    font-weight: bold;
 }
 
 .dropdown-menu-section span, 
 .dropdown-menu-section i {
-    background-color: transparent !important; /* Asegurar que no tengan fondo propio */
-    font-weight: bold; /* Resaltar texto */
+    background-color: transparent !important;
+    font-weight: bold;
 }
 
 .boton-normal {

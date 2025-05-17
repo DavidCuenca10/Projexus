@@ -15,26 +15,32 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
 
     const isAuthenticated = this.loginService.isAuthenticated();
-    const rutaIntentada = state.url; 
-    
-    // Rutas estáticas protegidas
-    const protectedRoutes = ['/home', '/crear-proyecto'];
+    const url = state.url;
 
-    // Expresión regular para cualquier ruta dinámica tipo '/algo/:id'
-    const dynamicRouteRegex = /^\/\w+\/[\w-]+$/;
+    const publicPaths = ['/login', '/register'];
+    // Rutas protegidas que incluyen rutas con IDs (dinámicas)
+    const protectedPrefixes = ['/profile', '/proyectos', '/solicitudes', '/messages', '/home'];
 
-    if (isAuthenticated && (rutaIntentada === '/login' || rutaIntentada === '/register')) {
-      // Si el usuario está autenticado y quiere entrar a login/register, lo manda a home
-      this.router.navigate(['/home']);
-      return false;
-    }
-
-    if (!isAuthenticated && (protectedRoutes.some(route => rutaIntentada.startsWith(route)) || dynamicRouteRegex.test(rutaIntentada))) {
-      // Si el usuario NO está autenticado y quiere entrar a una ruta protegida o una ruta dinámica tipo '/algo/:id'
+    if (!isAuthenticated) {
+      // Si la URL empieza por alguna de las rutas protegidas, manda a login
+      if (protectedPrefixes.some(prefix => url.startsWith(prefix))) {
+        this.router.navigate(['/login']);
+        return false;
+      }
+      // Permite acceso a rutas públicas (login, register)
+      if (publicPaths.includes(url)) {
+        return true;
+      }
+      // Por defecto, si no está autenticado y no es ruta pública, manda login
       this.router.navigate(['/login']);
       return false;
+    } else {
+      // Si está autenticado, no deja ir a login ni register
+      if (publicPaths.includes(url)) {
+        this.router.navigate(['/home']);
+        return false;
+      }
+      return true; // Usuario autenticado puede acceder a cualquier otra ruta
     }
-
-    return true; // Si ninguna de las condiciones se cumple, permite el acceso
   }
 }

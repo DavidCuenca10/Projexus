@@ -1,11 +1,8 @@
 <div class="login-wrapper d-flex justify-content-center align-items-center vh-100">
-  <div class="login-card shadow-lg p-5 animate-fade-up">
+  <div class="login-card shadow-lg p-5">
     <h2 class="text-center mb-4 fw-bold" style="font-size: 44px;">Bienvenido</h2>
     <p class="text-muted text-center mb-5">Inicia sesión para continuar</p>
-    
     <form (ngSubmit)="completeInicio()" #loginForm="ngForm">
-      
-      <!-- Email -->
       <div class="mb-3">
         <div class="input-container">
           <input
@@ -45,8 +42,7 @@
       <div *ngIf="errorMensaje" class="text-danger text-center mb-3">
         {{ errorMensaje }}
       </div>
-
-      <!-- Botón -->
+      
       <button
         type="submit"
         class="btn btn-primary w-100 py-2 rounded-pill fw-semibold"
@@ -55,7 +51,6 @@
       </button>
     </form>
 
-    <!-- Extra -->
     <div class="text-center mt-4">
       <p class="mb-1">
         ¿No tienes una cuenta?

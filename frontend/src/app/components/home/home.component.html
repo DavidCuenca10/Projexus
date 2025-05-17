@@ -1,18 +1,18 @@
 <app-navbar-user></app-navbar-user>
 
-<!-- Hero Section (reemplaza 'Proyectos recientes') -->
-<section class="hero-section text-white text-center">
-  <div class="hero-content">
+<div class="container text-white text-center">
+  <div class="container-titulo">
     <h1>🚀 Explora proyectos únicos</h1>
     <p>Colabora, aprende e inspírate con los proyectos de la comunidad</p>
   </div>
-</section>
+</div>
+
 
 <!-- Contenedor de proyectos -->
 <div class="container custom-container">
   <!-- Grid de proyectos -->
   <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-5">
-    <div class="col" *ngFor="let project of proyectosActivos | paginate: { itemsPerPage: 6, currentPage: page }" data-aos="zoom-im" data-aos-duration="1500" data-aos-easing="ease-in-out">
+    <div class="col" *ngFor="let project of proyectosActivos | paginate: { itemsPerPage: 6, currentPage: page }" data-aos="zoom-in" data-aos-duration="1000" data-aos-easing="ease-in-out">
       <div class="custom-card">
         <div class="custom-card-image">
           <div class="custom-badge-categoria" [ngClass]="project.category.toLowerCase()">
@@ -21,7 +21,7 @@
           <img [src]="project.image_url ? (environment.apiUrl + '/' + project.image_url) : 'imagenes/abstract_image.jpg'" class="custom-card-img" alt="Imagen proyecto"/>
         </div>
         <div class="custom-card-body">
-          <h3 class="custom-card-title">{{project.name}}</h3><p class="mb-2" style="color: rgb(107, 107, 248); font-weight: bold;">{{ project.current_members }} / {{ project.max_members }}</p>
+          <h3 class="custom-card-title">{{project.name}}</h3><p class="mb-2" style="color: rgb(107, 107, 248); font-weight: bold; font-size: 18px;">{{ project.current_members }} / {{ project.max_members }}</p>
           <p class="custom-card-text">{{project.description}}</p>
           <div class="custom-card-footer">
             <span class="badge bg-primary d-flex align-items-center gap-2">

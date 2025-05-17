@@ -3,12 +3,7 @@
   <div class="row">
     <div class="col-12">
       <div class="navbar navbar-expand-lg navigation">
-
-        <!-- Nombre de la página -->
-        <a class="navbar-brand" routerLink="/home">
-            Projexus
-        </a>
-
+        <a class="navbar-brand" routerLink="/home">Projexus</a>
         <!-- Botón de hamburguesa para pantallas pequeñas -->
         <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -23,7 +18,7 @@
                 <button class="btn boton-normal me-1 mb-2 mb-md-0" (click)="scrollToSection('projexus-info')">¿Qué es projexus?</button>
                 <button class="btn boton-normal me-1 mb-2 mb-md-0" (click)="scrollToSection('como-funciona')">Cómo funciona</button>
             </div>
-
+            <hr style="color: white;">
             <!-- Bloque con los botones de login y registro alineados a la derecha -->
             <div class="d-flex justify-content-end flex-column flex-md-row">
                 <button class="btn boton-normal me-2 mb-2 mb-md-0" routerLink="/login">Iniciar sesión</button>
@@ -36,7 +31,6 @@
             <div class="d-flex align-items-center perfil">   
               <!-- Botón de crear proyecto -->
               <button class="btn boton-crear-proyecto me-3" routerLink="/crear-proyecto"><i class="fa-solid fa-plus"></i> Crear proyecto</button>
-              
               <!-- Campanita de notificaciones -->
               <div class="dropdown me-3">
                 <button class="btn boton-normal position-relative" type="button" data-bs-toggle="dropdown" aria-expanded="false" (click)="toggleDropdown()">
@@ -45,7 +39,6 @@
                   <span *ngIf="notificaciones.length > 0" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                     {{ notificaciones.length }}
                   </span>
-                  <!-- Flecha que gira -->
                   <i class="fa-solid fa-chevron-right ms-2" [ngClass]="{'rotate-90': isDropdownOpen, 'rotate-back': !isDropdownOpen}"></i>
                 </button>
                 <!-- Panel de notificaciones -->
@@ -84,7 +77,6 @@
                 </div>
               </div>
 
-              <!-- Imagen de perfil -->
               <img [src]="userImage ? (environment.apiUrl + '/' + userImage) : '/perfiles/pordefecto.png'" class="img-fluid navigation_image" id="dropdownMenuButton" aria-expanded="false" data-bs-toggle="dropdown" aria-haspopup="true">
 
               <!-- Menú desplegable -->
