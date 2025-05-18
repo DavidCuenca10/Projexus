@@ -24,6 +24,7 @@ export class PerfilProyectosComponent implements OnInit {
   //1: { isOwner: true, isAdmin: false, isMember: true },};
   totalProyectos: number = 0;
   tipoModal: 'eliminarProyecto' | null = null;
+  anteriorEstado: string = '';
 
   constructor(
     private projectService: ProjectService,
@@ -43,6 +44,7 @@ export class PerfilProyectosComponent implements OnInit {
           // Verifica el rol de cada proyecto (recorremos los proyectos del usuario y comprobamos el rol de cada 1)
           this.proyectosUsuario.forEach((proyecto) => {
             this.verificarRol(proyecto.id); // Llama a la función de verificación para cada proyecto
+            this.anteriorEstado = proyecto.estado // Guardamos el valor del estado del proyecto
           });
         },
         error: (error) => {
@@ -111,6 +113,21 @@ export class PerfilProyectosComponent implements OnInit {
       },
       error: (error) => {
         this.mostrarToast('No se he podido eliminar el proyecto', 'error');
+      }
+    });
+  }
+
+  actualizarEstado(project: any) {
+    const projectId = project.id;
+    const nuevoEstado = project.estado;
+
+    this.projectService.actualizarEstadoProyecto(projectId, nuevoEstado).subscribe({
+      next: (response) => {
+        project.anteriorEstado = nuevoEstado;
+        this.mostrarToast('Proyecto actualizado correctamente', 'success');
+      },
+      error: (error) => {
+        this.mostrarToast('No se he podido actaulizar el proyecto', 'error');
       }
     });
   }

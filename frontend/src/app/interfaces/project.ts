@@ -14,5 +14,6 @@ export interface Project {
     tags: string;
     image_url: string;
     estado: string;
+    anteriorEstado?: string
 }
   

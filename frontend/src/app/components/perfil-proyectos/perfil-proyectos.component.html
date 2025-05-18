@@ -16,9 +16,27 @@
                 <div class="name">
                     <h2>{{ project.name }}</h2>
                 </div>
-                <div class="categoria" [ngClass]="project.category.toLowerCase()">
-                    <h5>{{ project.category === 'Diseno' ? 'Diseño' : project.category }}</h5>
+                <div class="d-flex">
+                    <div class="categoria me-3" [ngClass]="project.category.toLowerCase()">
+                        <h5>{{ project.category === 'Diseno' ? 'Diseño' : project.category }}</h5>
+                    </div>
+                    <div class="estado text-center justify-content-center">
+                        <div *ngIf="!esOwner(project.id)" class="estado-proyecto-miembro" [ngClass]="{'activo': project.estado === 'activo', 'inactivo': project.estado === 'inactivo'}">
+                            <h5>{{ project.estado }}</h5>
+                        </div>
+                        <select *ngIf="esOwner(project.id)" [(ngModel)]="project.estado" aria-label="Selecciona el estado del proyecto">
+                            <option value="activo">Activo</option>
+                            <option value="inactivo">Inactivo</option>
+                        </select>
+                        <button 
+                            *ngIf="esOwner(project.id) && project.estado !== project.anteriorEstado"
+                            (click)="actualizarEstado(project)"
+                            class="btn btn-sm btn-success ms-2">
+                            Guardar
+                        </button>
+                    </div>
                 </div>
+                
                 <div class="descripcion">
                     <p>{{ project.description }}</p>
                 </div>

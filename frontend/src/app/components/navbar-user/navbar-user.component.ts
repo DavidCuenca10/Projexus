@@ -157,8 +157,8 @@ export class NavbarUserComponent implements OnInit {
   mostrarToast(mensaje: string, tipo: 'success' | 'error' = 'success') {
     this.snackBar.open(mensaje, 'X', {
       duration: 5000,
-      horizontalPosition: 'end',
-      verticalPosition: 'bottom',
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
       panelClass: tipo === 'success' ? ['snackbar-success'] : ['snackbar-error']
     });
   }

@@ -11,7 +11,7 @@ app-navbar-user {
 }
 
 body {
-  background-color: #111926; /* Fondo base más oscuro */
+  background-color: #111926;
   background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
   background-size: 18px 18px;
 }

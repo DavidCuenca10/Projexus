@@ -322,4 +322,26 @@ class ProjectController extends Controller
                 'message' => 'Has salido del proyecto'
         ], 200);
     }
+
+    public function actualizarEstadoProyecto(Request $request, $projectId){
+        $project = Project::findOrFail($projectId);
+
+        // Verificar si el usuario autenticado es el Owner
+        if ($project->owner_id !== Auth::id()) {
+            return response()->json(['message' => 'No tienes permiso para cambiar el estado del proyecto'], 403);
+        }
+
+        $request->validate([
+            'estado' => 'required|in:activo,inactivo',
+        ]);
+
+        $project->update([
+            'estado' => $request->estado,
+        ]);
+
+        return response()->json([
+            'message' => 'Estado del proyecto actualizado',
+            'project' => $project,
+        ], 200);
+    }
 }

@@ -166,4 +166,13 @@ export class ProjectService {
       }
     });
   }
+
+  actualizarEstadoProyecto(projectId:number, newStatus: string): Observable<any> {
+    const url = `${this.apiUrl}/${projectId}`;
+    return this.http.put(url, { estado: newStatus }, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+  }
 }

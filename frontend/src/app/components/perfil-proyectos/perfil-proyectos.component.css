@@ -44,8 +44,7 @@
   border-radius: 15px;
   text-align: center;
   justify-content: center;
-  padding: 4px;
-  font-family: Onest,sans-serif;
+  padding: 6px;
 }
 
 .descripcion {
@@ -62,6 +61,24 @@
   align-items: center;
   gap: 15px;
   word-wrap: break-word;
+}
+
+.estado-proyecto-miembro {
+  padding: 5px;
+  padding-bottom: 1px;
+  border-radius: 15px;
+  justify-content: center;
+  text-align: center;
+}
+
+.activo {
+  background-color: green;
+  color: white;
+}
+
+.inactivo {
+  background-color: red;
+  color: white;
 }
 
 @media (max-width:576px){

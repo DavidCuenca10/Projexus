@@ -11,7 +11,7 @@ class Project extends Model
 
     protected $fillable = [
         'name', 'description', 'category', 'owner_id', 'max_members', 
-        'current_members', 'deadline', 'tags', 'image_url', 'status'
+        'current_members', 'deadline', 'tags', 'image_url', 'estado'
     ];
 
     // Relación con el propietario (un solo usuario)

@@ -21,6 +21,7 @@ Route::group(["middleware" => ["auth:sanctum"]], function(){
     Route::get("proyectos", [ProjectController::class, 'listarProyectosActivos']); //Listar todos los proyectos activos
     Route::delete('proyectos/{projectId}', [ProjectController::class, 'eliminarProyecto']); //Eliminar proyecto
     Route::get('proyectos/{id}', [ProjectController::class, 'obtenerProyecto']); //Buscar proyecto por id
+    Route::put("proyectos/{projectId}", [ProjectController::class, 'actualizarEstadoProyecto']); //Actualizar estado proyecto
 
 
     // Gestión de usuarios en proyectos
