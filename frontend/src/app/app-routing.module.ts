@@ -9,6 +9,7 @@ import { ProyectoDetallesComponent } from './components/proyecto-detalles/proyec
 import { CrearProyectoComponent } from './components/crear-proyecto/crear-proyecto.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { PerfilProyectosComponent } from './components/perfil-proyectos/perfil-proyectos.component';
+import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 
 const routes: Routes = [
   { path: 'register', component: RegisterComponent, canActivate: [AuthGuard] },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'proyecto/:id', component: ProyectoDetallesComponent, canActivate: [AuthGuard] },
   { path: 'crear-proyecto', component: CrearProyectoComponent, canActivate: [AuthGuard] },
   { path: 'perfil', component: PerfilComponent, canActivate: [AuthGuard] },
+  { path: 'admin', component: AdminPanelComponent, canActivate: [AuthGuard] },
   { path: 'proyectos/usuario/:id', component: PerfilProyectosComponent, canActivate: [AuthGuard] },
   { path: '', redirectTo: 'welcome', pathMatch: 'full' },
   { path: '**', redirectTo: 'welcome', pathMatch: 'full' }

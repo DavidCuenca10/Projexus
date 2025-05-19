@@ -28,4 +28,20 @@ export class PerfilService {
       }
     });
   }
+
+  getAllUsers(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/users`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+  }
+
+  deleteUser(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/users/${id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+  }
 }

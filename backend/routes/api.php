@@ -14,11 +14,15 @@ Route::post("login", [ApiController::class, "login"]);
 Route::group(["middleware" => ["auth:sanctum"]], function(){
     
     Route::get("profile", [ApiController::class, "profile"]);
+    Route::get("profile/users", [ApiController::class, "getAllUsers"]);
+    Route::delete('profile/users/{id}', [ApiController::class, 'deleteUser']);
+
 
     //Proyectos
     Route::post("proyectos", [ProjectController::class, 'crearProyecto']); //Crear proyecto
     Route::get("proyectos/usuario/{userId}", [ProjectController::class, 'listarProyectosUsuario']); //Listar proyectos de usuario
     Route::get("proyectos", [ProjectController::class, 'listarProyectosActivos']); //Listar todos los proyectos activos
+    Route::get("proyectos/todos", [ProjectController::class, 'listarTodosProyectos']);//Listar todos los proyectos
     Route::delete('proyectos/{projectId}', [ProjectController::class, 'eliminarProyecto']); //Eliminar proyecto
     Route::get('proyectos/{id}', [ProjectController::class, 'obtenerProyecto']); //Buscar proyecto por id
     Route::put("proyectos/{projectId}", [ProjectController::class, 'actualizarEstadoProyecto']); //Actualizar estado proyecto

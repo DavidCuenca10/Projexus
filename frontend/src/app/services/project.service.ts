@@ -40,6 +40,14 @@ export class ProjectService {
     });
   }
 
+  listarTodosProyectos(): Observable<any>{
+    return this.http.get(`${this.apiUrl}/todos`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+  }
+
 
   obtenerProyecto(id: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/${id}`, {

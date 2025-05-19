@@ -16,6 +16,7 @@ import { CrearProyectoComponent } from './components/crear-proyecto/crear-proyec
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { PerfilProyectosComponent } from './components/perfil-proyectos/perfil-proyectos.component';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
     CrearProyectoComponent,
     PerfilComponent,
     PerfilProyectosComponent,
+    AdminPanelComponent,
   ],
   imports: [
     BrowserModule,

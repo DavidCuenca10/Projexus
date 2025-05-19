@@ -67,8 +67,8 @@ class ProjectController extends Controller
             ], 404);
         }
 
-        // Verificar si el usuario autenticado es el dueño
-        if ($proyecto->owner_id !== Auth::id()) {
+        // Verificar si el usuario autenticado es el dueño o admin del sistema
+        if ($proyecto->owner_id !== Auth::id() && Auth::user()->role !== 'admin') {
             return response()->json([
                 'message' => 'No tienes permiso para eliminar este proyecto.'
             ], 403);
@@ -262,6 +262,13 @@ class ProjectController extends Controller
         return response()->json(['message' => 'Rol cambiado con éxito'], 200);
     }
 
+    public function listarTodosProyectos(){
+        $proyectos = Project::all();
+
+        return response()->json([
+            'projects' => $proyectos,
+        ], 200);
+    }
 
     public function listarProyectosActivos(){
 

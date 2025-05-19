@@ -1,0 +1,34 @@
+<app-navbar-user></app-navbar-user>
+
+<div class="container">
+  <h2 class="text-center mb-4 text-white">Panel de Administración</h2>
+
+  <!-- Botones para alternar entre Usuarios y Proyectos -->
+  <div class="d-flex justify-content-center mb-4">
+    <button class="btn btn-primary" (click)="toggleView()">
+      Ver {{ showUsers ? 'Proyectos' : 'Usuarios' }}
+    </button>
+  </div>
+
+  <!-- Lista de Usuarios -->
+  <div *ngIf="showUsers" class="list-group">
+    <div *ngFor="let usuario of users" class="list-group-item d-flex justify-content-between align-items-center">
+      <div>
+        <h5 class="mb-1">{{ usuario.name }}</h5>
+        <p class="mb-1" style="color: gray;">{{ usuario.email }}</p>
+      </div>
+      <button class="btn boton-elegante rojo" (click)="deleteUser(usuario.id)">Eliminar</button>
+    </div>
+  </div>
+
+  <!-- Lista de Proyectos -->
+  <div *ngIf="!showUsers" class="list-group">
+    <div *ngFor="let proyecto of projects" class="list-group-item d-flex justify-content-between align-items-center">
+      <div>
+        <h5 class="mb-1">{{ proyecto.name }}</h5>
+        <p class="mb-1" style="color: gray;">{{ proyecto.description }}</p>
+      </div>
+      <button class="btn boton-elegante rojo" (click)="deleteProject(proyecto.id)">Eliminar</button> <!-- Puedes agregar lógica de eliminar proyectos también -->
+    </div>
+  </div>
+</div>

@@ -16,6 +16,7 @@ import { environment } from '../../../environments/environment.development';
 export class NavbarUserComponent implements OnInit {
   public environment = environment;
   name: string = '';
+  role: string = '';
   token: string | null = null;
   userId: number | null = null;
   notificaciones: any[] = [];
@@ -43,6 +44,7 @@ export class NavbarUserComponent implements OnInit {
           if (response.status) {
             this.name = response.data.name;
             this.userId = response.data.id;
+            this.role = response.data.role;
 
             if (response.data.image_url) {
               this.userImage = response.data.image_url;
@@ -114,6 +116,10 @@ export class NavbarUserComponent implements OnInit {
 
   irAPerfil(){
     this.router.navigate(['/perfil']);
+  }
+
+  irAdmin(){
+    this.router.navigate(['/admin']);
   }
 
   proyectosUsuario(){

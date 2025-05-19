@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class ApiController extends Controller
 {
@@ -27,6 +28,7 @@ class ApiController extends Controller
             $imagePath = $request->file('image_url')->store('perfiles', 'public');
         }
 
+        $role = 'user';
         User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -34,6 +36,7 @@ class ApiController extends Controller
             'biography' => $request->biography,
             'preferences' => $request->preferences,
             'image_url' => $imagePath ? 'storage/' . $imagePath : null,
+            'role' => $role
         ]);
         
         return response()->json([
@@ -85,5 +88,42 @@ class ApiController extends Controller
             "message"=>"Profile data",
             "data"=>$userdata
         ]);
+    }
+
+    public function getAllUsers(){
+        $users = User::all();
+
+        return response()->json([
+            "status" => true,
+            "message" => "Users data",
+            "data" => $users
+        ]);
+    }
+
+    public function deleteUser($id){
+        $user = User::find($id);
+
+        if ($user->image_url) {
+            // Eliminar el prefijo 'storage/' para que quede 'projects/xxxx...'
+            $imagePath = str_replace('storage/', '', $user->image_url);
+
+            // Eliminar archivo usando disco 'public'
+            if (Storage::disk('public')->exists($imagePath)) {
+                Storage::disk('public')->delete($imagePath);
+            }
+        }
+
+        if ($user) {
+            $user->delete();
+            return response()->json([
+                'status' => true,
+                'message' => 'Usuario eliminado correctamente',
+            ]);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'Usuario no encontrado',
+            ], 404);
+        }
     }
 }

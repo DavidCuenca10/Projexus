@@ -1,0 +1,26 @@
+.container {
+  max-width: 1200px;
+  margin-top: 150px;
+}
+
+.list-group-item {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 16px;
+  padding: 25px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+  padding: 15px;
+  border-radius: 5px;
+  color: white;
+}
+
+.list-group-item button {
+  margin-left: 10px;
+}
+
+h2 {
+  font-size: 2rem;
+  color: #007bff;
+}
