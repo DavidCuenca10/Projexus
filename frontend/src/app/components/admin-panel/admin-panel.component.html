@@ -12,15 +12,18 @@
 
   <!-- Lista de Usuarios -->
   <div *ngIf="showUsers" class="list-group">
-    <div *ngFor="let usuario of users" class="list-group-item d-flex justify-content-between align-items-center">
-      <div>
-        <img [src]="usuario.image_url ? (environment.apiUrl + '/' + usuario.image_url) : 'perfiles/pordefecto.png'" class="mb-2" style="width: 50px; height: 50px; border-radius: 50%;">
-        <h5 class="mb-1">{{ usuario.name }}</h5>
-        <p class="mb-1" style="color: gray;">{{ usuario.email }}</p>
+    <div *ngFor="let usuario of users">
+      <div *ngIf="usuario.role !== 'admin'" class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+          <img [src]="usuario.image_url ? (environment.apiUrl + '/' + usuario.image_url) : 'perfiles/pordefecto.png'" class="mb-2" style="width: 50px; height: 50px; border-radius: 50%;">
+          <h5 class="mb-1">{{ usuario.name }}</h5>
+          <p class="mb-1" style="color: gray;">{{ usuario.email }}</p>
+        </div>
+        <button class="btn boton-elegante rojo" (click)="deleteUser(usuario.id)">Eliminar</button>
       </div>
-      <button class="btn boton-elegante rojo" (click)="deleteUser(usuario.id)">Eliminar</button>
     </div>
   </div>
+
 
   <!-- Lista de Proyectos -->
   <div *ngIf="!showUsers" class="list-group">
