@@ -4,6 +4,7 @@ import { Users } from '../../interfaces/users';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Project } from '../../interfaces/project';
 import { ProjectService } from '../../services/project.service';
+import { environment } from '../../../environments/environment.development';
 
 @Component({
   selector: 'app-admin-panel',
@@ -12,6 +13,7 @@ import { ProjectService } from '../../services/project.service';
   styleUrl: './admin-panel.component.css'
 })
 export class AdminPanelComponent implements OnInit {
+  public environment = environment;
   users: Users[] = [];
   projects: Project[] = [];
   showUsers: boolean = true;
@@ -54,7 +56,7 @@ export class AdminPanelComponent implements OnInit {
     });
   }
 
-  // Cargar proyectos
+  // Obtener todos los proyectos
   cargarProjects(): void {
     this.projectService.listarTodosProyectos().subscribe({
       next: (response) => {

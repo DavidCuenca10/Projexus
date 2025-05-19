@@ -17,6 +17,7 @@
     font-size: 4rem;
 }
 
+/*Card para cada proyecto*/
 .custom-card {
     background-color: #303030;
     border-radius: 20px;
@@ -90,7 +91,7 @@
     overflow: auto;
 }
 
-/* Pie de la tarjeta */
+/* Pie de la card */
 .custom-card-footer {
     padding-top: 10px;
     border-top: 1px solid #ddd;
@@ -174,8 +175,4 @@
 
 .saber-mas:hover::before {
     transform: translate3d(100%, 0, 0);
-}
-
-.mensaje-idea {
-    color: white;
 }

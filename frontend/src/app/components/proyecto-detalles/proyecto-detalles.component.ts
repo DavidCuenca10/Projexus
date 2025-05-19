@@ -56,6 +56,7 @@ export class ProyectoDetallesComponent implements OnInit {
   token: string | null = null;
   messages: any[] = [];
   message = '';
+  originalRole: string = '';
 
   //Usamos un mapa para el chat, de maner que guardadmos el usuario y su imagen para no tener que pedirlas constantemente
   userImage = new Map<string, string>();
@@ -121,19 +122,10 @@ export class ProyectoDetallesComponent implements OnInit {
     // Obtener miembros del proyecto
     this.projectService.obtenerUsuariosProyecto(this.projectId).subscribe({
       next: (data) => {
-        // map(): recorre cada elemento de la lista y crea una nueva lista transformada.
-        // miembro: es cada usuario dentro del array mientras lo recorremos en map.
-        // ...miembro: spread, copia todas las propiedades del miembro original a un nuevo objeto.
-        // originalRole: añadimos esta propiedad nueva al objeto, con el valor que viene de miembro.pivot.role (rol en el proyecto).
-        // Hacemos una copia del miembro y le añadimos un campo extra (originalRole) que contiene el rol, para poder acceder a ese dato fácilmente sin meternos dentro de propiedades anidadas.
-        this.members = data.members.map((miembro: Members) => ({
-          ...miembro,
-          originalRole: miembro.pivot.role // copiamos el rol original
-        }));
-
+        this.members = data.members
         // Aquí llenamos el mapa con las imagenes de cada usuario para el chat
         this.members.forEach(member => {
-          //Rellenamos con key nombre y imagen value, de manera que ya tenemos todas las imagenes de los miembros
+          this.originalRole = member.pivot.role;
           this.userImage.set(member.name, member.image_url);
         });
       },

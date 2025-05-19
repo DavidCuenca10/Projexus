@@ -14,7 +14,7 @@ class NotificationController extends Controller
         $projectIds = Project::where('owner_id', auth()->id())->pluck('id');
 
         if ($projectIds->isEmpty()) {
-            return response()->json(['message' => 'No eres dueño de ningún proyecto.'], 400);
+            return response()->json(['message' => 'No eres dueño de ningún proyecto.'], 200);
         }
 
         $solicitudes = SolicitudProyecto::with(['user', 'project'])

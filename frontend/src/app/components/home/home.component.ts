@@ -13,14 +13,13 @@ declare var AOS: any;
 export class HomeComponent implements OnInit{
   public environment = environment;
   proyectosActivos: Project[] = [];
-  proyectoDetalle: Project | null = null; // Variable para almacenar el proyecto con más detalles
-  public page!: number;
+  public page!: number; //Variable para la paginacion
   
   constructor(private projectService: ProjectService) { }
 
   ngOnInit(): void {
     this.getProyectosActivos();
-    AOS.init();
+    AOS.init(); //Animaciones
   }
 
   getProyectosActivos(): void {

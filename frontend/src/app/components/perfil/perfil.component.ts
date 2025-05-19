@@ -18,6 +18,7 @@ export class PerfilComponent implements OnInit {
   usuarioId: number = 0;
   tareas: Task[] = [];
   proyectosActivosUsuario: number = 0;
+  anteriorEstado: string = '';
 
   constructor(
     private perfilService: PerfilService,
@@ -46,10 +47,11 @@ export class PerfilComponent implements OnInit {
   cargarTareas(id: number) {
     this.perfilService.obtenerTareasUsuario(id).subscribe({
       next: (response) => {
-        this.tareas = response.tareas.map((tarea: Task) => ({
-          ...tarea,
-          anteriorStatus: tarea.status // este es el que vamos a comparar
-        }));
+        this.tareas = response.tareas
+
+        this.tareas.forEach(task => {
+          this.anteriorEstado = task.status
+        })
       },
       error: (error) => console.error('Error al cargar tareas', error)
     });
@@ -63,10 +65,10 @@ export class PerfilComponent implements OnInit {
     this.projectService.actualizarTarea(projectId, taskId, nuevoStatus).subscribe({
       next: (response) => {
         tarea.anteriorStatus = nuevoStatus;
-        console.log('Tarea actualizada', response);
+        this.mostrarToast('Tarea editada correctamente', 'success');
       },
       error: (error) => {
-        console.error('Error al actualizar tarea', error);
+        this.mostrarToast('Error al editar la tarea', 'error');
       }
     });
   }

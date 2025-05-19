@@ -82,7 +82,7 @@ export class CrearProyectoComponent {
     formData.append('category', this.category);
     formData.append('max_members', this.maxMembers.toString());
     formData.append('deadline', this.deadline || '');
-    formData.append('tags', this.tags.join(',')); // Si las etiquetas las pasas como una cadena separada por comas
+    formData.append('tags', this.tags.join(',')); // Cadena separada por comas
 
     // Verificar que hay una imagen y agregarla al FormData
     if (this.imageFile) {

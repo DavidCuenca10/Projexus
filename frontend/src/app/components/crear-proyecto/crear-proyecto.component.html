@@ -97,7 +97,7 @@
             <!-- Contenedor que muestra las etiquetas actuales -->
             <div class="d-flex flex-wrap gap-2 mb-2">
                 <span *ngFor="let tag of tags; let i = index" class="badge px-3 py-2 rounded-pill position-relative">
-                    {{ tag }} <!-- Muestra el nombre de la etiqueta -->
+                    {{ tag }}
                     
                     <!-- Botón de eliminar (la "X") -->
                     <button type="button" class="btn btn-borrar position-absolute m-2" style="top: -15px; right: -15px; width: 24px; height: 24px;" aria-label="Eliminar" (click)="removeTag(i)"><i class="fa-solid fa-xmark"></i></button>

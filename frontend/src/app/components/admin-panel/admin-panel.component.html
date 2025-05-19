@@ -14,6 +14,7 @@
   <div *ngIf="showUsers" class="list-group">
     <div *ngFor="let usuario of users" class="list-group-item d-flex justify-content-between align-items-center">
       <div>
+        <img [src]="usuario.image_url ? (environment.apiUrl + '/' + usuario.image_url) : 'perfiles/pordefecto.png'" class="mb-2" style="width: 50px; height: 50px; border-radius: 50%;">
         <h5 class="mb-1">{{ usuario.name }}</h5>
         <p class="mb-1" style="color: gray;">{{ usuario.email }}</p>
       </div>
@@ -26,9 +27,9 @@
     <div *ngFor="let proyecto of projects" class="list-group-item d-flex justify-content-between align-items-center">
       <div>
         <h5 class="mb-1">{{ proyecto.name }}</h5>
-        <p class="mb-1" style="color: gray;">{{ proyecto.description }}</p>
+        <p class="mb-1" style="color: gray; max-width: 1000px;">{{ proyecto.description }}</p>
       </div>
-      <button class="btn boton-elegante rojo" (click)="deleteProject(proyecto.id)">Eliminar</button> <!-- Puedes agregar lógica de eliminar proyectos también -->
+      <button class="btn boton-elegante rojo" (click)="deleteProject(proyecto.id)">Eliminar</button>
     </div>
   </div>
 </div>

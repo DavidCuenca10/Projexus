@@ -18,21 +18,20 @@ body {
 
 /*Toast*/
 
-.mat-simple-snackbar {
+.mat-mdc-snack-bar-label .mdc-snackbar__label {
   font-family: "Onest", sans-serif !important;
+  padding: 16px;
 }
 
 .snackbar-success{
   .mdc-snackbar__surface{
     background-color: green !important;
-    font-family: "Onest", sans-serif !important;
   }
 }
 
 .snackbar-error{
   .mdc-snackbar__surface{
     background-color: rgb(151, 0, 0) !important;
-    font-family: "Onest", sans-serif !important;
   }
 }
 

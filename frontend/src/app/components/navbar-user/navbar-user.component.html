@@ -86,7 +86,7 @@
                   <span>{{ name }}</span>  <!-- Aquí mostramos el nombre del usuario -->
                 </div>
 
-                <!-- Secciones del menú -->
+                <!-- Secciones del perfil -->
                 <div>
                   <div class="dropdown-menu-section" (click)="irAPerfil()">
                     <span>Mi perfil</span><i class="fa-solid fa-user float-end"></i>
@@ -95,7 +95,7 @@
                     <span>Mis proyectos</span><i class="fa-solid fa-diagram-project float-end"></i>
                   </div>
                   <div *ngIf="role === 'admin'" class="dropdown-menu-section" (click)="irAdmin()">
-                    <span>Administrador</span><i class="fa-solid fa-diagram-project float-end"></i>
+                    <span>Administrador</span><i class="fa-solid fa-hammer float-end"></i>
                   </div>
                   <div class="dropdown-menu-section text-danger" (click)="logout()">
                     <span>Cerrar sesión</span><i class="fa-solid fa-right-from-bracket float-end"></i>
