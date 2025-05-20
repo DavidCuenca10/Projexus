@@ -12,7 +12,7 @@ app-navbar-user {
 
 body {
   background-color: #111926;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(255, 255, 255, 0.096) 1px, transparent 1px);
   background-size: 18px 18px;
 }
 
@@ -287,7 +287,7 @@ body {
 .custom-badge-categoria.tecnologia, .categoria.tecnologia h5 {background-color: var(--color-tecnologia);}
 .custom-badge-categoria.diseno, .categoria.diseno h5 {background-color: var(--color-diseño);}
 .custom-badge-categoria.marketing, .categoria.marketing h5 {background-color: var(--color-marketing);}
-.custom-badge-categoria.negocios, .categoria.negocios h5 {background-color: var(--color-negocios); backdrop-filter: blur(12px);}
+.custom-badge-categoria.negocios, .categoria.negocios h5 {background-color: var(--color-negocios);}
 .custom-badge-categoria.salud, .categoria.salud h5 {background-color: var(--color-salud);}
 .custom-badge-categoria.educacion, .categoria.educacion h5 {background-color: var(--color-educacion);}
 .custom-badge-categoria.deporte, .categoria.deporte h5 {background-color: var(--color-deporte);}

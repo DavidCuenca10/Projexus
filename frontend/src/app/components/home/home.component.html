@@ -7,25 +7,30 @@
   </div>
 </div>
 
-
 <!-- Contenedor de proyectos -->
 <div class="container custom-container">
   <!-- Grid de proyectos -->
   <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-5" [ngClass]="{ 'justify-content-center': proyectosActivos.length <= 2 }">
-    <div class="col" *ngFor="let project of proyectosActivos | paginate: { itemsPerPage: 6, currentPage: page }" data-aos="zoom-in" data-aos-duration="1000" data-aos-easing="ease-in-out">
-      <div class="custom-card">
+    <div class="col d-flex" *ngFor="let project of proyectosActivos | paginate: { itemsPerPage: 6, currentPage: page }" data-aos="zoom-in" data-aos-duration="1000" data-aos-easing="ease-in-out">
+      <div class="card custom-card d-flex flex-column w-100 h-100">
+        <!-- Imagen del proyecto -->
         <div class="custom-card-image">
           <div class="custom-badge-categoria" [ngClass]="project.category.toLowerCase()">
-            <span>{{project.category === 'Diseno' ? 'Diseño' : project.category}}</span>
+            <span>{{ project.category === 'Diseno' ? 'Diseño' : project.category }}</span>
           </div>
           <img [src]="project.image_url ? (environment.apiUrl + '/' + project.image_url) : 'imagenes/abstract_image.jpg'" class="custom-card-img" alt="Imagen proyecto"/>
         </div>
-        <div class="custom-card-body">
-          <h3 class="custom-card-title">{{project.name}}</h3><p class="mb-2" style="color: rgb(107, 107, 248); font-weight: bold; font-size: 18px;">{{ project.current_members }} / {{ project.max_members }}</p>
-          <p class="custom-card-text">{{project.description}}</p>
-          <div class="custom-card-footer">
+
+        <!-- Cuerpo de la tarjeta -->
+        <div class="card-body d-flex flex-column flex-grow-1">
+          <h3 class="custom-card-title">{{project.name}}</h3>
+          <p class="mb-2 text-primary fw-bold" style="font-size: 18px;">{{ project.current_members }} / {{ project.max_members }}</p>
+          <p class="custom-card-text flex-grow-1">{{project.description}}</p>
+
+          <!-- Footer de la tarjeta -->
+          <div class="mt-auto custom-card-footer">
             <span class="badge bg-primary d-flex align-items-center gap-2">
-              <img [src]="project.owner.image_url ? (environment.apiUrl + '/' + project.owner.image_url) : 'perfiles/pordefecto.png'" class="rounded-circle" style="width: 30px; height: 30px;"> 
+              <img [src]="project.owner.image_url ? (environment.apiUrl + '/' + project.owner.image_url) : 'perfiles/pordefecto.png'" class="rounded-circle" style="width: 30px; height: 30px;">
               <span>{{ project.owner.name }}</span>
             </span>
             <div class="container-boton">

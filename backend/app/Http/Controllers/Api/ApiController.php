@@ -103,27 +103,33 @@ class ApiController extends Controller
     public function deleteUser($id){
         $user = User::find($id);
 
-        if ($user->image_url) {
-            // Eliminar el prefijo 'storage/' para que quede 'projects/xxxx...'
-            $imagePath = str_replace('storage/', '', $user->image_url);
-
-            // Eliminar archivo usando disco 'public'
-            if (Storage::disk('public')->exists($imagePath)) {
-                Storage::disk('public')->delete($imagePath);
-            }
-        }
-
-        if ($user) {
-            $user->delete();
-            return response()->json([
-                'status' => true,
-                'message' => 'Usuario eliminado correctamente',
-            ]);
-        } else {
+        if (!$user) {
             return response()->json([
                 'status' => false,
                 'message' => 'Usuario no encontrado',
             ], 404);
         }
+
+        // Asignamos todos los proyectos del usuario al ADMINISTRADOR DEL SISTEMA POR SEGURIDAD
+        $admin = User::where('role', 'admin')->first();
+        $user->ownedProjects()->update(['owner_id' => $admin->id]);
+        $user->tasks()->delete();
+        $user->solicitudes()->delete();
+        $user->projects()->detach();
+
+        // Eliminar imagen si tiene
+        if ($user->image_url) {
+            $imagePath = str_replace('storage/', '', $user->image_url);
+            if (Storage::disk('public')->exists($imagePath)) {
+                Storage::disk('public')->delete($imagePath);
+            }
+        }
+
+        $user->delete();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Usuario eliminado y proyectos reasignados al administrador correctamente.',
+        ]);
     }
 }

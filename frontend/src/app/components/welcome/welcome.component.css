@@ -96,19 +96,6 @@
   box-shadow: rgb(201, 46, 70) 0px 10px 0px 0px;
   color: hsl(0, 0%, 100%);
   cursor: pointer;
-  animation: pulseBoton 2s ease-in-out infinite;
-}
-
-@keyframes pulseBoton {
-    0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-  100% {
-    transform: scale(1);
-  }
 }
 
 .boton-empezar:hover {
@@ -132,6 +119,12 @@
 .section-header h2{
   font-size: 3rem;
   font-weight: 600;
+}
+
+@media (max-width: 576px) {
+  .section-header h2 {
+    text-align: center;
+  }
 }
 
 .info {
