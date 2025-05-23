@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ProjectService } from '../../services/project.service';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-crear-proyecto',
@@ -28,7 +29,7 @@ export class CrearProyectoComponent {
   //luego tenemos la fecha actual en el html [min]
   minDate: string = new Date().toISOString().split('T')[0]; // formato 'YYYY-MM-DD'
 
-  constructor(private projectService: ProjectService, private router: Router) {}
+  constructor(private projectService: ProjectService, private router: Router, private snackBar: MatSnackBar) {}
   
   //Etiquetas (chips)
   addTag(): void {
@@ -92,9 +93,20 @@ export class CrearProyectoComponent {
     // Llamar al servicio
     this.projectService.crearProyecto(formData).subscribe(response => {
       console.log('Proyecto creado', response);
+      this.mostrarToast('Proyecto creado correctamente', 'success');
       this.router.navigate(['/home']);
     }, error => {
+      this.mostrarToast(error, 'error');
       console.error('Error al crear el proyecto', error);
+    });
+  }
+  // Mostrar toast de éxito o error
+  mostrarToast(mensaje: string, tipo: 'success' | 'error' = 'success'): void {
+    this.snackBar.open(mensaje, 'X', {
+      duration: 5000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      panelClass: tipo === 'success' ? ['snackbar-success'] : ['snackbar-error']
     });
   }
 }
