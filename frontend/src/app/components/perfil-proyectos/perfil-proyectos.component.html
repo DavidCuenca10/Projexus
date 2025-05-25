@@ -43,7 +43,7 @@
                 <div class="botones">
                     <button class="boton-elegante" [routerLink]="['/proyecto', project.id]">Ver mas</button>
                     <button class="boton-elegante rojo" *ngIf="rolCargado && noEsOwner(project.id)" (click)="salirDelProyecto(project.id)">Salir</button>
-                    <label *ngIf="rolCargado && esOwner(project.id)" for="btn-modal" class="boton-elegante rojo" (click)="seleccionarProyectoParaEliminar()">
+                    <label *ngIf="rolCargado && esOwner(project.id)" for="btn-modal" class="boton-elegante rojo" (click)="seleccionarProyectoParaEliminar(project)">
                         Eliminar proyecto
                     </label>
                 </div>
@@ -56,14 +56,14 @@
         <div class="container-modal">
             <div class="content-modal">
                 <h3 *ngIf="tipoModal === 'eliminarProyecto'">
-                    ⚠️ Vas a eliminar el proyecto <strong>"{{ project.name }}"</strong>
+                    ⚠️ Vas a eliminar el proyecto <strong>"{{ proyectoSeleccionado.name }}"</strong>
                 </h3>
                 <p>Esta acción es permanente y no se podrá recuperar. ¿Deseas continuar?</p>
                 <div class="botones-modal">
                     <div class="btn-cancelar">
                         <label for="btn-modal">Cancelar</label>
                     </div>
-                    <div class="btn-confirmar" (click)="eliminarProyecto(project.id)">
+                    <div class="btn-confirmar" (click)="eliminarProyecto(proyectoSeleccionado.id)">
                         <label for="btn-modal">Confirmar</label>
                     </div>
                 </div>

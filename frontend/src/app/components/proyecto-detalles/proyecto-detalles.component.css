@@ -99,6 +99,19 @@
   margin-right: 10px;
 }
 
+@media (max-width: 1084px){
+  .info-proyecto {
+    max-width: 100%;
+    width: 100%;
+    text-align: center;
+  }
+  .imagen-proyecto {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+}
+
 /*Cierre contendor 1*/
 /*Contendor 2*/
 

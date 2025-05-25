@@ -25,6 +25,7 @@ export class PerfilProyectosComponent implements OnInit {
   totalProyectos: number = 0;
   tipoModal: 'eliminarProyecto' | null = null;
   anteriorEstado: string = '';
+  proyectoSeleccionado: any = null;
 
   constructor(
     private projectService: ProjectService,
@@ -95,8 +96,9 @@ export class PerfilProyectosComponent implements OnInit {
     })
   }
 
-  seleccionarProyectoParaEliminar() {
+  seleccionarProyectoParaEliminar(project: any) {
     // Cambiar el tipo de modal a 'eliminarProyecto'
+    this.proyectoSeleccionado = project;
     this.tipoModal = 'eliminarProyecto';
   }
 
