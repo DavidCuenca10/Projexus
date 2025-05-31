@@ -15,13 +15,10 @@
             <div class="bloque-proyecto">
               <h2><img [src]="imageOwner ? (environment.apiUrl + '/' + imageOwner) : 'perfiles/pordefecto.png'" class="me-2" style="width: 40px; height: 40px; border-radius: 50%;"> {{ nombreOwner }}</h2>
               <!-- Si no eres miembro mostrar el boton "Unirme" -->
-              <div *ngIf="rolCargado && !isMember && project.current_members < project.max_members"
-                  class="bloque-unirse" 
-                  (click)="solicitarAcceso()">
+              <div *ngIf="rolCargado && !isMember && project.current_members < project.max_members" class="bloque-unirse">
                 <span class="texto-unirse">🤝 ¿Te gusta este proyecto? ¡Solicita unirte ahora!</span>
-                <button class="boton-elegante verde" [disabled]="project.current_members >= project.max_members">Unirme</button>
+                <button class="boton-elegante verde" [disabled]="project.current_members >= project.max_members" (click)="solicitarAcceso()">Unirme</button>
               </div>
-
 
               <!-- Mensaje de solicitud -->
               <p *ngIf="mensajeSolicitud" class="solicitud-pendiente">{{ mensajeSolicitud }}</p>
@@ -158,7 +155,7 @@
         <!-- Si no es miembro -->
         <div class="justify-content-center text-center" *ngIf="!isMember" style="height: 150px;">
           Chat exclusivo para miembros del proyecto
-          <div class="mt-2" style="font-size: 80px;">
+          <div class="mt-2" style="font-size: 120px;">
             <i class="fa-solid fa-lock fa-lg"></i>
           </div>
         </div>
@@ -218,65 +215,74 @@
     <div class="col-12 col-md-6 mb-3 d-flex">
       <div class="custom-container flex-fill">
         <!-- Datos contenedor 4 -->
-        <h2 class="titulos">Tareas del proyecto</h2>
+        <h2 class="titulos text-center">Tareas del proyecto</h2>
         <!-- Encabezado con filtros y contador -->
-        <div class="filters-container d-flex justify-content-between align-items-center mb-3">
-          
-           <!-- Filtro 1 -->
-          <div class="filter-item">
-            <select class="form-select" [(ngModel)]="filtroEstado">
-              <option value="all">Todos los estados</option>
-              <option value="pending">Pendiente</option>
-              <option value="in_progress">En progreso</option>
-              <option value="completed">Completado</option>
-            </select>
-          </div>
-
-          <!-- Filtro 2 -->
-          <div class="filter-item">
-            <select class="form-select" [(ngModel)]="filtroPrioridad">
-              <option value="all">Todas las prioridades</option>
-              <option value="low">Baja</option>
-              <option value="medium">Media</option>
-              <option value="high">Alta</option>
-            </select>
-          </div>
-
-          <!-- Número total de tareas filtradas -->
-          <p>Total de tareas: {{ tareasFiltradas.length }}</p>
-        </div>
-
-        <!-- tareas -->
-        <div class="scroll">
-          <ng-container *ngFor="let tareas of tareasFiltradas">
-            <div class="tarea-card" [ngClass]="{'completed-task': tareas.status === 'completed'}">
-              <div class="tarea-header">
-                <h4>{{ tareas.title }}</h4>
-                <div class="tarea-info">
-                  <span class="status" [ngClass]="{
-                    'bg-success': tareas.status === 'completed',
-                    'active': tareas.status === 'active'
-                  }">
-                    {{ tareas.status === 'pending' ? 'Pendiente' : (tareas.status === 'in_progress' ? 'En progreso' : 'Completado') }}
-                  </span>
-                  <span class="priority" [ngClass]="{
-                    'bg-danger': tareas.priority === 'high',
-                    'bg-warning': tareas.priority === 'medium',
-                    'bg-success': tareas.priority === 'low'
-                  }">
-                    {{ tareas.priority === 'medium' ? 'Media' : (tareas.priority === 'high' ? 'Alta' : 'Baja') }}
-                  </span>
-                  <span class="deadline">{{ tareas.deadline | date:'dd/MM/yyyy' }}</span>
-
-                  <!-- Botón para abrir el modal -->
-                  <label for="btn-modal" (click)="seleccionarTarea(tareas)">
-                    <i *ngIf="isAdmin || isOwner" class="fas fa-trash papelera" title="Eliminar tarea"></i>
-                  </label>
-                </div>
-              </div>
-              <p class="tarea-description">{{ tareas.description }}</p>
+         
+        <div *ngIf="isMember">
+          <div class="filters-container d-flex justify-content-between align-items-center mb-3">
+            
+            <!-- Filtro 1 -->
+            <div class="filter-item">
+              <select class="form-select" [(ngModel)]="filtroEstado">
+                <option value="all">Todos los estados</option>
+                <option value="pending">Pendiente</option>
+                <option value="in_progress">En progreso</option>
+                <option value="completed">Completado</option>
+              </select>
             </div>
-          </ng-container>
+
+            <!-- Filtro 2 -->
+            <div class="filter-item">
+              <select class="form-select" [(ngModel)]="filtroPrioridad">
+                <option value="all">Todas las prioridades</option>
+                <option value="low">Baja</option>
+                <option value="medium">Media</option>
+                <option value="high">Alta</option>
+              </select>
+            </div>
+
+            <!-- Número total de tareas filtradas -->
+            <p>Total de tareas: {{ tareasFiltradas.length }}</p>
+          </div>
+
+          <!-- tareas -->
+          <div class="scroll">
+            <ng-container *ngFor="let tareas of tareasFiltradas">
+              <div class="tarea-card" [ngClass]="{'completed-task': tareas.status === 'completed'}">
+                <div class="tarea-header">
+                  <h4>{{ tareas.title }}</h4>
+                  <div class="tarea-info">
+                    <span class="status" [ngClass]="{
+                      'bg-success': tareas.status === 'completed',
+                      'active': tareas.status === 'active'
+                    }">
+                      {{ tareas.status === 'pending' ? 'Pendiente' : (tareas.status === 'in_progress' ? 'En progreso' : 'Completado') }}
+                    </span>
+                    <span class="priority" [ngClass]="{
+                      'bg-danger': tareas.priority === 'high',
+                      'bg-warning': tareas.priority === 'medium',
+                      'bg-success': tareas.priority === 'low'
+                    }">
+                      {{ tareas.priority === 'medium' ? 'Media' : (tareas.priority === 'high' ? 'Alta' : 'Baja') }}
+                    </span>
+                    <span class="deadline">{{ tareas.deadline | date:'dd/MM/yyyy' }}</span>
+
+                    <!-- Botón para abrir el modal -->
+                    <label for="btn-modal" (click)="seleccionarTarea(tareas)">
+                      <i *ngIf="isAdmin || isOwner" class="fas fa-trash papelera" title="Eliminar tarea"></i>
+                    </label>
+                  </div>
+                </div>
+                <p class="tarea-description">{{ tareas.description }}</p>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+        <div class="justify-content-center text-center" *ngIf="!isMember">
+          <div class="mt-2" style="font-size: 50px;">
+            <i class="fa-solid fa-lock fa-lg"></i>
+          </div>
+          <p>Necesitas ser miembro del proyecto para ver las tareas</p>
         </div>
 
         <!-- Modal (checkbox que controla la apertura del modal) -->

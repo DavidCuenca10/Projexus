@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Project;
+use App\Models\Task;
 use App\Models\ProjectMember;
 use App\Models\SolicitudProyecto;
 use Illuminate\Support\Facades\Storage;
@@ -222,6 +223,10 @@ class ProjectController extends Controller
         if (!$project->members()->where('user_id', $userId)->exists()) {
             return response()->json(['message' => 'El usuario no pertenece al proyecto'], 400);
         }
+
+        Task::where('project_id', $projectId)
+                ->where('assigned_to', $userId)
+                ->update(['assigned_to' => null]);
 
         // Eliminar al usuario
         $project->members()->detach($userId);

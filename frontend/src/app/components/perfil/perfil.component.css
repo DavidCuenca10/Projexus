@@ -29,7 +29,13 @@
   background-color: rgba(92, 255, 119, 0.158);
 }
 
-@media (max-width: 576px){
+@media (max-width: 999px) {
+  .custom-container {
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 576px) {
   .custom-container {
     margin-bottom: 10px;
   }

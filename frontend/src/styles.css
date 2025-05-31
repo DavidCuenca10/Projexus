@@ -275,12 +275,12 @@ body {
 }
 
 :root {
-  --color-tecnologia: rgba(44, 103, 180, 0.658);
-  --color-diseño: rgba(109, 0, 94, 0.658);
-  --color-marketing: rgba(0, 109, 64, 0.658);
-  --color-negocios: rgba(179, 95, 0, 0.658);
-  --color-deporte: rgba(78, 78, 78, 0.658);
-  --color-musica: #6710f291;
+  --color-tecnologia: rgba(44, 103, 180, 0.95);
+  --color-diseño: rgba(109, 0, 94, 0.95);
+  --color-marketing: rgba(0, 109, 64,0.95);
+  --color-negocios: rgba(179, 95, 0, 0.95);
+  --color-deporte: rgba(78, 78, 78, 0.95);
+  --color-musica: #6710f2ef;
 }
 
 /* Usamos clases para aplicar colores */
