@@ -53,10 +53,14 @@
             rows="5"
             [(ngModel)]="description"
             required
+            minlength="30"
             #projectDescriptionField="ngModel"
           ></textarea>
           <div *ngIf="form.submitted && !description" class="text-danger">
             Añade una descripción
+          </div>
+          <div *ngIf="form.submitted && projectDescriptionField.errors?.['minlength']" class="text-danger">
+            La descripción debe tener al menos 30 caracteres
           </div>
         </div>
 
